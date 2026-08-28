@@ -44,6 +44,7 @@ import {
 } from 'lucide-react';
 import { FileExcelOutlined, FileWordOutlined, IeOutlined, ReloadOutlined, SettingOutlined } from '@ant-design/icons';
 import { execCRUD } from '../../../services/apiServices';
+import * as workflowApi from '../../../services/workflowApi';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import styles from '../QuanLyKeHoach.module.css';
@@ -91,6 +92,20 @@ const GiaoViecTab = ({ detailData, onRefresh }) => {
         periods: []
     });
 
+    // Workflow-linked task options (for the "Liên kết Workflow" quick-add column)
+    const [wfTasks, setWfTasks] = useState([]);
+
+    useEffect(() => {
+        const wfProjectId = detailData?.plan?.wf_project_id;
+        if (!wfProjectId) {
+            setWfTasks([]);
+            return;
+        }
+        workflowApi.getKanbanProjectBoard(wfProjectId)
+            .then((data) => setWfTasks(data?.tasks || []))
+            .catch(() => setWfTasks([]));
+    }, [detailData?.plan?.wf_project_id]);
+
     // Filters
     const [searchText, setSearchText] = useState('');
     const [filterType, setFilterType] = useState('');
@@ -111,7 +126,8 @@ const GiaoViecTab = ({ detailData, onRefresh }) => {
         lv008: '',
         lv013: 'CUS',
         lv014: '',
-        lv111: ''
+        lv111: '',
+        wf_task_id: null
     });
 
     // Edit Drawer Form
@@ -321,7 +337,8 @@ const GiaoViecTab = ({ detailData, onRefresh }) => {
                     lv008: quickRowData.lv008 || currentUserId || 'admin',
                     lv013: quickRowData.lv013 || 'CUS',
                     lv014: quickRowData.lv014 || '',
-                    lv111: quickRowData.lv111 || ''
+                    lv111: quickRowData.lv111 || '',
+                    wf_task_id: quickRowData.wf_task_id || null
                 }
             };
 
@@ -340,7 +357,8 @@ const GiaoViecTab = ({ detailData, onRefresh }) => {
                     lv008: currentUserId || 'admin',
                     lv013: 'CUS',
                     lv014: '',
-                    lv111: ''
+                    lv111: '',
+                    wf_task_id: null
                 });
                 await loadData();
                 if (onRefresh) onRefresh();
@@ -464,6 +482,8 @@ const GiaoViecTab = ({ detailData, onRefresh }) => {
         }
     };
 
+    const ACTION_TO_PLAN_STATUS = { startTask: 1, completeTask: 2, unapproveTask: 0 };
+
     // State Transitions
     const handleTransition = async (action, ids, label) => {
         try {
@@ -471,6 +491,17 @@ const GiaoViecTab = ({ detailData, onRefresh }) => {
             let successCount = 0;
 
             for (const id of listIds) {
+                const task = tasks.find((t) => t.lv001 === id);
+                if (task?.wf_task_id && ACTION_TO_PLAN_STATUS[action] !== undefined) {
+                    try {
+                        await workflowApi.updateTaskStatusFromPlan(task.wf_task_id, ACTION_TO_PLAN_STATUS[action]);
+                        successCount++;
+                    } catch (e) {
+                        message.error(`CV ${id}: ${e.message}`);
+                    }
+                    continue;
+                }
+
                 const res = await execCRUD('cr_lv0025_xemtongcv', action, { childId: id });
                 if (res && res.success) {
                     successCount++;
@@ -813,6 +844,42 @@ const GiaoViecTab = ({ detailData, onRefresh }) => {
                     );
                 }
                 return val || record.lv049 || <Text type="secondary">-</Text>;
+            }
+        },
+        {
+            title: 'Liên kết Workflow',
+            key: 'wf_task_link',
+            width: 200,
+            render: (_, record) => {
+                if (record.isQuickRow) {
+                    if (wfTasks.length === 0) {
+                        return <Text type="secondary" style={{ fontSize: 12 }}>Kế hoạch chưa liên kết dự án Workflow</Text>;
+                    }
+                    return (
+                        <Select
+                            size='small'
+                            placeholder='Chọn công việc Workflow...'
+                            allowClear
+                            showSearch
+                            optionFilterProp='label'
+                            style={{ width: '100%' }}
+                            value={quickRowData.wf_task_id}
+                            options={wfTasks.map((t) => ({ value: t.id, label: `${t.code} — ${t.name}` }))}
+                            onChange={(val) => {
+                                const task = wfTasks.find((t) => t.id === val);
+                                setQuickRowData((prev) => ({
+                                    ...prev,
+                                    wf_task_id: val || null,
+                                    lv004: !prev.lv004 && task ? task.name : prev.lv004,
+                                    lv005: !prev.lv005 && task?.deadline ? dayjs(task.deadline) : prev.lv005,
+                                }));
+                            }}
+                        />
+                    );
+                }
+                return record.wf_task_code
+                    ? <Tag color="purple">{record.wf_task_code}</Tag>
+                    : <Text type="secondary">—</Text>;
             }
         },
         {
@@ -1194,7 +1261,7 @@ const GiaoViecTab = ({ detailData, onRefresh }) => {
                     size="small"
                     bordered
                     pagination={{ pageSize: 15, showSizeChanger: true }}
-                    scroll={{ x: 2150 }}
+                    scroll={{ x: 2350 }}
                     style={{ borderRadius: 8, overflow: 'hidden' }}
                     onRow={(record) => {
                         return {
