@@ -43,8 +43,13 @@ export const listProjects = () => callWorkflowApi("project.list");
 export const getProject = (id) => callWorkflowApi("project.get", { id });
 export const createProject = (data) => callWorkflowApi("project.create", data);
 
+// ---- Kanban column config (dynamic per workflow, snapshot per project) ----
+export const saveKanbanColumns = (workflowId, columns) =>
+  callWorkflowApi("kanban_column.save", { workflow_id: workflowId, columns });
+
 // ---- Kanban / task ----
 export const getKanbanBoard = (projectStageId) => callWorkflowApi("kanban.board", { project_stage_id: projectStageId });
+export const getKanbanProjectBoard = (projectId) => callWorkflowApi("kanban.projectBoard", { project_id: projectId });
 export const getMyTasks = () => callWorkflowApi("task.myTasks");
 export const getTask = (id) => callWorkflowApi("task.get", { id });
 export const saveTask = (data) => callWorkflowApi("task.save", data);
@@ -66,13 +71,6 @@ export const listLockRequests = (projectStageId = null) =>
 // ---- History ----
 export const listHistory = (projectId = null, limit = 100) =>
   callWorkflowApi("history.list", { project_id: projectId, limit });
-
-export const TASK_STATUS_LABELS = {
-  TODO: "Cần làm",
-  IN_PROGRESS: "Đang làm",
-  WAITING: "Chờ xử lý",
-  DONE: "Hoàn thành",
-};
 
 export const TASK_PRIORITY_LABELS = {
   LOW: "Thấp",

@@ -32,7 +32,7 @@
 }
 
 .wf-kanban-column {
-  flex: 1;
+  flex: 1 0 220px;
   min-width: 220px;
   background: #fafafa;
   border-radius: 8px;

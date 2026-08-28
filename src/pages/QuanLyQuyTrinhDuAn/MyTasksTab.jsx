@@ -4,7 +4,6 @@ import * as workflowApi from "../../services/workflowApi";
 import TaskDrawer from "./TaskDrawer";
 
 const PRIORITY_COLOR = { LOW: "default", NORMAL: "blue", HIGH: "orange", URGENT: "red" };
-const STATUS_OPTIONS = Object.entries(workflowApi.TASK_STATUS_LABELS).map(([value, label]) => ({ value, label }));
 
 export default function MyTasksTab() {
   const [tasks, setTasks] = useState([]);
@@ -76,7 +75,7 @@ export default function MyTasksTab() {
           size="small"
           value={v}
           style={{ width: 130 }}
-          options={STATUS_OPTIONS}
+          options={(r.columns || []).map((c) => ({ value: c.code, label: c.label }))}
           onClick={(e) => e.stopPropagation()}
           onChange={(val) => changeStatus(r.id, val)}
         />

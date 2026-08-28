@@ -128,6 +128,27 @@ INSERT INTO `wf_department_code_prefix` (department_code, prefix, next_seq) VALU
 ('PB005', 'TST', 1);
 
 -- ----------------------------------------------------------------------------
+-- 6b. wf_kanban_column - Bo cot Kanban tu dinh nghia rieng cho tung Workflow
+--     (them/bot/doi ten tuy y). Cot code='DONE' la bat buoc va co dinh (danh
+--     dau hoan thanh) de khong pha vo cac logic da co (wf_maybe_advance_stage,
+--     xac nhan lien phong ban...), cac cot con lai hoan toan tu do.
+-- ----------------------------------------------------------------------------
+DROP TABLE IF EXISTS `wf_kanban_column`;
+CREATE TABLE `wf_kanban_column` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `workflow_id` INT NOT NULL,
+  `code` VARCHAR(30) NOT NULL,
+  `label` VARCHAR(100) NOT NULL,
+  `color` VARCHAR(20) NOT NULL DEFAULT 'default',
+  `order_no` INT NOT NULL DEFAULT 0,
+  `is_done_status` TINYINT(1) NOT NULL DEFAULT 0,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_wf_kanban_column_workflow` (`workflow_id`),
+  CONSTRAINT `fk_wf_kanban_column_workflow` FOREIGN KEY (`workflow_id`) REFERENCES `wf_workflow` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------------------------------------------------------
 -- 7. wf_project - Du an thuc te, sinh ra tu 1 Workflow Template
 -- ----------------------------------------------------------------------------
 DROP TABLE IF EXISTS `wf_project`;
@@ -139,6 +160,7 @@ CREATE TABLE `wf_project` (
   `workflow_id` INT NOT NULL,
   `status` VARCHAR(30) NOT NULL DEFAULT 'IN_PROGRESS',
   `current_stage_id` INT DEFAULT NULL,
+  `kanban_columns_json` TEXT DEFAULT NULL,
   `created_by` VARCHAR(32) DEFAULT NULL,
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -329,3 +351,9 @@ INSERT INTO `wf_task_template_confirm_dept` (task_template_id, department_code)
 SELECT id, 'PB002' FROM wf_task_template WHERE stage_id = 3 AND name = 'Chot hop dong';
 INSERT INTO `wf_task_template_confirm_dept` (task_template_id, department_code)
 SELECT id, 'PB001' FROM wf_task_template WHERE stage_id = 3 AND name = 'Chot hop dong';
+
+INSERT INTO `wf_kanban_column` (workflow_id, code, label, color, order_no, is_done_status) VALUES
+(1, 'TODO', 'Can lam', 'default', 1, 0),
+(1, 'IN_PROGRESS', 'Dang lam', 'blue', 2, 0),
+(1, 'WAITING', 'Cho xu ly', 'orange', 3, 0),
+(1, 'DONE', 'Hoan thanh', 'green', 4, 1);

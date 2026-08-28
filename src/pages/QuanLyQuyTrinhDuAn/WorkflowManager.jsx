@@ -16,7 +16,7 @@ import {
   Collapse,
   InputNumber,
 } from "antd";
-import { Plus, Copy, Trash2, GripVertical, Pencil } from "lucide-react";
+import { Plus, Copy, Trash2, GripVertical, Pencil, Save } from "lucide-react";
 import * as workflowApi from "../../services/workflowApi";
 
 const STAGE_TYPES = [
@@ -57,6 +57,13 @@ export default function WorkflowManager() {
   const [taskStageId, setTaskStageId] = useState(null);
 
   const [dragStageId, setDragStageId] = useState(null);
+
+  const [kanbanCols, setKanbanCols] = useState([]);
+  const [savingCols, setSavingCols] = useState(false);
+
+  useEffect(() => {
+    setKanbanCols(selected?.columns || []);
+  }, [selected]);
 
   const loadList = useCallback(async () => {
     setLoading(true);
@@ -253,6 +260,44 @@ export default function WorkflowManager() {
     }
   };
 
+  // ---- Cot Kanban (dong, tuy chinh theo tung Workflow) ----
+  const updateKanbanCol = (idx, patch) => {
+    setKanbanCols((cols) => cols.map((c, i) => (i === idx ? { ...c, ...patch } : c)));
+  };
+
+  const addKanbanCol = () => {
+    setKanbanCols((cols) => {
+      const doneIdx = cols.findIndex((c) => c.code === "DONE");
+      const newCol = { code: "", label: "", color: "default" };
+      const insertAt = doneIdx >= 0 ? doneIdx : cols.length;
+      return [...cols.slice(0, insertAt), newCol, ...cols.slice(insertAt)];
+    });
+  };
+
+  const removeKanbanCol = (idx) => {
+    setKanbanCols((cols) => cols.filter((_, i) => i !== idx));
+  };
+
+  const saveKanbanCols = async () => {
+    for (const c of kanbanCols) {
+      if (!c.code.trim() || !c.label.trim()) {
+        message.error("Mỗi cột cần có mã và tên hiển thị");
+        return;
+      }
+    }
+    setSavingCols(true);
+    try {
+      const data = await workflowApi.saveKanbanColumns(selected.id, kanbanCols);
+      message.success("Đã lưu cột Kanban");
+      setKanbanCols(data);
+      setSelected((prev) => ({ ...prev, columns: data }));
+    } catch (e) {
+      message.error(e.message);
+    } finally {
+      setSavingCols(false);
+    }
+  };
+
   const columns = [
     { title: "Mã", dataIndex: "code", width: 140 },
     { title: "Tên workflow", dataIndex: "name" },
@@ -294,7 +339,7 @@ export default function WorkflowManager() {
 
   return (
     <div style={{ display: "flex", gap: 16 }}>
-      <div style={{ flex: selected ? "0 0 40%" : "1 1 100%" }}>
+      <div style={{ flex: selected ? "0 0 40%" : "1 1 100%", minWidth: 0 }}>
         {isAdmin ? (
           <Space style={{ marginBottom: 12 }}>
             <Button type="primary" icon={<Plus size={14} />} onClick={openCreateWorkflow}>
@@ -312,13 +357,55 @@ export default function WorkflowManager() {
           loading={loading}
           dataSource={workflows}
           columns={columns}
+          scroll={selected ? { x: "max-content" } : undefined}
           onRow={(row) => ({ onClick: () => loadDetail(row.id), style: { cursor: "pointer" } })}
           rowClassName={(row) => (selected?.id === row.id ? "wf-row-selected" : "")}
         />
       </div>
 
       {selected && (
-        <div style={{ flex: "1 1 60%" }}>
+        <div style={{ flex: "1 1 60%", minWidth: 0 }}>
+          {isAdmin && (
+            <Card size="small" title="Cột Kanban của Workflow này" style={{ marginBottom: 12 }}>
+              <div style={{ fontSize: 12, color: "#999", marginBottom: 8 }}>
+                Tùy chỉnh cột Kanban cho dự án tạo từ workflow này (thêm/bớt/đổi tên tùy ý). Cột mã "DONE" bắt buộc phải có, không thể xóa.
+              </div>
+              <Space direction="vertical" style={{ width: "100%" }}>
+                {kanbanCols.map((col, idx) => (
+                  <Space key={idx} wrap>
+                    <Input
+                      placeholder="Mã (VD: REVIEW)"
+                      value={col.code}
+                      disabled={col.code === "DONE"}
+                      style={{ width: 130 }}
+                      onChange={(e) => updateKanbanCol(idx, { code: e.target.value.toUpperCase() })}
+                    />
+                    <Input
+                      placeholder="Tên hiển thị"
+                      value={col.label}
+                      style={{ width: 140 }}
+                      onChange={(e) => updateKanbanCol(idx, { label: e.target.value })}
+                    />
+                    <Select
+                      value={col.color}
+                      style={{ width: 100 }}
+                      options={["default", "blue", "purple", "orange", "gold", "green", "red", "cyan"].map((c) => ({ value: c, label: c }))}
+                      onChange={(v) => updateKanbanCol(idx, { color: v })}
+                    />
+                    <Button size="small" danger disabled={col.code === "DONE"} icon={<Trash2 size={13} />} onClick={() => removeKanbanCol(idx)} />
+                  </Space>
+                ))}
+                <Space>
+                  <Button size="small" icon={<Plus size={13} />} onClick={addKanbanCol}>
+                    Thêm cột
+                  </Button>
+                  <Button size="small" type="primary" icon={<Save size={13} />} loading={savingCols} onClick={saveKanbanCols}>
+                    Lưu cột Kanban
+                  </Button>
+                </Space>
+              </Space>
+            </Card>
+          )}
           <Card
             size="small"
             title={`${selected.code} — ${selected.name}`}

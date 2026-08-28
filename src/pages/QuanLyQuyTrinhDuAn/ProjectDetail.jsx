@@ -8,27 +8,22 @@ import {
   Form,
   Input,
   Select,
+  Segmented,
   message,
   Empty,
   Modal,
   Timeline,
   Tooltip,
 } from "antd";
-import { ArrowLeft, Lock, Unlock, Plus, History, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Lock, Unlock, Plus, History, CheckCircle2, LayoutGrid, Columns3 } from "lucide-react";
 import * as workflowApi from "../../services/workflowApi";
 import TaskDrawer from "./TaskDrawer";
 
-const COLUMNS = [
-  { key: "TODO", label: "Cần làm" },
-  { key: "IN_PROGRESS", label: "Đang làm" },
-  { key: "WAITING", label: "Chờ xử lý" },
-  { key: "DONE", label: "Hoàn thành" },
-];
-
 const PRIORITY_COLOR = { LOW: "default", NORMAL: "blue", HIGH: "orange", URGENT: "red" };
 
-function TaskCard({ task, onClick }) {
-  const overdue = task.deadline && task.status !== "DONE" && new Date(task.deadline) < new Date();
+function TaskCard({ task, onClick, showStage }) {
+  const isDone = task.status === "DONE";
+  const overdue = task.deadline && !isDone && new Date(task.deadline) < new Date();
   return (
     <div
       className="wf-task-card"
@@ -39,6 +34,7 @@ function TaskCard({ task, onClick }) {
       <div style={{ fontWeight: 600 }}>{task.code}</div>
       <div>{task.name}</div>
       <Space size={4} wrap style={{ marginTop: 4 }}>
+        {showStage && task.stage_name && <Tag color="cyan">{task.stage_code}</Tag>}
         <Tag color={PRIORITY_COLOR[task.priority]}>{workflowApi.TASK_PRIORITY_LABELS[task.priority] || task.priority}</Tag>
         {task.confirm_total > 0 && (
           <Tag color={task.confirm_done === task.confirm_total ? "green" : "gold"}>
@@ -212,6 +208,8 @@ export default function ProjectDetail({ projectId, onBack }) {
   const [project, setProject] = useState(null);
   const [activeStageId, setActiveStageId] = useState(null);
   const [board, setBoard] = useState(null);
+  const [viewMode, setViewMode] = useState("stage"); // "stage" | "overview"
+  const [overviewTasks, setOverviewTasks] = useState(null);
   const [employees, setEmployees] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [activeTaskId, setActiveTaskId] = useState(null);
@@ -233,6 +231,11 @@ export default function ProjectDetail({ projectId, onBack }) {
     setBoard(data);
   }, [activeStageId]);
 
+  const loadOverview = useCallback(async () => {
+    const data = await workflowApi.getKanbanProjectBoard(projectId);
+    setOverviewTasks(data.tasks);
+  }, [projectId]);
+
   useEffect(() => {
     loadProject();
     workflowApi.getEmployees().then(setEmployees).catch(() => {});
@@ -241,12 +244,17 @@ export default function ProjectDetail({ projectId, onBack }) {
   }, [loadProject]);
 
   useEffect(() => {
-    loadBoard();
-  }, [loadBoard]);
+    if (viewMode === "stage") loadBoard();
+  }, [loadBoard, viewMode]);
+
+  useEffect(() => {
+    if (viewMode === "overview") loadOverview();
+  }, [loadOverview, viewMode]);
 
   const refreshAll = async () => {
     await loadProject();
-    await loadBoard();
+    if (viewMode === "overview") await loadOverview();
+    else await loadBoard();
   };
 
   const onDropColumn = async (taskId, status) => {
@@ -310,12 +318,15 @@ export default function ProjectDetail({ projectId, onBack }) {
         <Tag style={{ marginLeft: 8 }}>{project.status}</Tag>
       </Card>
 
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
         {project.stages.map((stage) => (
-          <Tooltip key={stage.id} title={`${stage.task_counts.DONE}/${Object.values(stage.task_counts).reduce((a, b) => a + b, 0)} công việc hoàn thành`}>
+          <Tooltip key={stage.id} title={`${stage.task_counts.DONE || 0}/${Object.values(stage.task_counts).reduce((a, b) => a + b, 0)} công việc hoàn thành`}>
             <div
-              onClick={() => setActiveStageId(stage.id)}
-              className={`wf-stage-chip wf-stage-${stage.status.toLowerCase()} ${activeStageId === stage.id ? "wf-stage-active" : ""}`}
+              onClick={() => {
+                setActiveStageId(stage.id);
+                setViewMode("stage");
+              }}
+              className={`wf-stage-chip wf-stage-${stage.status.toLowerCase()} ${viewMode === "stage" && activeStageId === stage.id ? "wf-stage-active" : ""}`}
             >
               {stage.status === "DONE" && <CheckCircle2 size={13} />}
               {stage.status === "PENDING" && <Lock size={13} />}
@@ -325,7 +336,17 @@ export default function ProjectDetail({ projectId, onBack }) {
         ))}
       </div>
 
-      {activeStage && (
+      <Segmented
+        style={{ marginBottom: 16 }}
+        value={viewMode}
+        onChange={setViewMode}
+        options={[
+          { label: "Kanban theo giai đoạn", value: "stage", icon: <Columns3 size={13} /> },
+          { label: "Kanban tổng thể dự án", value: "overview", icon: <LayoutGrid size={13} /> },
+        ]}
+      />
+
+      {viewMode === "stage" && activeStage && (
         <div style={{ display: "flex", gap: 16 }}>
           <div style={{ flex: "0 0 320px" }}>
             <StageExtraPanel
@@ -352,22 +373,22 @@ export default function ProjectDetail({ projectId, onBack }) {
               </Button>
             </Space>
             {board ? (
-              <div style={{ display: "flex", gap: 12 }}>
-                {COLUMNS.map((col) => (
+              <div style={{ display: "flex", gap: 12, overflowX: "auto", paddingBottom: 8 }}>
+                {(project.columns || []).map((col) => (
                   <div
-                    key={col.key}
+                    key={col.code}
                     className="wf-kanban-column"
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={(e) => {
                       const id = e.dataTransfer.getData("text/plain");
-                      onDropColumn(id, col.key);
+                      onDropColumn(id, col.code);
                     }}
                   >
                     <div className="wf-kanban-column-title">
-                      {col.label} ({board.tasks.filter((t) => t.status === col.key).length})
+                      {col.label} ({board.tasks.filter((t) => t.status === col.code).length})
                     </div>
                     {board.tasks
-                      .filter((t) => t.status === col.key)
+                      .filter((t) => t.status === col.code)
                       .map((t) => (
                         <TaskCard key={t.id} task={t} onClick={() => setActiveTaskId(t.id)} />
                       ))}
@@ -378,6 +399,37 @@ export default function ProjectDetail({ projectId, onBack }) {
               <Empty />
             )}
           </div>
+        </div>
+      )}
+
+      {viewMode === "overview" && (
+        <div>
+          {overviewTasks ? (
+            <div style={{ display: "flex", gap: 12, overflowX: "auto", paddingBottom: 8 }}>
+              {(project.columns || []).map((col) => (
+                <div
+                  key={col.code}
+                  className="wf-kanban-column"
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => {
+                    const id = e.dataTransfer.getData("text/plain");
+                    onDropColumn(id, col.code);
+                  }}
+                >
+                  <div className="wf-kanban-column-title">
+                    {col.label} ({overviewTasks.filter((t) => t.status === col.code).length})
+                  </div>
+                  {overviewTasks
+                    .filter((t) => t.status === col.code)
+                    .map((t) => (
+                      <TaskCard key={t.id} task={t} showStage onClick={() => setActiveTaskId(t.id)} />
+                    ))}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <Empty />
+          )}
         </div>
       )}
 
