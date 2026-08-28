@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Table, Tag, Select, message, Empty } from "antd";
+import { Table, Tag, Select, message, Empty, Input, Space } from "antd";
+import { Search } from "lucide-react";
 import * as workflowApi from "../../services/workflowApi";
 import TaskDrawer from "./TaskDrawer";
 
@@ -12,6 +13,8 @@ export default function MyTasksTab() {
   const [departments, setDepartments] = useState([]);
   const [profile, setProfile] = useState(null);
   const [activeTaskId, setActiveTaskId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [priorityFilter, setPriorityFilter] = useState("ALL");
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -35,18 +38,38 @@ export default function MyTasksTab() {
   const changeStatus = async (taskId, status) => {
     try {
       await workflowApi.updateTaskStatus(taskId, status);
-      message.success("Đã cập nhật");
+      message.success("Đã cập nhật trạng thái");
       load();
     } catch (e) {
       message.error(e.message);
     }
   };
 
+  const filteredTasks = tasks.filter((t) => {
+    const matchesSearch =
+      !searchQuery.trim() ||
+      (t.name && t.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (t.code && t.code.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (t.project_name && t.project_name.toLowerCase().includes(searchQuery.toLowerCase()));
+
+    const matchesPriority = priorityFilter === "ALL" || t.priority === priorityFilter;
+    return matchesSearch && matchesPriority;
+  });
+
   const columns = [
-    { title: "Mã CV", dataIndex: "code", width: 110 },
-    { title: "Tên công việc", dataIndex: "name" },
+    { title: "Mã CV", dataIndex: "code", width: 110, render: (v) => <span className="wf-code">{v}</span> },
+    {
+      title: "Tên công việc",
+      dataIndex: "name",
+      render: (v, r) => (
+        <span>
+          <b>{v}</b>
+          {r.linked_plan_task_id ? <Tag color="purple" style={{ marginLeft: 6 }}>Đã liên kết kế hoạch</Tag> : null}
+        </span>
+      ),
+    },
     { title: "Dự án", render: (_, r) => `${r.project_code} — ${r.project_name}` },
-    { title: "Giai đoạn", render: (_, r) => `${r.stage_code} — ${r.stage_name}` },
+    { title: "Giai đoạn", render: (_, r) => <Tag color="cyan">{r.stage_code} — {r.stage_name}</Tag> },
     { title: "Deadline", dataIndex: "deadline", width: 110, render: (v) => v || "—" },
     {
       title: "Ưu tiên",
@@ -85,14 +108,37 @@ export default function MyTasksTab() {
 
   return (
     <div>
-      <p style={{ color: "#999", fontSize: 13, marginBottom: 12 }}>
-        Danh sách công việc được giao cho bạn, hoặc chưa có người phụ trách nhưng thuộc phòng ban của bạn.
-      </p>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, flexWrap: "wrap", gap: 12 }}>
+        <Space wrap>
+          <Input
+            placeholder="Tìm theo tên công việc, mã, dự án..."
+            prefix={<Search size={14} style={{ color: "#94a3b8" }} />}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{ width: 260 }}
+            allowClear
+          />
+          <Select
+            value={priorityFilter}
+            onChange={setPriorityFilter}
+            style={{ width: 150 }}
+            options={[
+              { value: "ALL", label: "Tất cả mức ưu tiên" },
+              { value: "LOW", label: "Thấp" },
+              { value: "NORMAL", label: "Bình thường" },
+              { value: "HIGH", label: "Cao" },
+              { value: "URGENT", label: "Khẩn cấp" },
+            ]}
+          />
+          <span style={{ color: "#64748b", fontSize: 13 }}>{filteredTasks.length} / {tasks.length} công việc</span>
+        </Space>
+      </div>
+
       <Table
         rowKey="id"
         size="small"
         loading={loading}
-        dataSource={tasks}
+        dataSource={filteredTasks}
         columns={columns}
         locale={{ emptyText: <Empty description="Không có công việc nào" /> }}
         onRow={(row) => ({ onClick: () => setActiveTaskId(row.id), style: { cursor: "pointer" } })}
