@@ -6,18 +6,40 @@
 
 .header-bar {
   background-color: #ffffff;
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 1px solid var(--line, #e2e6ee);
   padding: 0;
   height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   position: fixed;
   top: 0;
   left: var(--sidebar-width, 250px);
   right: 0;
   z-index: 1000;
+}
+
+.header-clock-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.25;
+  padding-right: 4px;
+  border-right: 1px solid var(--line, #e2e6ee);
+  margin-right: 4px;
+}
+
+.header-clock-time {
+  font-family: var(--font-mono, monospace);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink, #10182b);
+  font-variant-numeric: tabular-nums;
+}
+
+.header-clock-date {
+  font-size: 11px;
+  color: var(--ink-muted, #5b6472);
 }
 
 .header-left {
@@ -92,13 +114,13 @@
 
 .minimize-btn:hover,
 .maximize-btn:hover {
-  background-color: rgba(25, 125, 211, 0.1);
-  color: #197dd3 !important;
+  background-color: rgba(var(--primary-color-rgb, 25, 125, 211), 0.1);
+  color: var(--primary-color, #197dd3) !important;
 }
 
 .minimize-btn:hover svg,
 .maximize-btn:hover svg {
-  color: #197dd3 !important;
+  color: var(--primary-color, #197dd3) !important;
 }
 
 .header-search {

@@ -34,6 +34,16 @@ const HeaderBar = ({ isCollapsed }) => {
   const [hasOverlay, setHasOverlay] = React.useState(false);
   const [employeeInfo, setEmployeeInfo] = React.useState(null);
   const [avatarUrl, setAvatarUrl] = React.useState(null);
+  const [now, setNow] = React.useState(() => new Date());
+
+  React.useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 1000 * 30);
+    return () => clearInterval(timer);
+  }, []);
+
+  const WEEKDAYS = ["CN", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
+  const timeLabel = now.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
+  const dateLabel = `${WEEKDAYS[now.getDay()]}, ${String(now.getDate()).padStart(2, "0")}/${String(now.getMonth() + 1).padStart(2, "0")}`;
 
   const fetchUserData = React.useCallback(async () => {
     try {
@@ -157,7 +167,7 @@ const HeaderBar = ({ isCollapsed }) => {
             </div>
           ) : (
             <Text strong style={{ fontSize: "16px" }}>
-              <span style={{ color: "#1838eeff" }}>Hệ Thống Quản Trị Doanh Nghiệp</span> - <span style={{ color: "#ff4d4f" }}>SOF</span>
+              <span style={{ color: "var(--ink, #10182b)" }}>Hệ Thống Quản Trị Doanh Nghiệp</span> - <span style={{ color: "#ff4d4f" }}>SOF</span>
             </Text>
           )}
         </div>
@@ -165,6 +175,11 @@ const HeaderBar = ({ isCollapsed }) => {
 
       <div className="header-center">
         <Space size="middle">
+          <div className="header-clock-widget">
+            <span className="header-clock-time">{timeLabel}</span>
+            <span className="header-clock-date">{dateLabel}</span>
+          </div>
+
           <Button
             type="text"
             icon={<Bell size={16} />}

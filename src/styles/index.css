@@ -7,13 +7,45 @@
 
 :root {
   --sidebar-width: 250px;
+
+  /* ------------------------------------------------------------------
+     Design tokens. --primary-color / --color-primary-gradient are the
+     live-switchable brand color (set at runtime by SidebarMenu's theme
+     picker) — every other token below is fixed, so switching the accent
+     never touches ink/canvas/status colors.
+     ------------------------------------------------------------------ */
+  --ink: #10182b;
+  --ink-muted: #5b6472;
+  --ink-faint: #94a0b2;
+  --canvas: #f2f4f8;
+  --surface: #ffffff;
+  --line: #e2e6ee;
+  --line-soft: #edf0f5;
+  --success: #1b8a5a;
+  --success-bg: #e7f5ee;
+  --warning: #b8720f;
+  --warning-bg: #fbf1de;
+  --danger: #c23b3b;
+  --danger-bg: #fbeaea;
+  --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 }
 
 html, body, #root {
   height: 100%;
   min-height: 100dvh;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-ui);
   overflow: hidden;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+}
+
+/* Numbers/IDs stay tabular so columns of figures line up */
+.ant-table, .ant-statistic-content, .ant-descriptions {
+  font-variant-numeric: tabular-nums;
 }
 
 /* Đặt nền gradient ở cấp root để tránh vùng trắng lộ ra dưới màn hình login
@@ -98,8 +130,8 @@ body {
 */
 
 .ant-layout-sider {
-  background: #fff !important;
-  border-right: 1px solid #f0f0f0;
+  background: var(--surface) !important;
+  border-right: 1px solid var(--line);
   position: fixed !important;
   left: 0;
   top: 0;
@@ -108,8 +140,8 @@ body {
 }
 
 .ant-layout-header {
-  background: #fff !important;
-  border-bottom: 1px solid #f0f0f0;
+  background: var(--surface) !important;
+  border-bottom: 1px solid var(--line);
   padding: 0;
   height: 64px;
   line-height: 20px;
@@ -128,42 +160,10 @@ body {
   overflow-x: hidden;
 }
 
-.ant-layout-content::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('../assets/Img/bg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  opacity: 0.6;
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* Card styles */
-.ant-card {
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
-  border: 1px solid #f0f0f0;
-  position: relative;
-  z-index: 1;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(2px);
-}
-
-/* Generic container backgrounds */
-.container:not(.container-sm):not(.container-md):not(.container-lg):not(.container-xl),
-.page-container,
-.main-container,
-.content-container {
-  position: relative;
-}
-
+/* Signature background: a near-imperceptible blueprint grid rather than the
+   soft-focus stock photo this used to show — felt more than seen, it quietly
+   reinforces "this is a planning instrument" without competing with content. */
+.ant-layout-content::before,
 .container:not(.container-sm):not(.container-md):not(.container-lg):not(.container-xl)::before,
 .page-container::before,
 .main-container::before,
@@ -174,52 +174,69 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('../assets/Img/bg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  opacity: 0.6;
+  background-color: var(--canvas);
+  background-image:
+    linear-gradient(rgba(16, 24, 43, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 24, 43, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
   z-index: -1;
   pointer-events: none;
 }
 
+.container:not(.container-sm):not(.container-md):not(.container-lg):not(.container-xl),
+.page-container,
+.main-container,
+.content-container {
+  position: relative;
+}
+
+/* Card styles */
+.ant-card {
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(16, 24, 43, 0.04);
+  border: 1px solid var(--line);
+  position: relative;
+  z-index: 1;
+  background: var(--surface);
+}
+
 .ant-card-head {
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--line);
 }
 
 .ant-card-head-title {
-  font-weight: 600;
-  color: #262626;
+  font-weight: 650;
+  color: var(--ink);
 }
 
-/* Button styles */
+/* Button styles — flat and quiet; a bounce-on-hover for every button reads
+   as generic, so lift is reserved for genuinely draggable/clickable cards. */
 .ant-btn {
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: 500;
-  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   position: relative;
   z-index: 1;
 }
 
 .ant-btn-primary {
-  background: linear-gradient(135deg, #1890ff, #096dd9);
+  background: var(--primary-color, #197dd3);
   border: none;
 }
 
 .ant-btn-primary:hover {
-  background: linear-gradient(135deg, #096dd9, #0050b3);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+  background: var(--primary-color, #197dd3) !important;
+  filter: brightness(0.92);
+  box-shadow: none;
 }
 
 /* Input styles */
 .ant-input,
 .ant-input-number,
 .ant-select-selector {
-  border-radius: 6px;
-  border: 1px solid #d9d9d9;
-  transition: all 0.3s;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  transition: all 0.2s;
 }
 
 .ant-input:focus,
@@ -227,37 +244,37 @@ body {
 .ant-input-number:focus,
 .ant-input-number-focused,
 .ant-select-focused .ant-select-selector {
-  border-color: #1890ff;
-  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  border-color: var(--primary-color, #197dd3);
+  box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb, 25, 125, 211), 0.15);
 }
 
 /* Table styles */
 .ant-table {
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
 }
 
 .ant-table-thead > tr > th {
-  background-color: #fafafa;
-  border-bottom: 1px solid #f0f0f0;
-  font-weight: 600;
-  color: #262626;
+  background-color: var(--line-soft);
+  border-bottom: 1px solid var(--line);
+  font-weight: 650;
+  color: var(--ink);
 }
 
 .ant-table-tbody > tr > td {
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--line-soft);
 }
 
 .ant-table-tbody > tr:hover > td {
-  background-color: #f5f5f5;
+  background-color: var(--line-soft);
 }
 
 /* ERP table standard: sync list screens with src/pages/NhanVien/NhanVien.jsx */
 :root {
   --erp-table-fixed-height: calc(100vh - 350px);
-  --erp-table-border: #c1d9f3;
-  --erp-table-blue: #197dd3;
-  --erp-page-bg: #edf3fb;
+  --erp-table-border: var(--line);
+  --erp-table-blue: var(--primary-color, #197dd3);
+  --erp-page-bg: var(--canvas);
 }
 
 .app-content :where([class*="khoContainer"], [class*="pageContainer"], [class*="page-container"]) {
@@ -276,10 +293,10 @@ body {
   align-items: center !important;
   gap: 6px !important;
   padding: 5px 12px !important;
-  background: #ffffff !important;
+  background: var(--surface) !important;
   border: 1px solid var(--erp-table-border) !important;
   border-radius: 10px !important;
-  box-shadow: 0 2px 8px rgba(25, 125, 211, 0.07) !important;
+  box-shadow: 0 1px 2px rgba(16, 24, 43, 0.04) !important;
   margin-bottom: 8px !important;
   min-height: 40px !important;
   flex-wrap: nowrap !important;
@@ -317,10 +334,10 @@ body {
   [class*="mainTable"],
   [class*="customTable"]
 ) {
-  border-radius: 18px !important;
+  border-radius: 12px !important;
   border: 1px solid var(--erp-table-border) !important;
-  background: #ffffff !important;
-  box-shadow: 0 12px 28px rgba(31, 108, 186, 0.08) !important;
+  background: var(--surface) !important;
+  box-shadow: 0 1px 3px rgba(16, 24, 43, 0.05) !important;
   overflow: hidden !important;
 }
 
@@ -340,11 +357,12 @@ body {
 }
 
 .app-content .ant-table-wrapper .ant-table-thead > tr > th {
-  background: #e4f1ff !important;
-  color: #4b4344 !important;
-  font-weight: 600 !important;
-  font-size: 14px !important;
-  padding: 6px 8px !important;
+  background: var(--line-soft) !important;
+  color: var(--ink) !important;
+  font-weight: 650 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.01em;
+  padding: 8px 8px !important;
   text-align: center !important;
   white-space: nowrap !important;
   border-bottom: 1px solid var(--erp-table-border) !important;
@@ -352,18 +370,18 @@ body {
 
 .app-content .ant-table-wrapper .ant-table-tbody > tr > td {
   padding: 5px 8px !important;
-  color: #1e293b !important;
-  font-size: 14px !important;
+  color: var(--ink) !important;
+  font-size: 13.5px !important;
   line-height: 22px !important;
   vertical-align: middle !important;
 }
 
 .app-content .ant-table-wrapper .ant-table-tbody > tr:nth-child(odd) > td {
-  background: #f4f9ff;
+  background: var(--line-soft);
 }
 
 .app-content .ant-table-wrapper .ant-table-row:hover > td {
-  background-color: #e8f2ff !important;
+  background-color: rgba(var(--primary-color-rgb, 25, 125, 211), 0.07) !important;
 }
 
 .app-content .ant-table-wrapper .ant-table-cell:not(.ant-table-selection-column) {
@@ -401,24 +419,24 @@ body {
 
 /* Modal styles */
 .ant-modal {
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
 }
 
 .ant-modal-header {
-  border-bottom: 1px solid #f0f0f0;
-  border-radius: 8px 8px 0 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 12px 12px 0 0;
 }
 
 .ant-modal-title {
-  font-weight: 600;
-  color: #262626;
+  font-weight: 650;
+  color: var(--ink);
 }
 
 /* Form styles */
 .ant-form-item-label > label {
   font-weight: 500;
-  color: #262626;
+  color: var(--ink);
 }
 
 .ant-form-item-explain-error {
@@ -432,23 +450,23 @@ body {
 
 .ant-menu-item {
   margin: 4px 8px;
-  border-radius: 6px;
+  border-radius: 8px;
   height: 40px;
   line-height: 40px;
 }
 
 .ant-menu-item-selected {
-  background-color: #e6f7ff;
-  color: #1890ff;
+  background-color: var(--line-soft);
+  color: var(--primary-color, #197dd3);
 }
 
 .ant-menu-item:hover {
-  background-color: #f5f5f5;
+  background-color: var(--line-soft);
 }
 
 /* Tag styles */
 .ant-tag {
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 12px;
 }
 
@@ -458,15 +476,15 @@ body {
 }
 
 .ant-statistic-title {
-  color: #8c8c8c;
+  color: var(--ink-muted);
   font-size: 14px;
   margin-bottom: 4px;
 }
 
 .ant-statistic-content {
-  color: #262626;
+  color: var(--ink);
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 650;
 }
 
 /* Custom scrollbar */
@@ -476,17 +494,18 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: transparent;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: var(--ink-faint);
   border-radius: 3px;
+  opacity: 0.5;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+  background: var(--ink-muted);
 }
 
 /* Common page styles */
@@ -499,8 +518,8 @@ body {
 
 .page-header h2 {
   margin: 0;
-  color: #262626;
-  font-weight: 600;
+  color: var(--ink);
+  font-weight: 650;
 }
 
 /* Responsive */

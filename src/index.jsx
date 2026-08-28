@@ -33,7 +33,28 @@ root.render(
       }}
     >
       <QueryClientProvider client={queryClient}>
-        <ConfigProvider locale={viVN}>
+        <ConfigProvider
+          locale={viVN}
+          theme={{
+            token: {
+              colorPrimary: '#197dd3',
+              colorSuccess: '#1b8a5a',
+              colorWarning: '#b8720f',
+              colorError: '#c23b3b',
+              colorTextBase: '#10182b',
+              colorBorder: '#e2e6ee',
+              borderRadius: 8,
+              fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+            },
+            components: {
+              Card: { borderRadiusLG: 12 },
+              Button: { borderRadius: 8, controlHeight: 34 },
+              Table: { borderRadius: 10, headerBg: '#edf0f5' },
+              Modal: { borderRadiusLG: 12 },
+              Tag: { borderRadiusSM: 6 },
+            },
+          }}
+        >
           <ThemeProvider>
             <AuthProvider>
               <CartProvider>
