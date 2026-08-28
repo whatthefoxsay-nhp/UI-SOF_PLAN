@@ -42,6 +42,7 @@ import {
 } from 'lucide-react';
 import dayjs from 'dayjs';
 import { execCRUD } from '../../services/apiServices';
+import * as workflowApi from '../../services/workflowApi';
 import TaoDeNGhiChiTienModal from './TaoDeNGhiChiTienModal';
 import DanhSachDeNghiModal from './DanhSachDeNghiModal';
 import styles from './QuanLyKeHoach.module.css';
@@ -81,6 +82,9 @@ const QuanLyKeHoach = () => {
     const [isDNCTModalOpen, setIsDNCTModalOpen] = useState(false);
     const [isListDNModalOpen, setIsListDNModalOpen] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState(null);
+
+    // Workflow projects (for linking a plan to a Workflow project)
+    const [wfProjects, setWfProjects] = useState([]);
 
     // Quick Insert state
     const [newItem, setNewItem] = useState({
@@ -148,6 +152,10 @@ const QuanLyKeHoach = () => {
     useEffect(() => {
         fetchData();
     }, [fetchData]);
+
+    useEffect(() => {
+        workflowApi.listProjects().then(setWfProjects).catch(() => setWfProjects([]));
+    }, []);
 
     const handleSearch = useCallback(
         (term, project, status) => {
@@ -327,6 +335,7 @@ const QuanLyKeHoach = () => {
             lv100: '',
             lv101: null,
             lv102: 0,
+            wf_project_id: undefined,
         });
         setDrawerVisible(true);
     };
@@ -360,6 +369,7 @@ const QuanLyKeHoach = () => {
             lv100: record.lv100 || '',
             lv101: record.lv101 && record.lv101 !== '0000-00-00' ? dayjs(record.lv101) : null,
             lv102: record.lv102 ? Number(record.lv102) : 0,
+            wf_project_id: record.wf_project_id ? Number(record.wf_project_id) : undefined,
         });
         setDrawerVisible(true);
     };
@@ -1212,6 +1222,19 @@ const QuanLyKeHoach = () => {
                                     <SelectDuAn style={{ width: '100%' }} placeholder="Chọn dự án..." size="small" popupMatchSelectWidth={false} dropdownMatchSelectWidth={false} />
                                 </Form.Item>
                             </Suspense>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item name="wf_project_id" label="Dự án Workflow (tùy chọn)">
+                                <Select
+                                    style={{ width: '100%' }}
+                                    placeholder="Liên kết dự án Workflow..."
+                                    size="small"
+                                    allowClear
+                                    showSearch
+                                    optionFilterProp="label"
+                                    options={wfProjects.map((p) => ({ value: p.id, label: `${p.code} — ${p.name}` }))}
+                                />
+                            </Form.Item>
                         </Col>
                         <Col span={8}>
                             <Suspense fallback={<Spin size="small" />}>
