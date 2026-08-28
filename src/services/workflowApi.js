@@ -18,6 +18,7 @@ async function callWorkflowApi(action, data = {}) {
 // ---- Meta ----
 export const getDepartments = () => callWorkflowApi("meta.departments");
 export const getEmployees = () => callWorkflowApi("meta.employees");
+export const getMyProfile = () => callWorkflowApi("meta.myProfile");
 
 // ---- Workflow template ----
 export const listWorkflows = () => callWorkflowApi("workflow.list");
@@ -44,6 +45,7 @@ export const createProject = (data) => callWorkflowApi("project.create", data);
 
 // ---- Kanban / task ----
 export const getKanbanBoard = (projectStageId) => callWorkflowApi("kanban.board", { project_stage_id: projectStageId });
+export const getMyTasks = () => callWorkflowApi("task.myTasks");
 export const getTask = (id) => callWorkflowApi("task.get", { id });
 export const saveTask = (data) => callWorkflowApi("task.save", data);
 export const updateTaskStatus = (id, status) => callWorkflowApi("task.updateStatus", { id, status });

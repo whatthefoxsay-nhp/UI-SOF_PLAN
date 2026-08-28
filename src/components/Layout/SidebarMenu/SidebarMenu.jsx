@@ -250,6 +250,10 @@ const SidebarMenu = ({ isCollapsed = false, onCollapseChange }) => {
           label: "Quản lý quy trình dự án",
           children: [
             {
+              key: "/quan-ly-quy-trinh-du-an?tab=my-tasks",
+              label: "Công việc của tôi",
+            },
+            {
               key: "/quan-ly-quy-trinh-du-an?tab=workflow",
               label: "Mẫu Quy Trình (Workflow)",
             },

@@ -39,6 +39,8 @@ export default function WorkflowManager() {
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState(null); // full workflow detail
   const [departments, setDepartments] = useState([]);
+  const [profile, setProfile] = useState(null);
+  const isAdmin = !!profile?.is_admin;
 
   const [wfModalOpen, setWfModalOpen] = useState(false);
   const [wfForm] = Form.useForm();
@@ -80,6 +82,7 @@ export default function WorkflowManager() {
   useEffect(() => {
     loadList();
     workflowApi.getDepartments().then(setDepartments).catch(() => {});
+    workflowApi.getMyProfile().then(setProfile).catch(() => {});
   }, [loadList]);
 
   const openCreateWorkflow = () => {
@@ -260,22 +263,31 @@ export default function WorkflowManager() {
       title: "Kích hoạt",
       dataIndex: "is_active",
       width: 100,
-      render: (v, row) => <Switch checked={!!v} onChange={() => doToggle(row)} onClick={(e) => e?.stopPropagation?.()} />,
+      render: (v, row) =>
+        isAdmin ? (
+          <Switch checked={!!v} onChange={() => doToggle(row)} onClick={(e) => e?.stopPropagation?.()} />
+        ) : (
+          <Tag color={v ? "green" : "default"}>{v ? "Đang dùng" : "Ngừng"}</Tag>
+        ),
     },
-    {
-      title: "Thao tác",
-      width: 160,
-      render: (_, row) => (
-        <Space onClick={(e) => e.stopPropagation()}>
-          <Button size="small" icon={<Copy size={14} />} onClick={() => setCloneTarget(row)}>
-            Nhân bản
-          </Button>
-          <Popconfirm title="Xóa workflow này?" onConfirm={() => doDelete(row)}>
-            <Button size="small" danger icon={<Trash2 size={14} />} />
-          </Popconfirm>
-        </Space>
-      ),
-    },
+    ...(isAdmin
+      ? [
+          {
+            title: "Thao tác",
+            width: 160,
+            render: (_, row) => (
+              <Space onClick={(e) => e.stopPropagation()}>
+                <Button size="small" icon={<Copy size={14} />} onClick={() => setCloneTarget(row)}>
+                  Nhân bản
+                </Button>
+                <Popconfirm title="Xóa workflow này?" onConfirm={() => doDelete(row)}>
+                  <Button size="small" danger icon={<Trash2 size={14} />} />
+                </Popconfirm>
+              </Space>
+            ),
+          },
+        ]
+      : []),
   ];
 
   const departmentName = (code) => departments.find((d) => d.code === code)?.name || code;
@@ -283,11 +295,17 @@ export default function WorkflowManager() {
   return (
     <div style={{ display: "flex", gap: 16 }}>
       <div style={{ flex: selected ? "0 0 40%" : "1 1 100%" }}>
-        <Space style={{ marginBottom: 12 }}>
-          <Button type="primary" icon={<Plus size={14} />} onClick={openCreateWorkflow}>
-            Tạo Workflow
-          </Button>
-        </Space>
+        {isAdmin ? (
+          <Space style={{ marginBottom: 12 }}>
+            <Button type="primary" icon={<Plus size={14} />} onClick={openCreateWorkflow}>
+              Tạo Workflow
+            </Button>
+          </Space>
+        ) : (
+          <div style={{ marginBottom: 12, color: "#999", fontSize: 12 }}>
+            Bạn đang xem ở chế độ chỉ đọc — chỉ quản trị viên mới cấu hình được Workflow.
+          </div>
+        )}
         <Table
           rowKey="id"
           size="small"
@@ -305,9 +323,11 @@ export default function WorkflowManager() {
             size="small"
             title={`${selected.code} — ${selected.name}`}
             extra={
-              <Button size="small" icon={<Plus size={14} />} onClick={openCreateStage}>
-                Thêm giai đoạn
-              </Button>
+              isAdmin && (
+                <Button size="small" icon={<Plus size={14} />} onClick={openCreateStage}>
+                  Thêm giai đoạn
+                </Button>
+              )
             }
           >
             {selected.stages.length === 0 && <Empty description="Chưa có giai đoạn nào" />}
@@ -332,7 +352,7 @@ export default function WorkflowManager() {
                     ))}
                   </div>
                 ),
-                extra: (
+                extra: isAdmin && (
                   <Space onClick={(e) => e.stopPropagation()}>
                     <Button size="small" icon={<Pencil size={13} />} onClick={() => openEditStage(stage)} />
                     <Popconfirm title="Xóa giai đoạn này?" onConfirm={() => doDeleteStage(stage)}>
@@ -342,11 +362,13 @@ export default function WorkflowManager() {
                 ),
                 children: (
                   <div>
-                    <Space style={{ marginBottom: 8 }}>
-                      <Button size="small" icon={<Plus size={13} />} onClick={() => openCreateTask(stage.id)}>
-                        Thêm công việc mẫu
-                      </Button>
-                    </Space>
+                    {isAdmin && (
+                      <Space style={{ marginBottom: 8 }}>
+                        <Button size="small" icon={<Plus size={13} />} onClick={() => openCreateTask(stage.id)}>
+                          Thêm công việc mẫu
+                        </Button>
+                      </Space>
+                    )}
                     <Table
                       size="small"
                       rowKey="id"
@@ -362,18 +384,22 @@ export default function WorkflowManager() {
                           dataIndex: "confirm_departments",
                           render: (arr) => arr.map((d) => <Tag key={d}>{departmentName(d)}</Tag>),
                         },
-                        {
-                          title: "",
-                          width: 90,
-                          render: (_, task) => (
-                            <Space>
-                              <Button size="small" icon={<Pencil size={12} />} onClick={() => openEditTask(stage.id, task)} />
-                              <Popconfirm title="Xóa?" onConfirm={() => doDeleteTask(task)}>
-                                <Button size="small" danger icon={<Trash2 size={12} />} />
-                              </Popconfirm>
-                            </Space>
-                          ),
-                        },
+                        ...(isAdmin
+                          ? [
+                              {
+                                title: "",
+                                width: 90,
+                                render: (_, task) => (
+                                  <Space>
+                                    <Button size="small" icon={<Pencil size={12} />} onClick={() => openEditTask(stage.id, task)} />
+                                    <Popconfirm title="Xóa?" onConfirm={() => doDeleteTask(task)}>
+                                      <Button size="small" danger icon={<Trash2 size={12} />} />
+                                    </Popconfirm>
+                                  </Space>
+                                ),
+                              },
+                            ]
+                          : []),
                       ]}
                     />
                   </div>

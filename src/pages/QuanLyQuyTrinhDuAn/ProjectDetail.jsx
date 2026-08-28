@@ -10,14 +10,13 @@ import {
   Select,
   message,
   Empty,
-  Divider,
-  List,
   Modal,
   Timeline,
   Tooltip,
 } from "antd";
-import { ArrowLeft, Lock, Unlock, Plus, Trash2, History, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Lock, Unlock, Plus, History, CheckCircle2 } from "lucide-react";
 import * as workflowApi from "../../services/workflowApi";
+import TaskDrawer from "./TaskDrawer";
 
 const COLUMNS = [
   { key: "TODO", label: "Cần làm" },
@@ -53,7 +52,7 @@ function TaskCard({ task, onClick }) {
   );
 }
 
-function StageExtraPanel({ stage, onSaved }) {
+function StageExtraPanel({ stage, profile, onSaved }) {
   const [form] = Form.useForm();
   const [reasonOpen, setReasonOpen] = useState(false);
   const [reason, setReason] = useState("");
@@ -108,6 +107,8 @@ function StageExtraPanel({ stage, onSaved }) {
   const isContract = stage.stage_type === "CONTRACT";
   const isPayment = stage.stage_type === "PAYMENT";
   const isExecution = stage.stage_type === "EXECUTION";
+  const canEdit = !!profile && (profile.is_admin || (stage.departments || []).includes(profile.department_code));
+  const canApprove = !!profile && profile.is_admin;
 
   return (
     <Card
@@ -130,7 +131,7 @@ function StageExtraPanel({ stage, onSaved }) {
       }
       style={{ marginBottom: 12 }}
     >
-      <Form form={form} layout="vertical" disabled={locked}>
+      <Form form={form} layout="vertical" disabled={locked || !canEdit}>
         {isContract && (
           <>
             <Form.Item name="gia_ban" label="Giá bán (VNĐ)"><Input type="number" /></Form.Item>
@@ -155,36 +156,46 @@ function StageExtraPanel({ stage, onSaved }) {
           </>
         )}
         {!locked ? (
-          <Space>
-            <Button size="small" onClick={() => save(false)}>
-              Lưu
-            </Button>
-            {stage.lock_enabled && (
-              <Button size="small" type="primary" icon={<Lock size={13} />} onClick={() => save(true)}>
-                Chốt & LOCK
+          canEdit && (
+            <Space>
+              <Button size="small" onClick={() => save(false)}>
+                Lưu
               </Button>
-            )}
-          </Space>
+              {stage.lock_enabled && (
+                <Button size="small" type="primary" icon={<Lock size={13} />} onClick={() => save(true)}>
+                  Chốt & LOCK
+                </Button>
+              )}
+            </Space>
+          )
         ) : (
           <Space direction="vertical" style={{ width: "100%" }}>
             {pendingRequests.length === 0 ? (
-              <Button size="small" onClick={() => setReasonOpen(true)}>
-                Yêu cầu mở khóa
-              </Button>
+              canEdit && (
+                <Button size="small" onClick={() => setReasonOpen(true)}>
+                  Yêu cầu mở khóa
+                </Button>
+              )
             ) : (
-              pendingRequests.map((r) => (
-                <Card key={r.id} size="small" type="inner" title={`Yêu cầu #${r.id} bởi ${r.requested_by}`}>
-                  <div style={{ marginBottom: 8 }}>{r.reason}</div>
-                  <Space>
-                    <Button size="small" type="primary" onClick={() => decide(r.id, true)}>
-                      Duyệt mở khóa
-                    </Button>
-                    <Button size="small" danger onClick={() => decide(r.id, false)}>
-                      Từ chối
-                    </Button>
-                  </Space>
-                </Card>
-              ))
+              pendingRequests.map((r) =>
+                canApprove && r.requested_by !== profile?.code ? (
+                  <Card key={r.id} size="small" type="inner" title={`Yêu cầu #${r.id} bởi ${r.requested_by}`}>
+                    <div style={{ marginBottom: 8 }}>{r.reason}</div>
+                    <Space>
+                      <Button size="small" type="primary" onClick={() => decide(r.id, true)}>
+                        Duyệt mở khóa
+                      </Button>
+                      <Button size="small" danger onClick={() => decide(r.id, false)}>
+                        Từ chối
+                      </Button>
+                    </Space>
+                  </Card>
+                ) : (
+                  <Tag key={r.id} color="gold">
+                    Yêu cầu #{r.id} bởi {r.requested_by} đang chờ quản trị viên khác duyệt
+                  </Tag>
+                ),
+              )
             )}
           </Space>
         )}
@@ -194,166 +205,6 @@ function StageExtraPanel({ stage, onSaved }) {
         <Input.TextArea rows={3} placeholder="Lý do cần mở khóa" value={reason} onChange={(e) => setReason(e.target.value)} />
       </Modal>
     </Card>
-  );
-}
-
-const ITEM_TYPES = [
-  { value: "CHECKLIST", label: "Checklist bàn giao" },
-  { value: "BUG", label: "Bug (Tester)" },
-  { value: "ALLOCATION", label: "Phân bổ ngày công" },
-  { value: "TICKET", label: "Ticket bảo trì" },
-];
-
-function TaskDrawer({ taskId, employees, departments, onClose, onChanged }) {
-  const [task, setTask] = useState(null);
-  const [form] = Form.useForm();
-  const [itemForm] = Form.useForm();
-
-  const reload = useCallback(async () => {
-    if (!taskId) return;
-    const data = await workflowApi.getTask(taskId);
-    setTask(data);
-    form.setFieldsValue({
-      assignee_code: data.assignee_code,
-      deadline: data.deadline || "",
-      priority: data.priority,
-    });
-  }, [taskId, form]);
-
-  useEffect(() => {
-    reload();
-  }, [reload]);
-
-  if (!taskId) return null;
-
-  const saveInfo = async () => {
-    const values = await form.validateFields();
-    try {
-      await workflowApi.saveTask({ id: taskId, name: task.name, department_code: task.department_code, ...values });
-      message.success("Đã lưu");
-      reload();
-      onChanged();
-    } catch (e) {
-      message.error(e.message);
-    }
-  };
-
-  const doConfirm = async (dept) => {
-    try {
-      await workflowApi.confirmTask(taskId, dept);
-      message.success("Đã xác nhận");
-      reload();
-      onChanged();
-    } catch (e) {
-      message.error(e.message);
-    }
-  };
-
-  const addItem = async () => {
-    const values = await itemForm.validateFields();
-    try {
-      await workflowApi.saveTaskItem({ task_id: taskId, ...values });
-      itemForm.resetFields();
-      reload();
-    } catch (e) {
-      message.error(e.message);
-    }
-  };
-
-  const deleteItem = async (id) => {
-    await workflowApi.deleteTaskItem(id);
-    reload();
-  };
-
-  const departmentName = (code) => departments.find((d) => d.code === code)?.name || code;
-
-  return (
-    <Drawer title={task ? `${task.code} — ${task.name}` : "..."} open={!!taskId} onClose={onClose} width={480}>
-      {task && (
-        <>
-          <Form form={form} layout="vertical">
-            <Form.Item name="assignee_code" label="Người phụ trách">
-              <Select
-                allowClear
-                showSearch
-                optionFilterProp="label"
-                options={employees.map((e) => ({ value: e.code, label: `${e.name} (${e.code})` }))}
-              />
-            </Form.Item>
-            <Form.Item name="deadline" label="Deadline">
-              <Input type="date" />
-            </Form.Item>
-            <Form.Item name="priority" label="Độ ưu tiên">
-              <Select
-                options={[
-                  { value: "LOW", label: "Thấp" },
-                  { value: "NORMAL", label: "Bình thường" },
-                  { value: "HIGH", label: "Cao" },
-                  { value: "URGENT", label: "Khẩn cấp" },
-                ]}
-              />
-            </Form.Item>
-            <Button size="small" onClick={saveInfo}>
-              Lưu thông tin
-            </Button>
-          </Form>
-
-          {task.confirms.length > 0 && (
-            <>
-              <Divider>Xác nhận phòng ban</Divider>
-              <List
-                size="small"
-                dataSource={task.confirms}
-                renderItem={(c) => (
-                  <List.Item
-                    actions={[
-                      c.status === "CONFIRMED" ? (
-                        <Tag icon={<CheckCircle2 size={12} />} color="green">
-                          Đã xác nhận
-                        </Tag>
-                      ) : (
-                        <Button size="small" onClick={() => doConfirm(c.department_code)}>
-                          Xác nhận
-                        </Button>
-                      ),
-                    ]}
-                  >
-                    {departmentName(c.department_code)}
-                  </List.Item>
-                )}
-              />
-            </>
-          )}
-
-          <Divider>Dữ liệu phát sinh (checklist / bug / phân bổ / ticket)</Divider>
-          <List
-            size="small"
-            dataSource={task.items}
-            locale={{ emptyText: "Chưa có mục nào" }}
-            renderItem={(it) => (
-              <List.Item actions={[<Button size="small" danger icon={<Trash2 size={12} />} onClick={() => deleteItem(it.id)} />]}>
-                <Tag>{ITEM_TYPES.find((t) => t.value === it.item_type)?.label || it.item_type}</Tag> {it.title}
-                {it.status ? <Tag style={{ marginLeft: 6 }}>{it.status}</Tag> : null}
-              </List.Item>
-            )}
-          />
-          <Form form={itemForm} layout="inline" style={{ marginTop: 8, rowGap: 8 }}>
-            <Form.Item name="item_type" rules={[{ required: true }]} style={{ minWidth: 140 }}>
-              <Select placeholder="Loại" options={ITEM_TYPES} />
-            </Form.Item>
-            <Form.Item name="title" rules={[{ required: true }]} style={{ minWidth: 160 }}>
-              <Input placeholder="Tiêu đề" />
-            </Form.Item>
-            <Form.Item name="status">
-              <Input placeholder="Trạng thái" style={{ width: 110 }} />
-            </Form.Item>
-            <Button size="small" type="primary" onClick={addItem}>
-              Thêm
-            </Button>
-          </Form>
-        </>
-      )}
-    </Drawer>
   );
 }
 
@@ -368,6 +219,7 @@ export default function ProjectDetail({ projectId, onBack }) {
   const [addTaskForm] = Form.useForm();
   const [historyOpen, setHistoryOpen] = useState(false);
   const [history, setHistory] = useState([]);
+  const [profile, setProfile] = useState(null);
 
   const loadProject = useCallback(async () => {
     const data = await workflowApi.getProject(projectId);
@@ -385,6 +237,7 @@ export default function ProjectDetail({ projectId, onBack }) {
     loadProject();
     workflowApi.getEmployees().then(setEmployees).catch(() => {});
     workflowApi.getDepartments().then(setDepartments).catch(() => {});
+    workflowApi.getMyProfile().then(setProfile).catch(() => {});
   }, [loadProject]);
 
   useEffect(() => {
@@ -442,6 +295,12 @@ export default function ProjectDetail({ projectId, onBack }) {
         <Button icon={<History size={14} />} onClick={openHistory}>
           Lịch sử hoạt động
         </Button>
+        {profile && (
+          <Tag color={profile.is_admin ? "gold" : "default"}>
+            {profile.name} ({departments.find((d) => d.code === profile.department_code)?.name || profile.department_code || "—"})
+            {profile.is_admin ? " · Quản trị viên" : ""}
+          </Tag>
+        )}
       </Space>
 
       <Card size="small" style={{ marginBottom: 12 }}>
@@ -471,6 +330,7 @@ export default function ProjectDetail({ projectId, onBack }) {
           <div style={{ flex: "0 0 320px" }}>
             <StageExtraPanel
               stage={{ ...activeStage, project_id: project.id }}
+              profile={profile}
               onSaved={(updated) => {
                 setProject((p) => ({
                   ...p,
@@ -525,6 +385,7 @@ export default function ProjectDetail({ projectId, onBack }) {
         taskId={activeTaskId}
         employees={employees}
         departments={departments}
+        profile={profile}
         onClose={() => setActiveTaskId(null)}
         onChanged={refreshAll}
       />
