@@ -420,7 +420,7 @@ Expected: `success:true`, each row now has a `linked_plan_task_id` key (null unt
 No change needed in `services.sof.vn/index.php` — its generic `case 'insert'`/`case 'update'` blocks for `cr_lv0094` (around line 4666-4760) already do `foreach ($input as $key => $value) { if (property_exists($class, $key)) $class->$key = $value; }`, so any input key matching a public property on the class is picked up automatically.
 
 **Interfaces:**
-- Produces: `cr_lv0094::$wf_project_id` (public, nullable int-as-string) — round-trips through insert, update, and `LV_LoadID()`.
+- Produces: `cr_lv0094::$wf_project_id` (public, nullable int-as-string) — round-trips through insert, update, `LV_LoadID()`, and (critically, since this is what actually feeds `GiaoViecTab.jsx` via `ChiTietKeHoach.jsx`) `LV_LoadPlanDetailData()`'s field whitelist.
 
 - [ ] **Step 1: Read the property block**
 
@@ -535,7 +535,25 @@ Find the block of `$this->lvXXX = $vrow['lvXXX'];` assignments inside `LV_LoadID
 			$this->wf_project_id = $vrow['wf_project_id'] ?? null;
 ```
 
-- [ ] **Step 6: Verify via the running app**
+- [ ] **Step 6 (discovered during pre-flight review, load-bearing for Task 9 — do not skip): also whitelist `wf_project_id` in `LV_LoadPlanDetailData()`**
+
+`GiaoViecTab.jsx` does not read the plan via `LV_LoadID()` output directly — it reads via `ChiTietKeHoach.jsx`'s call to `execCRUD('cr_lv0094_detail', 'loadPlanDetail', { lv001: planId })`, which routes (in `services.sof.vn/index.php`, case `cr_lv0094_detail`) to `$planClass->LV_LoadPlanDetailData($planID)`. That method builds its returned `plan` object through `LV_DetailFields($this, $this->DefaultFieldList . ',lv072,lv079,lv080,lv081,lv082,lv083,lv084,lv085,lv097,lv098,lv100,lv101,lv102')` — an **explicit field whitelist**, separate from `DefaultFieldList` itself. `wf_project_id` must be added to this whitelist too, or `detailData.plan.wf_project_id` will always be `undefined` in the frontend regardless of Steps 1-5 above.
+
+Read first: `grep -n "LV_LoadPlanDetailData" -A 25 "c:/laragon/www/v2.des.plan.banhangonline.top/clsall/cr_lv0094.php"`. Find, inside that method:
+
+```php
+		$vPlanFields = $this->LV_DetailFields($this, $this->DefaultFieldList . ',lv072,lv079,lv080,lv081,lv082,lv083,lv084,lv085,lv097,lv098,lv100,lv101,lv102');
+```
+
+Replace with:
+
+```php
+		$vPlanFields = $this->LV_DetailFields($this, $this->DefaultFieldList . ',lv072,lv079,lv080,lv081,lv082,lv083,lv084,lv085,lv097,lv098,lv100,lv101,lv102,wf_project_id');
+```
+
+Then confirm `$vPlanFields` is actually what ends up under the `'plan'` key of this method's returned array — read further down `LV_LoadPlanDetailData()` (it's a long method) until you find the `return` statement or final `$vOutput = [...]` assembly, and confirm `'plan' => $vPlanFields` (or equivalent). If the actual key/variable differs from this assumption, use whatever the real code does — the goal is: the object returned under `plan` in `loadPlanDetail`'s JSON response includes `wf_project_id`.
+
+- [ ] **Step 7: Verify via the running app**
 
 With `npm start` already serving the app on port 3000: open "Quản lý kế hoạch", create or edit a plan, open browser DevTools → Network, submit the form, and inspect the `services.sof.vn/index.php?action=cr_lv0094&func=insert` (or `update`) request/response — confirm no PHP error/500 and `success:true`. Then:
 
@@ -545,7 +563,7 @@ mysql -h localhost -u root hao_erp_sofv5_0 -e "SELECT lv001, lv002, wf_project_i
 
 (`wf_project_id` will be NULL until Task 8 adds the frontend field that actually sends a value — this step is just confirming insert/update don't break.)
 
-- [ ] **Step 7: No git commit**
+- [ ] **Step 8: No git commit**
 
 ---
 
