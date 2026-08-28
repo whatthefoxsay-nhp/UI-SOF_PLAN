@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Table, Button, Modal, Form, Input, Select, Tag, Progress, Space, message } from "antd";
-import { Plus } from "lucide-react";
+import { Button, Modal, Form, Input, Select, Tag, message, Spin, Empty } from "antd";
+import { Plus, Building2 } from "lucide-react";
 import * as workflowApi from "../../services/workflowApi";
 
 const STATUS_COLOR = { IN_PROGRESS: "processing", DONE: "success", CANCELLED: "default" };
@@ -48,41 +48,56 @@ export default function ProjectList({ onOpenProject }) {
     }
   };
 
-  const columns = [
-    { title: "Mã dự án", dataIndex: "code", width: 130 },
-    { title: "Tên dự án", dataIndex: "name" },
-    { title: "Khách hàng", dataIndex: "customer_name", width: 180 },
-    { title: "Workflow", dataIndex: "workflow_name", width: 200 },
-    {
-      title: "Tiến độ giai đoạn",
-      width: 220,
-      render: (_, row) => (
-        <Progress percent={row.stage_count ? Math.round((row.stage_done_count / row.stage_count) * 100) : 0} size="small" format={() => `${row.stage_done_count}/${row.stage_count}`} />
-      ),
-    },
-    {
-      title: "Trạng thái",
-      dataIndex: "status",
-      width: 140,
-      render: (v) => <Tag color={STATUS_COLOR[v]}>{STATUS_LABEL[v] || v}</Tag>,
-    },
-  ];
-
   return (
     <div>
-      <Space style={{ marginBottom: 12 }}>
+      <div className="wf-project-toolbar">
+        <span className="wf-project-count">{projects.length} dự án</span>
         <Button type="primary" icon={<Plus size={14} />} onClick={openCreate}>
           Tạo dự án
         </Button>
-      </Space>
-      <Table
-        rowKey="id"
-        size="small"
-        loading={loading}
-        dataSource={projects}
-        columns={columns}
-        onRow={(row) => ({ onClick: () => onOpenProject(row.id), style: { cursor: "pointer" } })}
-      />
+      </div>
+
+      {loading ? (
+        <div style={{ textAlign: "center", padding: 60 }}>
+          <Spin size="large" />
+        </div>
+      ) : projects.length === 0 ? (
+        <div className="wf-empty-state">
+          <Empty description="Chưa có dự án nào" />
+        </div>
+      ) : (
+        <div className="wf-project-grid">
+          {projects.map((row) => (
+            <div key={row.id} className="wf-project-card" onClick={() => onOpenProject(row.id)}>
+              <div className="wf-project-card-top">
+                <span className="wf-project-code">{row.code}</span>
+                <Tag color={STATUS_COLOR[row.status]} style={{ margin: 0 }}>
+                  {STATUS_LABEL[row.status] || row.status}
+                </Tag>
+              </div>
+              <div className="wf-project-name">{row.name}</div>
+              <div className="wf-project-meta">
+                {row.customer_name && (
+                  <>
+                    <Building2 size={12} />
+                    <span>{row.customer_name}</span>
+                    <span className="wf-project-meta-dot">·</span>
+                  </>
+                )}
+                <span>{row.workflow_name}</span>
+              </div>
+              <div className="wf-project-track">
+                {Array.from({ length: row.stage_count || 0 }).map((_, i) => (
+                  <span key={i} className={`wf-project-track-seg ${i < row.stage_done_count ? "wf-project-track-seg-done" : ""}`} />
+                ))}
+              </div>
+              <div className="wf-project-track-text">
+                {row.stage_done_count}/{row.stage_count} giai đoạn hoàn thành
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       <Modal title="Tạo dự án mới" open={modalOpen} onCancel={() => setModalOpen(false)} onOk={submit} destroyOnClose>
         <Form form={form} layout="vertical">

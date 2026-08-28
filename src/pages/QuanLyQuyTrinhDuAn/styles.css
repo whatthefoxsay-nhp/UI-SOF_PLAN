@@ -1,35 +1,248 @@
+/* ==========================================================================
+   Design tokens — "Quản lý quy trình dự án"
+   Kept consistent with the SOF Plan brand blue (#197dd3, used across the
+   app incl. QuanLyKeHoach) rather than introducing a clashing new hue;
+   the distinctiveness here comes from the pipeline motif and typography,
+   not a competing color system.
+   ========================================================================== */
+:root {
+  --wf-primary: #197dd3;
+  --wf-primary-dark: #125a9c;
+  --wf-ink: #0f172a;
+  --wf-muted: #64748b;
+  --wf-border: #e2e8f0;
+  --wf-success: #10b981;
+  --wf-warning: #f59e0b;
+  --wf-danger: #ef4444;
+}
+
+.wf-code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  letter-spacing: 0.02em;
+}
+
 .wf-row-selected {
   background-color: #e6f4ff;
 }
 
-.wf-stage-chip {
+/* ==========================================================================
+   Stage pipeline — the signature element. The product's whole concept is a
+   sequential pipeline (Workflow → Stages → Tasks), so the stage picker is a
+   connected rail of nodes rather than a row of generic pill chips.
+   ========================================================================== */
+.wf-pipeline {
+  display: flex;
+  align-items: flex-start;
+  overflow-x: auto;
+  padding: 18px 6px 14px;
+  margin-bottom: 4px;
+}
+
+.wf-pipeline-item {
+  display: flex;
+  align-items: flex-start;
+  flex: 0 0 auto;
+}
+
+.wf-pipeline-node-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 104px;
+  cursor: pointer;
+  position: relative;
+}
+
+.wf-pipeline-node {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  border: 2px solid var(--wf-border);
+  background: #ffffff;
+  color: #cbd5e1;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+}
+
+.wf-pipeline-node-wrap:hover .wf-pipeline-node {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.12);
+}
+
+.wf-pipeline-node-done {
+  background: var(--wf-success);
+  border-color: var(--wf-success);
+  color: #fff;
+}
+
+.wf-pipeline-node-active {
+  background: var(--wf-primary);
+  border-color: var(--wf-primary);
+  color: #fff;
+  animation: wf-pulse 2.4s ease-in-out infinite;
+}
+
+.wf-pipeline-node-pending {
+  background: #f8fafc;
+  border-color: var(--wf-border);
+  color: #cbd5e1;
+}
+
+@keyframes wf-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(25, 125, 211, 0.18); }
+  50% { box-shadow: 0 0 0 9px rgba(25, 125, 211, 0.06); }
+}
+
+.wf-pipeline-selected .wf-pipeline-node {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.16);
+}
+
+.wf-pipeline-label {
+  font-size: 11.5px;
+  font-weight: 650;
+  color: var(--wf-ink);
+  text-align: center;
+  line-height: 1.3;
+  max-width: 104px;
+}
+
+.wf-pipeline-label-code {
+  display: block;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 10px;
+  color: var(--wf-muted);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 1px;
+}
+
+.wf-pipeline-connector {
+  width: 40px;
+  height: 2px;
+  background: var(--wf-border);
+  margin-top: 16px;
+  flex: 0 0 auto;
+}
+
+.wf-pipeline-connector-done {
+  background: var(--wf-success);
+}
+
+/* ==========================================================================
+   Project cards (list view) — replaces a plain admin table with a scannable
+   grid; each card's progress track is made of discrete stage segments
+   (the pipeline motif again) instead of a generic percentage bar.
+   ========================================================================== */
+.wf-project-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.wf-project-count {
+  color: var(--wf-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.wf-project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 16px;
+}
+
+.wf-project-card {
+  background: #ffffff;
+  border: 1px solid var(--wf-border);
+  border-radius: 16px;
+  padding: 18px 18px 16px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wf-project-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 30px -10px rgba(25, 125, 211, 0.18), 0 4px 10px rgba(15, 23, 42, 0.05);
+  border-color: rgba(25, 125, 211, 0.35);
+}
+
+.wf-project-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.wf-project-code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--wf-primary);
+  letter-spacing: 0.03em;
+}
+
+.wf-project-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--wf-ink);
+  line-height: 1.35;
+}
+
+.wf-project-meta {
+  font-size: 12px;
+  color: var(--wf-muted);
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #d9d9d9;
-  cursor: pointer;
-  font-size: 13px;
-  background: #fafafa;
-  color: #999;
+  flex-wrap: wrap;
 }
 
-.wf-stage-open {
-  background: #e6f4ff;
-  border-color: #91caff;
-  color: #1677ff;
+.wf-project-meta-dot {
+  opacity: 0.5;
 }
 
-.wf-stage-done {
-  background: #f6ffed;
-  border-color: #b7eb8f;
-  color: #389e0d;
+.wf-project-track {
+  display: flex;
+  gap: 3px;
+  margin-top: 6px;
 }
 
-.wf-stage-active {
-  box-shadow: 0 0 0 2px #1677ff;
+.wf-project-track-seg {
+  height: 6px;
+  flex: 1;
+  border-radius: 3px;
+  background: #e2e8f0;
 }
 
-/* Kanban columns/cards now reuse QuanLyKeHoach.module.css classes (kanbanBoard,
+.wf-project-track-seg-done {
+  background: var(--wf-success);
+}
+
+.wf-project-track-text {
+  font-size: 11px;
+  color: var(--wf-muted);
+  font-weight: 650;
+}
+
+.wf-empty-state {
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--wf-muted);
+}
+
+/* Kanban columns/cards reuse QuanLyKeHoach.module.css classes (kanbanBoard,
    kanbanColumn, kanbanCard, ...) for visual consistency with that module. */

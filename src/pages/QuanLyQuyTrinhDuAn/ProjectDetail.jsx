@@ -59,7 +59,7 @@ function TaskCard({ task, onClick, showStage }) {
       <div className={khStyles.kanbanCardInner} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Space size={6}>
-            <span className={khStyles.detailLink} style={{ fontSize: 12, fontWeight: 700 }}>
+            <span className={`${khStyles.detailLink} wf-code`} style={{ fontSize: 12, fontWeight: 700 }}>
               {task.code}
             </span>
             {showStage && task.stage_code && (
@@ -97,6 +97,37 @@ function TaskCard({ task, onClick, showStage }) {
           <div className={`${khStyles.userAvatar} ${gradientClass}`}>{initials}</div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function StagePipeline({ stages, activeStageId, viewMode, onSelect }) {
+  return (
+    <div className="wf-pipeline">
+      {stages.map((stage, idx) => {
+        const isDone = stage.status === "DONE";
+        const isActive = stage.status === "OPEN";
+        const nodeClass = isDone ? "wf-pipeline-node-done" : isActive ? "wf-pipeline-node-active" : "wf-pipeline-node-pending";
+        const selected = viewMode === "stage" && activeStageId === stage.id;
+        const totalTasks = Object.values(stage.task_counts).reduce((a, b) => a + b, 0);
+
+        return (
+          <div className="wf-pipeline-item" key={stage.id}>
+            <Tooltip title={`${stage.task_counts.DONE || 0}/${totalTasks} công việc hoàn thành`}>
+              <div className={`wf-pipeline-node-wrap ${selected ? "wf-pipeline-selected" : ""}`} onClick={() => onSelect(stage.id)}>
+                <div className={`wf-pipeline-node ${nodeClass}`}>
+                  {isDone ? <CheckCircle2 size={16} /> : stage.status === "PENDING" ? <Lock size={13} /> : idx + 1}
+                </div>
+                <div className="wf-pipeline-label">
+                  <span className="wf-pipeline-label-code">{stage.code}</span>
+                  {stage.name}
+                </div>
+              </div>
+            </Tooltip>
+            {idx < stages.length - 1 && <div className={`wf-pipeline-connector ${isDone ? "wf-pipeline-connector-done" : ""}`} />}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -365,29 +396,21 @@ export default function ProjectDetail({ projectId, onBack }) {
       </Space>
 
       <Card size="small" style={{ marginBottom: 12 }}>
-        <b>{project.code}</b> — {project.name}
+        <b className="wf-code">{project.code}</b> — {project.name}
         {project.customer_name && <span> · Khách hàng: {project.customer_name}</span>}
         <span> · Workflow: {project.workflow_name}</span>
         <Tag style={{ marginLeft: 8 }}>{project.status}</Tag>
       </Card>
 
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
-        {project.stages.map((stage) => (
-          <Tooltip key={stage.id} title={`${stage.task_counts.DONE || 0}/${Object.values(stage.task_counts).reduce((a, b) => a + b, 0)} công việc hoàn thành`}>
-            <div
-              onClick={() => {
-                setActiveStageId(stage.id);
-                setViewMode("stage");
-              }}
-              className={`wf-stage-chip wf-stage-${stage.status.toLowerCase()} ${viewMode === "stage" && activeStageId === stage.id ? "wf-stage-active" : ""}`}
-            >
-              {stage.status === "DONE" && <CheckCircle2 size={13} />}
-              {stage.status === "PENDING" && <Lock size={13} />}
-              {stage.code} · {stage.name}
-            </div>
-          </Tooltip>
-        ))}
-      </div>
+      <StagePipeline
+        stages={project.stages}
+        activeStageId={activeStageId}
+        viewMode={viewMode}
+        onSelect={(id) => {
+          setActiveStageId(id);
+          setViewMode("stage");
+        }}
+      />
 
       <Segmented
         style={{ marginBottom: 16 }}
