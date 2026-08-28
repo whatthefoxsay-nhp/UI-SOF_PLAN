@@ -15,35 +15,88 @@ import {
   Timeline,
   Tooltip,
 } from "antd";
-import { ArrowLeft, Lock, Unlock, Plus, History, CheckCircle2, LayoutGrid, Columns3 } from "lucide-react";
+import { ArrowLeft, Lock, Unlock, Plus, History, CheckCircle2, LayoutGrid, Columns3, GripVertical, Calendar } from "lucide-react";
 import * as workflowApi from "../../services/workflowApi";
 import TaskDrawer from "./TaskDrawer";
+import khStyles from "../QuanLyKeHoach/QuanLyKeHoach.module.css";
 
 const PRIORITY_COLOR = { LOW: "default", NORMAL: "blue", HIGH: "orange", URGENT: "red" };
+
+// Cung bo mau + class avatar voi Kanban cua module "Quan ly ke hoach" de 2 noi
+// nhin dong bo (dung chung QuanLyKeHoach.module.css thay vi tu ve lai tu dau).
+const COLUMN_THEMES = [
+  { bg: "rgba(241, 245, 249, 0.55)", border: "rgba(203, 213, 225, 0.5)", text: "#334155", badgeBg: "rgba(203, 213, 225, 0.7)", badgeText: "#1e293b", accent: "#64748b" },
+  { bg: "rgba(238, 242, 255, 0.55)", border: "rgba(199, 210, 254, 0.5)", text: "#4f46e5", badgeBg: "rgba(199, 210, 254, 0.7)", badgeText: "#3730a3", accent: "#6366f1" },
+  { bg: "rgba(209, 250, 229, 0.45)", border: "rgba(167, 243, 208, 0.5)", text: "#065f46", badgeBg: "rgba(167, 243, 208, 0.7)", badgeText: "#064e3b", accent: "#10b981" },
+  { bg: "rgba(254, 243, 199, 0.45)", border: "rgba(253, 230, 138, 0.5)", text: "#92400e", badgeBg: "rgba(253, 230, 138, 0.7)", badgeText: "#78350f", accent: "#f59e0b" },
+  { bg: "rgba(252, 231, 243, 0.45)", border: "rgba(251, 207, 232, 0.5)", text: "#9d174d", badgeBg: "rgba(251, 207, 232, 0.7)", badgeText: "#831843", accent: "#ec4899" },
+  { bg: "rgba(204, 251, 241, 0.45)", border: "rgba(153, 246, 228, 0.5)", text: "#075985", badgeBg: "rgba(153, 246, 228, 0.7)", badgeText: "#0c4a6e", accent: "#14b8a6" },
+  { bg: "rgba(243, 232, 255, 0.45)", border: "rgba(233, 213, 252, 0.5)", text: "#6b21a8", badgeBg: "rgba(233, 213, 252, 0.7)", badgeText: "#581c87", accent: "#a855f7" },
+];
+
+const GRADIENT_CLASSES = ["luxuryGradient1", "luxuryGradient2", "luxuryGradient3", "luxuryGradient4", "luxuryGradient5"];
+
+function hashCode(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
+  return h;
+}
 
 function TaskCard({ task, onClick, showStage }) {
   const isDone = task.status === "DONE";
   const overdue = task.deadline && !isDone && new Date(task.deadline) < new Date();
+  const avatarSeed = task.assignee_code || task.department_code || task.code || "?";
+  const initials = avatarSeed.slice(0, 2).toUpperCase();
+  const gradientClass = khStyles[GRADIENT_CLASSES[hashCode(avatarSeed) % GRADIENT_CLASSES.length]];
+
   return (
     <div
-      className="wf-task-card"
+      className={khStyles.kanbanCard}
       draggable
       onDragStart={(e) => e.dataTransfer.setData("text/plain", String(task.id))}
       onClick={onClick}
     >
-      <div style={{ fontWeight: 600 }}>{task.code}</div>
-      <div>{task.name}</div>
-      <Space size={4} wrap style={{ marginTop: 4 }}>
-        {showStage && task.stage_name && <Tag color="cyan">{task.stage_code}</Tag>}
-        <Tag color={PRIORITY_COLOR[task.priority]}>{workflowApi.TASK_PRIORITY_LABELS[task.priority] || task.priority}</Tag>
-        {task.confirm_total > 0 && (
-          <Tag color={task.confirm_done === task.confirm_total ? "green" : "gold"}>
-            Xác nhận {task.confirm_done}/{task.confirm_total}
-          </Tag>
-        )}
-        {overdue && <Tag color="red">Quá hạn</Tag>}
-      </Space>
-      {task.deadline && <div style={{ fontSize: 12, opacity: 0.65 }}>Hạn: {task.deadline}</div>}
+      <div className={khStyles.kanbanCardInner} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Space size={6}>
+            <span className={khStyles.detailLink} style={{ fontSize: 12, fontWeight: 700 }}>
+              {task.code}
+            </span>
+            {showStage && task.stage_code && (
+              <Tag color="cyan" style={{ fontSize: 10, margin: 0, padding: "0 4px", lineHeight: "16px" }}>
+                {task.stage_code}
+              </Tag>
+            )}
+          </Space>
+          {task.confirm_total > 0 && (
+            <Tag
+              color={task.confirm_done === task.confirm_total ? "green" : "gold"}
+              style={{ fontSize: 10, margin: 0, padding: "0 4px", lineHeight: "16px" }}
+            >
+              {task.confirm_done}/{task.confirm_total}
+            </Tag>
+          )}
+        </div>
+
+        <Tag color={PRIORITY_COLOR[task.priority]} style={{ width: "fit-content", fontSize: 10, margin: 0 }}>
+          {workflowApi.TASK_PRIORITY_LABELS[task.priority] || task.priority}
+        </Tag>
+
+        <div style={{ fontWeight: 700, fontSize: 13.5, color: "#1e293b" }}>{task.name}</div>
+
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 4 }}>
+          {task.deadline ? (
+            <div style={{ display: "flex", alignItems: "center", gap: 4, color: overdue ? "#ff4d4f" : "#94a3b8", fontSize: 10.5 }}>
+              <Calendar size={12} />
+              <span>{task.deadline}</span>
+              {overdue && <span>· Quá hạn</span>}
+            </div>
+          ) : (
+            <span />
+          )}
+          <div className={`${khStyles.userAvatar} ${gradientClass}`}>{initials}</div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -373,27 +426,44 @@ export default function ProjectDetail({ projectId, onBack }) {
               </Button>
             </Space>
             {board ? (
-              <div style={{ display: "flex", gap: 12, overflowX: "auto", paddingBottom: 8 }}>
-                {(project.columns || []).map((col) => (
-                  <div
-                    key={col.code}
-                    className="wf-kanban-column"
-                    onDragOver={(e) => e.preventDefault()}
-                    onDrop={(e) => {
-                      const id = e.dataTransfer.getData("text/plain");
-                      onDropColumn(id, col.code);
-                    }}
-                  >
-                    <div className="wf-kanban-column-title">
-                      {col.label} ({board.tasks.filter((t) => t.status === col.code).length})
-                    </div>
-                    {board.tasks
-                      .filter((t) => t.status === col.code)
-                      .map((t) => (
-                        <TaskCard key={t.id} task={t} onClick={() => setActiveTaskId(t.id)} />
-                      ))}
-                  </div>
-                ))}
+              <div className={khStyles.kanbanBoardContainer}>
+                <div className={khStyles.kanbanBoard}>
+                  {(project.columns || []).map((col, colIdx) => {
+                    const theme = COLUMN_THEMES[colIdx % COLUMN_THEMES.length];
+                    const colTasks = board.tasks.filter((t) => t.status === col.code);
+                    return (
+                      <div
+                        key={col.code}
+                        className={khStyles.kanbanColumn}
+                        style={{ backgroundColor: theme.bg, borderColor: theme.border, borderTopColor: theme.accent }}
+                        onDragOver={(e) => e.preventDefault()}
+                        onDrop={(e) => {
+                          const id = e.dataTransfer.getData("text/plain");
+                          onDropColumn(id, col.code);
+                        }}
+                      >
+                        <div className={khStyles.kanbanColumnHeader} style={{ borderBottomColor: theme.border }}>
+                          <Space size={6}>
+                            <div className={khStyles.columnDragHandle} style={{ color: theme.accent, cursor: "default" }}>
+                              <GripVertical size={16} />
+                            </div>
+                            <span style={{ fontWeight: 700, fontSize: 13, color: theme.text, textTransform: "uppercase" }}>{col.label}</span>
+                          </Space>
+                          <Tag style={{ borderRadius: 10, fontWeight: 700, border: "none", backgroundColor: theme.badgeBg, color: theme.badgeText }}>
+                            {colTasks.length}
+                          </Tag>
+                        </div>
+                        <div className={khStyles.columnDropZone}>
+                          <div className={khStyles.tasksContainer}>
+                            {colTasks.map((t) => (
+                              <TaskCard key={t.id} task={t} onClick={() => setActiveTaskId(t.id)} />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             ) : (
               <Empty />
@@ -405,27 +475,44 @@ export default function ProjectDetail({ projectId, onBack }) {
       {viewMode === "overview" && (
         <div>
           {overviewTasks ? (
-            <div style={{ display: "flex", gap: 12, overflowX: "auto", paddingBottom: 8 }}>
-              {(project.columns || []).map((col) => (
-                <div
-                  key={col.code}
-                  className="wf-kanban-column"
-                  onDragOver={(e) => e.preventDefault()}
-                  onDrop={(e) => {
-                    const id = e.dataTransfer.getData("text/plain");
-                    onDropColumn(id, col.code);
-                  }}
-                >
-                  <div className="wf-kanban-column-title">
-                    {col.label} ({overviewTasks.filter((t) => t.status === col.code).length})
-                  </div>
-                  {overviewTasks
-                    .filter((t) => t.status === col.code)
-                    .map((t) => (
-                      <TaskCard key={t.id} task={t} showStage onClick={() => setActiveTaskId(t.id)} />
-                    ))}
-                </div>
-              ))}
+            <div className={khStyles.kanbanBoardContainer}>
+              <div className={khStyles.kanbanBoard}>
+                {(project.columns || []).map((col, colIdx) => {
+                  const theme = COLUMN_THEMES[colIdx % COLUMN_THEMES.length];
+                  const colTasks = overviewTasks.filter((t) => t.status === col.code);
+                  return (
+                    <div
+                      key={col.code}
+                      className={khStyles.kanbanColumn}
+                      style={{ backgroundColor: theme.bg, borderColor: theme.border, borderTopColor: theme.accent }}
+                      onDragOver={(e) => e.preventDefault()}
+                      onDrop={(e) => {
+                        const id = e.dataTransfer.getData("text/plain");
+                        onDropColumn(id, col.code);
+                      }}
+                    >
+                      <div className={khStyles.kanbanColumnHeader} style={{ borderBottomColor: theme.border }}>
+                        <Space size={6}>
+                          <div className={khStyles.columnDragHandle} style={{ color: theme.accent, cursor: "default" }}>
+                            <GripVertical size={16} />
+                          </div>
+                          <span style={{ fontWeight: 700, fontSize: 13, color: theme.text, textTransform: "uppercase" }}>{col.label}</span>
+                        </Space>
+                        <Tag style={{ borderRadius: 10, fontWeight: 700, border: "none", backgroundColor: theme.badgeBg, color: theme.badgeText }}>
+                          {colTasks.length}
+                        </Tag>
+                      </div>
+                      <div className={khStyles.columnDropZone}>
+                        <div className={khStyles.tasksContainer}>
+                          {colTasks.map((t) => (
+                            <TaskCard key={t.id} task={t} showStage onClick={() => setActiveTaskId(t.id)} />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           ) : (
             <Empty />
