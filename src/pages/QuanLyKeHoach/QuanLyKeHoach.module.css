@@ -505,6 +505,26 @@
     overflow-x: auto;
     padding-bottom: 24px;
     margin-top: 15px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(99, 102, 241, 0.5) transparent;
+}
+
+.kanbanBoardContainer::-webkit-scrollbar {
+    height: 10px;
+}
+
+.kanbanBoardContainer::-webkit-scrollbar-track {
+    background: rgba(148, 163, 184, 0.12);
+    border-radius: 999px;
+}
+
+.kanbanBoardContainer::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.5);
+    border-radius: 999px;
+}
+
+.kanbanBoardContainer::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 102, 241, 0.75);
 }
 
 .kanbanBoard {
