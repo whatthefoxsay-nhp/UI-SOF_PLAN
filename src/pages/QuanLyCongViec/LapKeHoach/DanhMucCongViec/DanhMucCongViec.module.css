@@ -1,0 +1,8 @@
+.container { padding: 18px 22px; }
+.header { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin: 18px 0; }
+.header h2 { margin: 0 0 4px; color: #1f3b5b; }
+.header span { color: #667085; }
+.search { width: 270px; }
+.card { border-radius: 10px; }
+.toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+@media (max-width: 768px) { .container { padding: 12px; } .header { align-items: flex-start; flex-direction: column; } .search { width: 100%; } .toolbar { align-items: flex-start; flex-direction: column; } }

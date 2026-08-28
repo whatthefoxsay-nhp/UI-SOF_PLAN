@@ -1,0 +1,478 @@
+/* ==========================================================================
+   Premium Design System - QuanLyKeHoach
+   ========================================================================== */
+
+.container {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #4b4344;
+    background: #edf3fb; /* Match HDLDKeToan's premium light background */
+    padding: 24px;
+    min-height: 100vh;
+    border-radius: 16px;
+}
+
+.pageTitle {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    margin-bottom: 20px !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Action Toolbar Row */
+.toolbarRow {
+    margin-bottom: 20px !important;
+    padding: 14px 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.toolbarRow :global(.ant-btn) {
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.toolbarRow :global(.ant-btn-primary) {
+    background: #197dd3;
+    border-color: #197dd3;
+}
+
+.toolbarRow :global(.ant-btn-primary:hover) {
+    background: #1569b3 !important;
+    border-color: #1569b3 !important;
+}
+
+/* Main Grid Customization */
+.mainTable :global(.ant-table) {
+    border-radius: 12px !important;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+.mainTable :global(.ant-table-thead > tr > th) {
+    background: #e4f1ff !important;
+    color: #1e293b !important;
+    font-weight: 700 !important;
+    font-size: 13px;
+    padding: 12px 10px !important;
+    text-align: center !important;
+    border-bottom: 1px solid #c1d9f3 !important;
+}
+
+.mainTable :global(.ant-table-tbody > tr > td) {
+    padding: 8px 10px !important;
+    font-size: 13px;
+    color: #334155;
+    border-bottom: 1px solid #f1f5f9 !important;
+    transition: background-color 0.2s ease;
+}
+
+/* Alternating Row Coloring */
+.mainTable :global(.ant-table-tbody > tr:nth-child(odd) > td) {
+    background: #f8fbff;
+}
+
+/* Hover highlight on standard rows */
+.mainTable :global(.ant-table-row:hover > td) {
+    background-color: #edf5ff !important;
+}
+
+/* Inputs and Select Custom Overrides inside Table Cells */
+.mainTable :global(.ant-input),
+.mainTable :global(.ant-input-number),
+.mainTable :global(.ant-select-selector),
+.mainTable :global(.ant-picker) {
+    border-radius: 6px !important;
+    border-color: #cbd5e1 !important;
+}
+
+.mainTable :global(.ant-input:focus),
+.mainTable :global(.ant-input-number-focused),
+.mainTable :global(.ant-select-focused .ant-select-selector) {
+    border-color: #197dd3 !important;
+    box-shadow: 0 0 0 2px rgba(25, 125, 211, 0.1) !important;
+}
+
+/* Drawer, Form, and Tabs for QuanLyKeHoach */
+.khoDrawer :global(.ant-drawer-content) {
+    border-radius: 16px 0 0 16px !important;
+    border: 1px solid #c1d9f3 !important;
+    box-shadow: -10px 0 30px rgba(25, 125, 211, 0.1) !important;
+    background: #edf3fb !important;
+}
+
+.khoDrawer :global(.ant-drawer-header) {
+    padding: 16px 24px !important;
+    background: #edf6ff !important;
+    border-bottom: 1px solid #c1d9f3 !important;
+}
+
+.khoDrawer :global(.ant-drawer-title) {
+    color: #4b4344 !important;
+    font-weight: 700 !important;
+}
+
+.khoDrawer :global(.ant-drawer-body) {
+    padding: 24px !important;
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    margin: 16px !important;
+    box-shadow: 0 4px 12px rgba(25, 125, 211, 0.05);
+}
+
+.khoDrawer :global(.ant-drawer-footer) {
+    padding: 12px 24px !important;
+    background: #f6f9fe !important;
+    border-top: 1px solid #c1d9f3 !important;
+}
+
+/* Form inputs & dropdowns inside Drawer */
+.customForm :global(.ant-input),
+.customForm :global(.ant-input-number),
+.customForm :global(.ant-select-selector),
+.customForm :global(.ant-picker) {
+    border-radius: 10px !important;
+    border: 1px solid #c1d9f3 !important;
+    height: 40px !important;
+    display: flex;
+    align-items: center;
+}
+
+.customForm :global(.ant-input-number) {
+    padding: 0 !important;
+}
+
+.customForm :global(.ant-input-number-input) {
+    height: 38px !important;
+}
+
+.customForm :global(.ant-form-item-label > label) {
+    font-weight: 600 !important;
+    color: #4b4344 !important;
+    font-size: 13px;
+}
+
+/* Tabs inside Drawer */
+.customTabs :global(.ant-tabs-nav) {
+    margin-bottom: 24px !important;
+}
+
+.customTabs :global(.ant-tabs-tab) {
+    padding: 10px 16px !important;
+    font-weight: 600 !important;
+    font-size: 14px;
+    color: #64748b !important;
+    transition: all 0.2s ease;
+}
+
+.customTabs :global(.ant-tabs-tab-active) {
+    color: #197dd3 !important;
+    background: #edf6ff !important;
+    border-radius: 8px !important;
+}
+
+.customTabs :global(.ant-tabs-ink-bar) {
+    background: #197dd3 !important;
+    height: 3px !important;
+}
+
+/* Batch Action Bar */
+.batchActionBar {
+    background: #ffffff;
+    padding: 14px 24px;
+    border: 1px solid #c1d9f3;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0;
+    box-shadow: 0 8px 24px rgba(25, 125, 211, 0.08);
+    animation: slideDown 0.3s ease-out;
+}
+
+.batchActionBar :global(.ant-btn) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.batchActionBar :global(.ant-btn:not([disabled]):hover) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(25, 125, 211, 0.15);
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.batchActionBarDisabled {
+    background: #fafafa !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: none !important;
+    opacity: 0.65;
+    filter: grayscale(1);
+}
+
+.batchActionBarDisabled span,
+.batchActionBarDisabled b {
+    color: #8c8c8c !important;
+}
+
+.pageWrapper {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    margin-top: 16px;
+}
+
+/* Clickable detail link */
+.detailLink {
+    font-weight: 600;
+    color: #197dd3;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.detailLink:hover {
+    color: #1569b3;
+    text-decoration: underline;
+}
+
+/* Quick insert row styles */
+.quickRow {
+    background-color: #fffbe6 !important;
+}
+
+.quickRow:hover > td {
+    background-color: #fff1b8 !important;
+}
+
+/* Detail drawer for native plan children */
+.planDetailDrawer :global(.ant-drawer-body) {
+    padding: 18px !important;
+    background: #f8fbff !important;
+}
+
+.detailHeaderTitle {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.detailHeaderTitle :global(.ant-typography) {
+    margin: 0 !important;
+    color: #1e293b !important;
+}
+
+.detailTabs :global(.ant-tabs-nav) {
+    margin: 0 0 16px !important;
+    padding: 10px 12px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.detailTabs :global(.ant-tabs-tab) {
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    font-weight: 650;
+}
+
+.detailTabs :global(.ant-tabs-tab-active) {
+    background: #edf6ff !important;
+}
+
+.detailOverview {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.detailOverview :global(.ant-card) {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 6px 18px rgba(25, 125, 211, 0.06);
+}
+
+.detailOverview :global(.ant-statistic-title) {
+    color: #64748b;
+    font-weight: 650;
+}
+
+.detailOverview :global(.ant-statistic-content) {
+    color: #1e293b;
+    font-weight: 750;
+}
+
+.detailInfoCard :global(.ant-card-head) {
+    min-height: 42px;
+    background: #f6f9fe;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.detailInfoCard :global(.ant-card-head-title) {
+    font-size: 14px;
+    color: #1e293b;
+    font-weight: 750;
+}
+
+.detailTable :global(.ant-table) {
+    border-radius: 12px !important;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+.detailTable :global(.ant-table-thead > tr > th) {
+    background: #e4f1ff !important;
+    color: #1e293b !important;
+    font-size: 12px;
+    font-weight: 750 !important;
+    padding: 10px 8px !important;
+}
+
+.detailTable :global(.ant-table-tbody > tr > td) {
+    padding: 8px !important;
+    font-size: 12.5px;
+}
+
+.detailTable :global(.ant-table-tbody > tr:nth-child(odd) > td) {
+    background: #fbfdff;
+}
+
+@media (max-width: 900px) {
+    .planDetailDrawer :global(.ant-drawer-content-wrapper) {
+        width: 100vw !important;
+    }
+
+    .planDetailDrawer :global(.ant-drawer-extra) {
+        margin-top: 8px;
+        width: 100%;
+    }
+}
+
+/* Responsive polish for the copied XemKeHoach page */
+.toolbarRow {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+}
+
+.toolbarRow > :global(.ant-col:last-child) {
+    flex: 1 1 520px;
+    display: flex;
+    justify-content: flex-end;
+    min-width: 320px;
+}
+
+.toolbarRow :global(.ant-space) {
+    justify-content: flex-end;
+    row-gap: 8px !important;
+}
+
+.batchActionBar {
+    flex-wrap: wrap;
+    row-gap: 10px;
+    overflow: visible;
+}
+
+.batchActionBar :global(.ant-btn) {
+    white-space: nowrap;
+}
+
+.clickableRow :global(td) {
+    cursor: pointer;
+}
+
+.clickableRow:hover :global(td) {
+    background-color: #e8f3ff !important;
+}
+
+@media (max-width: 1200px) {
+    .toolbarRow > :global(.ant-col:last-child),
+    .toolbarRow :global(.ant-space) {
+        justify-content: flex-start;
+    }
+}
+.financeModal :global(.ant-modal-content),
+.financeModal :global(.ant-modal-header),
+.financeModal :global(.ant-modal-title),
+.financeModal :global(.ant-modal-body),
+.financeModal :global(.ant-modal-footer),
+.financeDrawer :global(.ant-drawer-content),
+.financeDrawer :global(.ant-drawer-header),
+.financeDrawer :global(.ant-drawer-title),
+.financeDrawer :global(.ant-drawer-body),
+.financeDrawer :global(.ant-table),
+.financeDrawer :global(.ant-tabs),
+.financeDrawer :global(.ant-descriptions),
+.financeModal :global(.ant-form),
+.financeModal :global(.ant-table),
+.financeModal :global(.ant-radio-wrapper),
+.financeModal :global(.ant-checkbox-wrapper),
+.financeModal :global(.ant-btn) {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+.financeModal :global(.ant-modal-title),
+.financeDrawer :global(.ant-drawer-title) {
+    color: #1e293b !important;
+    font-weight: 700 !important;
+}
+
+.financeModal :global(.ant-form-item-label > label),
+.financeDrawer :global(.ant-descriptions-item-label),
+.financeModal :global(.ant-table-thead > tr > th),
+.financeDrawer :global(.ant-table-thead > tr > th) {
+    font-weight: 650 !important;
+    color: #334155 !important;
+}
+
+.detailToolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.kanbanBoard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  align-items: start;
+}
+
+.kanbanColumn {
+  min-height: 260px;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fbff;
+}
+
+.kanbanColumnHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.kanbanCard {
+  border-radius: 8px !important;
+  border-color: #dbeafe !important;
+}

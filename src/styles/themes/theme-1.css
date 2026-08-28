@@ -1,0 +1,296 @@
+/* ================================================================
+   THEME 1 - Cafe Classic Theme
+   Pallet màu: #8B4513, #D2B48C, #5D2F0A, #F4A460
+   Theme nâu cafe truyền thống cho ứng dụng POS
+================================================================ */
+
+.theme-1 {
+  /* ==================== PRIMARY COLORS ==================== */
+  /* Màu chủ đạo cafe */
+  --color-primary: #8B4513;           /* Nâu cafe chính */
+  --color-primary-light: #D2B48C;     /* Nâu sáng */
+  --color-primary-dark: #5D2F0A;      /* Nâu đậm */
+  --color-primary-gradient: linear-gradient(135deg, #8B4513 0%, #CD853F 100%);
+  
+  /* ==================== SECONDARY COLORS ==================== */
+  /* Màu phụ cafe */
+  --color-secondary: #F4A460;         /* Nâu cát */
+  --color-secondary-light: #FFEFD5;   /* Kem nhạt */
+  --color-secondary-dark: #DAA520;    /* Vàng đồng */
+  
+  /* ==================== NEUTRAL COLORS ==================== */
+  /* Màu trung tính cho cafe */
+  --color-neutral: #8C8C8C;           /* Xám trung tính */
+  --color-neutral-light: #BFBFBF;     /* Xám sáng */
+  --color-neutral-dark: #434343;      /* Xám đậm */
+  
+  /* ==================== EXTENDED PALETTE ==================== */
+  /* Màu mở rộng hài hòa với theme cafe */
+  --color-accent: #FF6347;            /* Đỏ cam nhấn */
+  --color-accent-secondary: #FFB6C1;  /* Hồng nhạt */
+  --color-highlight: #32CD32;         /* Xanh lá */
+  
+  /* ==================== BACKGROUND COLORS ==================== */
+  --bg-primary: #ffffff;              /* Nền chính trắng */
+  --bg-secondary: #F0F2F5;            /* Nền phụ xám nhạt */
+  --bg-tertiary: #FAFAFA;             /* Nền cấp 3 */
+  --bg-surface: #ffffff;              /* Nền surface */
+  --bg-surface-hover: #FFF8DC;        /* Nền hover với tone kem nhạt */
+  --bg-dark: #001529;                 /* Nền tối */
+  --bg-overlay: rgba(139, 69, 19, 0.15); /* Overlay với màu primary cafe */
+  
+  /* ==================== TEXT COLORS ==================== */
+  --color-text-primary: #262626;      /* Text chính */
+  --color-text-secondary: #595959;     /* Text phụ */
+  --color-text-muted: #8C8C8C;        /* Text mờ */
+  --color-text-on-primary: #ffffff;    /* Text trên nền primary */
+  --color-text-on-secondary: #262626;  /* Text trên nền secondary */
+  --color-text-on-surface: #262626;    /* Text trên surface */
+  
+  /* ==================== BORDER COLORS ==================== */
+  --border-light: #F0F0F0;            /* Border nhẹ */
+  --border-medium: #D9D9D9;           /* Border trung bình */
+  --border-dark: #434343;             /* Border đậm */
+  --border-primary: #8B4513;          /* Border primary */
+  --border-focus: #D2B48C;            /* Border khi focus */
+  
+  /* ==================== STATUS COLORS ==================== */
+  /* Màu trạng thái với tone hài hòa */
+  
+  /* Success - Xanh lá */
+  --color-success: #22c55e;           /* Xanh thành công */
+  --color-success-light: #bbf7d0;     /* Xanh thành công nhạt */
+  --color-success-dark: #16a34a;      /* Xanh thành công đậm */
+  
+  /* Warning - Vàng cam */
+  --color-warning: #f59e0b;           /* Vàng cảnh báo */
+  --color-warning-light: #fef3c7;     /* Vàng cảnh báo nhạt */
+  --color-warning-dark: #d97706;      /* Vàng cảnh báo đậm */
+  
+  /* Error - Đỏ */
+  --color-error: #ef4444;             /* Đỏ lỗi */
+  --color-error-light: #fecaca;       /* Đỏ lỗi nhạt */
+  --color-error-dark: #dc2626;        /* Đỏ lỗi đậm */
+  
+  /* Info - Cafe orange (sử dụng accent) */
+  --color-info: #FF6347;              /* Cam thông tin */
+  --color-info-light: #FFE4E1;        /* Cam thông tin nhạt */
+  --color-info-dark: #DC143C;         /* Cam thông tin đậm */
+  
+  /* ==================== COMPONENT OVERRIDES ==================== */
+  
+  /* Shadows với tone nâu nhẹ */
+  --shadow-primary: 0 4px 14px rgba(139, 69, 19, 0.25);
+  --shadow-success: 0 4px 14px rgba(34, 197, 94, 0.15);
+  --shadow-warning: 0 4px 14px rgba(245, 158, 11, 0.15);
+  --shadow-error: 0 4px 14px rgba(239, 68, 68, 0.15);
+  --shadow-color: rgba(38, 38, 38, 0.08);
+  --shadow-strong-color: rgba(38, 38, 38, 0.12);
+  
+  /* Header với primary color */
+  --header-bg: var(--bg-primary);
+  --header-border: var(--border-light);
+  
+  /* Sidebar */
+  --sidebar-bg: var(--bg-primary);
+  --sidebar-border: var(--border-light);
+  
+  /* Cards với subtle background */
+  --card-bg: var(--bg-surface);
+  --card-border: var(--border-light);
+  --card-shadow: 0 1px 3px rgba(30, 41, 59, 0.08);
+  
+  /* Buttons với primary colors */
+  --btn-primary-bg: var(--color-primary);
+  --btn-primary-hover-bg: var(--color-primary-dark);
+  --btn-secondary-bg: var(--color-secondary);
+  --btn-secondary-hover-bg: var(--color-secondary-dark);
+  
+  /* Forms */
+  --form-control-border: var(--border-medium);
+  --form-control-focus-border: var(--border-focus);
+  --form-control-bg: var(--bg-surface);
+  
+  /* Tables */
+  --table-header-bg: var(--bg-secondary);
+  --table-border: var(--border-light);
+  --table-row-hover: var(--bg-surface-hover);
+  --table-row-selected: rgba(25, 125, 211, 0.08);
+  
+  /* ==================== CAFE POS SPECIFIC ==================== */
+  
+  /* Table Status với màu mới */
+  --table-status-empty: var(--color-secondary);
+  --table-status-occupied: var(--color-warning);
+  --table-status-serving: var(--color-info);
+  --table-status-checkout: var(--color-success);
+  --table-status-locked: var(--color-error);
+  
+  /* Product Status */
+  --product-available: var(--color-success);
+  --product-low-stock: var(--color-warning);
+  --product-out-stock: var(--color-error);
+  --product-disabled: var(--color-secondary);
+  
+  /* Navigation với cafe accent */
+  --nav-active-bg: rgba(139, 69, 19, 0.1);
+  --nav-active-border: var(--color-primary);
+  --nav-hover-bg: rgba(210, 180, 140, 0.1);
+}
+
+/* ============================================
+   THEME 1 SPECIFIC COMPONENT STYLES
+============================================ */
+
+/* Header Styling */
+.theme-1 .app-header {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-light);
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.theme-1 .app-header .header-title {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Sidebar Styling */
+.theme-1 .app-sidebar {
+  background: var(--bg-primary);
+  border-right: 1px solid var(--border-light);
+}
+
+.theme-1 .sidebar-nav-item {
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.theme-1 .sidebar-nav-item:hover {
+  background: var(--nav-hover-bg);
+  color: var(--color-primary);
+}
+
+.theme-1 .sidebar-nav-item.active {
+  background: var(--nav-active-bg);
+  color: var(--color-primary);
+  border-right: 3px solid var(--nav-active-border);
+}
+
+/* Cards */
+.theme-1 .card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+}
+
+.theme-1 .card-header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-light);
+  color: var(--color-text-primary);
+}
+
+/* Buttons */
+.theme-1 .btn-primary {
+  background: var(--btn-primary-bg);
+  border-color: var(--btn-primary-bg);
+  color: var(--color-text-on-primary);
+}
+
+.theme-1 .btn-primary:hover {
+  background: var(--btn-primary-hover-bg);
+  border-color: var(--btn-primary-hover-bg);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-primary);
+}
+
+.theme-1 .btn-secondary {
+  background: var(--btn-secondary-bg);
+  border-color: var(--btn-secondary-bg);
+  color: var(--color-text-on-secondary);
+}
+
+/* Forms */
+.theme-1 .form-control {
+  background: var(--form-control-bg);
+  border: 1px solid var(--form-control-border);
+  color: var(--color-text-primary);
+}
+
+.theme-1 .form-control:focus {
+  border-color: var(--form-control-focus-border);
+  box-shadow: 0 0 0 3px rgba(119, 212, 251, 0.1);
+}
+
+/* Tables */
+.theme-1 .table {
+  background: var(--bg-surface);
+}
+
+.theme-1 .table th {
+  background: var(--table-header-bg);
+  color: var(--color-text-primary);
+  border-bottom: 2px solid var(--table-border);
+}
+
+.theme-1 .table td {
+  border-bottom: 1px solid var(--table-border);
+  color: var(--color-text-primary);
+}
+
+.theme-1 .table tr:hover {
+  background: var(--table-row-hover);
+}
+
+.theme-1 .table tr.selected {
+  background: var(--table-row-selected);
+}
+
+/* Status badges */
+.theme-1 .badge-success {
+  background: var(--color-success);
+  color: white;
+}
+
+.theme-1 .badge-warning {
+  background: var(--color-warning);
+  color: white;
+}
+
+.theme-1 .badge-error {
+  background: var(--color-error);
+  color: white;
+}
+
+.theme-1 .badge-info {
+  background: var(--color-info);
+  color: white;
+}
+
+/* Modal */
+.theme-1 .modal-content {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 20px 25px rgba(30, 41, 59, 0.15);
+}
+
+.theme-1 .modal-header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Tooltips */
+.theme-1 .tooltip {
+  background: var(--color-neutral);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+/* Loading states */
+.theme-1 .loading {
+  color: var(--color-primary);
+}
+
+.theme-1 .spinner {
+  border-color: var(--color-primary-light);
+  border-top-color: var(--color-primary);
+}

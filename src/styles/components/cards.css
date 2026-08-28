@@ -1,0 +1,627 @@
+/* ================================================================
+   CARDS STYLES
+   Hệ thống card components toàn ứng dụng với theme #197dd3, #77d4fb, #bdbcc4, #4b4344
+================================================================ */
+
+/* Ant Design Card Override */
+.ant-card {
+  background: linear-gradient(135deg, #197dd3 0%, #77d4fb 100%) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(25, 125, 211, 0.15) !important;
+  color: white !important;
+}
+
+.ant-card-head {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+}
+
+.ant-card-head-title {
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.ant-card-body {
+  color: white !important;
+}
+
+/* Table Cards trong BepBar */
+.ant-card.table-card {
+  background: linear-gradient(135deg, #197dd3 0%, #77d4fb 100%) !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+}
+
+.ant-card.table-card.occupied {
+  background: linear-gradient(135deg, #4b4344 0%, #bdbcc4 100%) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.ant-card.table-card.available {
+  background: linear-gradient(135deg, #77d4fb 0%, #197dd3 100%) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Base Card Styles */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: var(--color-white);
+  background-clip: border-box;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-base);
+  transition: var(--transition-base);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* Card Variants */
+.card--elevated {
+  border: none;
+  box-shadow: var(--shadow-lg);
+}
+
+.card--elevated:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+}
+
+.card--outlined {
+  box-shadow: none;
+  border: 2px solid var(--color-border);
+}
+
+.card--outlined:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-base);
+}
+
+.card--filled {
+  background-color: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+}
+
+/* Card Sizes */
+.card--sm {
+  border-radius: var(--radius-base);
+}
+
+.card--lg {
+  border-radius: var(--radius-xl);
+}
+
+.card--xl {
+  border-radius: var(--radius-2xl);
+}
+
+/* Card Header */
+.card-header {
+  padding: var(--space-4) var(--space-4) 0;
+  margin-bottom: 0;
+  background-color: transparent;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.card-header:last-child {
+  border-bottom: none;
+}
+
+.card-header--borderless {
+  border-bottom: none;
+  padding-bottom: var(--space-4);
+}
+
+.card-header--compact {
+  padding: var(--space-3) var(--space-4) 0;
+}
+
+/* Card Body */
+.card-body {
+  flex: 1 1 auto;
+  padding: var(--space-4);
+}
+
+.card-body--compact {
+  padding: var(--space-3);
+}
+
+.card-body--spacious {
+  padding: var(--space-6);
+}
+
+.card-body--no-padding {
+  padding: 0;
+}
+
+/* Card Footer */
+.card-footer {
+  padding: 0 var(--space-4) var(--space-4);
+  background-color: transparent;
+  border-top: 1px solid var(--color-border);
+  margin-top: auto;
+}
+
+.card-footer:first-child {
+  border-top: none;
+  padding-top: var(--space-4);
+}
+
+.card-footer--borderless {
+  border-top: none;
+  padding-top: var(--space-4);
+}
+
+.card-footer--compact {
+  padding: 0 var(--space-3) var(--space-3);
+}
+
+/* Card Title and Subtitle */
+.card-title {
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.3;
+  color: var(--color-text);
+}
+
+.card-title--sm {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+}
+
+.card-title--lg {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.card-subtitle {
+  margin-top: calc(-1 * var(--space-1));
+  margin-bottom: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  line-height: 1.4;
+}
+
+/* Card Text */
+.card-text {
+  margin-bottom: var(--space-3);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.card-text:last-child {
+  margin-bottom: 0;
+}
+
+/* Card Image */
+.card-img {
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--radius-lg) - 1px);
+}
+
+.card-img-top {
+  width: 100%;
+  height: auto;
+  border-top-left-radius: calc(var(--radius-lg) - 1px);
+  border-top-right-radius: calc(var(--radius-lg) - 1px);
+}
+
+.card-img-bottom {
+  width: 100%;
+  height: auto;
+  border-bottom-left-radius: calc(var(--radius-lg) - 1px);
+  border-bottom-right-radius: calc(var(--radius-lg) - 1px);
+}
+
+.card-img-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: var(--space-4);
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  border-radius: calc(var(--radius-lg) - 1px);
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* Card Actions */
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.card-actions--right {
+  justify-content: flex-end;
+}
+
+.card-actions--center {
+  justify-content: center;
+}
+
+.card-actions--between {
+  justify-content: space-between;
+}
+
+.card-actions--vertical {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Interactive Cards */
+.card--clickable {
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.card--clickable:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.card--clickable:active {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Card States */
+.card--loading {
+  opacity: 0.7;
+  pointer-events: none;
+  position: relative;
+}
+
+.card--loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
+  border: 2px solid var(--color-primary);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  z-index: 1;
+}
+
+.card--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  filter: grayscale(0.5);
+}
+
+.card--selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-light);
+}
+
+.card--error {
+  border-color: var(--color-danger);
+  background-color: var(--color-danger-light);
+}
+
+.card--success {
+  border-color: var(--color-success);
+  background-color: var(--color-success-light);
+}
+
+.card--warning {
+  border-color: var(--color-warning);
+  background-color: var(--color-warning-light);
+}
+
+/* Card Badge */
+.card-badge {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 1;
+}
+
+/* Card Group */
+.card-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.card-group .card {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-group--no-gap .card {
+  border-radius: 0;
+  border-right-width: 0;
+}
+
+.card-group--no-gap .card:first-child {
+  border-top-left-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-lg);
+}
+
+.card-group--no-gap .card:last-child {
+  border-right-width: 1px;
+  border-top-right-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-lg);
+}
+
+/* Card Deck */
+.card-deck {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Card Columns */
+.card-columns {
+  column-count: 3;
+  column-gap: var(--space-4);
+  orphans: 1;
+  widows: 1;
+}
+
+.card-columns .card {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: var(--space-4);
+  break-inside: avoid;
+}
+
+/* Cafe-specific Card Styles */
+.card-product {
+  transition: var(--transition-base);
+  cursor: pointer;
+  min-height: 280px;
+}
+
+.card-product:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.card-product .card-img-top {
+  height: 200px;
+  object-fit: cover;
+  background-color: var(--color-gray-100);
+}
+
+.card-product .card-body {
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-product .card-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.4;
+  margin-bottom: var(--space-2);
+  color: var(--color-text);
+}
+
+.card-product .card-price {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin-top: auto;
+  font-family: var(--font-family-mono);
+}
+
+.card-product--out-of-stock {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.card-product--out-of-stock::after {
+  content: 'Hết hàng';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--color-danger);
+  color: var(--color-white);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+  z-index: 2;
+}
+
+.card-table {
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition-base);
+  position: relative;
+}
+
+.card-table:hover {
+  transform: scale(1.05);
+}
+
+.card-table--empty {
+  background-color: var(--color-success-light);
+  border-color: var(--color-success);
+  color: var(--color-success-dark);
+}
+
+.card-table--occupied {
+  background-color: var(--color-danger-light);
+  border-color: var(--color-danger);
+  color: var(--color-danger-dark);
+}
+
+.card-table--reserved {
+  background-color: var(--color-warning-light);
+  border-color: var(--color-warning);
+  color: var(--color-warning-dark);
+}
+
+.card-table--cleaning {
+  background-color: var(--color-info-light);
+  border-color: var(--color-info);
+  color: var(--color-info-dark);
+}
+
+.card-table-number {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-1);
+}
+
+.card-table-status {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card-order {
+  border-left: 4px solid var(--color-primary);
+}
+
+.card-order--pending {
+  border-left-color: var(--color-warning);
+}
+
+.card-order--completed {
+  border-left-color: var(--color-success);
+}
+
+.card-order--cancelled {
+  border-left-color: var(--color-danger);
+}
+
+.card-stats {
+  text-align: center;
+  padding: var(--space-6) var(--space-4);
+}
+
+.card-stats-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto var(--space-3);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xl);
+}
+
+.card-stats-icon--primary {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.card-stats-icon--success {
+  background-color: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.card-stats-icon--warning {
+  background-color: var(--color-warning-light);
+  color: var(--color-warning);
+}
+
+.card-stats-icon--danger {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger);
+}
+
+.card-stats-value {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+  font-family: var(--font-family-mono);
+}
+
+.card-stats-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: var(--font-weight-medium);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .card-columns {
+    column-count: 2;
+  }
+  
+  .card-deck {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-3);
+  }
+  
+  .card-group {
+    flex-direction: column;
+  }
+  
+  .card-product {
+    min-height: 240px;
+  }
+  
+  .card-product .card-img-top {
+    height: 160px;
+  }
+  
+  .card-table {
+    min-height: 100px;
+  }
+  
+  .card-table-number {
+    font-size: var(--font-size-xl);
+  }
+  
+  .card-stats {
+    padding: var(--space-4) var(--space-3);
+  }
+  
+  .card-stats-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: var(--space-2);
+  }
+  
+  .card-stats-value {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .card-columns {
+    column-count: 1;
+  }
+  
+  .card-deck {
+    grid-template-columns: 1fr;
+  }
+}

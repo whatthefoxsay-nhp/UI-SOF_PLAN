@@ -1,0 +1,55 @@
+================================================================================
+TEXT MERGE SUMMARY v1.1.0
+================================================================================
+Generated: 2025-10-10 14:23:05
+================================================================================
+
+STATISTICS
+--------------------------------------------------------------------------------
+Original texts:      1157
+After merge:         817
+Duplicates removed:  340
+Reduction rate:      29.4%
+
+BY LANGUAGE
+--------------------------------------------------------------------------------
+vi            817 texts
+
+BY CATEGORY
+--------------------------------------------------------------------------------
+
+VI:
+  auth                     71 texts
+    └─ general             71 texts
+  business                 50 texts
+    └─ general             50 texts
+  common                  123 texts
+    └─ action              11 texts
+    └─ button             106 texts
+    └─ navigation           6 texts
+  crud                     71 texts
+    └─ create              17 texts
+    └─ delete              24 texts
+    └─ read                11 texts
+    └─ update              19 texts
+  form                    122 texts
+    └─ label               71 texts
+    └─ placeholder         50 texts
+    └─ validation           1 texts
+  list                     55 texts
+    └─ filter               4 texts
+    └─ header              36 texts
+    └─ pagination          15 texts
+  menu                      3 texts
+    └─ general              3 texts
+  message                  48 texts
+    └─ error               19 texts
+    └─ success             29 texts
+  other                   236 texts
+    └─ general            236 texts
+  report                   26 texts
+    └─ general             26 texts
+  status                   11 texts
+    └─ general             11 texts
+  time                      1 texts
+    └─ general              1 texts

@@ -1,0 +1,306 @@
+/* ================================================================
+   SIDEBAR MENU STYLES
+   Styles for the sidebar navigation menu
+   Pallet: Dynamic based on theme
+================================================================ */
+
+:root {
+  --primary-color: #197dd3;
+  --secondary-color: #77d4fb;
+  --primary-color-rgb: 25, 125, 211;
+  --color-primary-gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  --shadow-primary: 0 4px 14px rgba(var(--primary-color-rgb), 0.25);
+
+  /* Shared system background/border colors dynamically mixed from primary theme color */
+  --primary-bg-color: color-mix(in srgb, var(--primary-color) 7%, #ffffff);
+  --primary-border-color: color-mix(in srgb, var(--primary-color) 20%, #ffffff);
+  --primary-header-bg: color-mix(in srgb, var(--primary-color) 12%, #ffffff);
+  --primary-header-gradient: linear-gradient(140deg, #ffffff 65%, color-mix(in srgb, var(--primary-color) 15%, #ffffff) 100%);
+  --primary-table-header-bg: color-mix(in srgb, var(--primary-color) 10%, #ffffff);
+  --primary-table-row-odd: color-mix(in srgb, var(--primary-color) 3%, #ffffff);
+  --primary-table-row-hover: color-mix(in srgb, var(--primary-color) 8%, #ffffff);
+}
+
+.sidebar-menu {
+  height: 100vh;
+  background-color: #ffffff;
+  border-right: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1001;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-menu.collapsed {
+  width: 80px;
+}
+
+.logo-section {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: var(--color-primary-gradient);
+  color: white;
+  padding: 0 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px;
+  border-radius: 8px;
+}
+
+.logo-text {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.sidebar-menu.collapsed .logo-text,
+.sidebar-menu.collapsed .logo-brand {
+  display: none;
+}
+
+.sidebar-menu.collapsed .logo-section {
+  justify-content: center;
+  padding: 0;
+}
+
+.main-menu {
+  flex: 1;
+  padding: 12px 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #fff;
+}
+
+.main-menu::-webkit-scrollbar {
+  width: 4px;
+}
+
+.main-menu::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 10px;
+}
+
+/* ================================================================
+   MENU HIERARCHY STYLES
+================================================================ */
+
+/* Common Styles */
+.main-menu .ant-menu-item,
+.main-menu .ant-menu-submenu-title {
+  margin: 2px 6px !important;
+  border-radius: 8px !important;
+  width: calc(100% - 12px) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* --- LEVEL 1 (Top Level Parents) --- */
+.main-menu > .ant-menu-submenu > .ant-menu-submenu-title {
+  height: 46px !important;
+  line-height: 46px !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  color: #1a1a1a !important;
+  background: transparent !important;
+  position: relative;
+}
+
+.main-menu > .ant-menu-submenu > .ant-menu-submenu-title::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 36px;
+  width: 20px;
+  height: 2px;
+  background: var(--primary-color);
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+.main-menu > .ant-menu-submenu-open > .ant-menu-submenu-title,
+.main-menu > .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  color: var(--primary-color) !important;
+  background-color: rgba(var(--primary-color-rgb), 0.05) !important;
+}
+
+.main-menu > .ant-menu-submenu-open > .ant-menu-submenu-title svg,
+.main-menu > .ant-menu-submenu-selected > .ant-menu-submenu-title svg {
+  color: var(--primary-color) !important;
+}
+
+/* --- LEVEL 2 (Secondary Categories) --- */
+.main-menu .ant-menu-sub .ant-menu-submenu-title,
+.main-menu .ant-menu-sub > .ant-menu-item {
+  height: 38px !important;
+  line-height: 38px !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  padding-left: 24px !important;
+  background-color: rgba(var(--primary-color-rgb), 0.03) !important;
+  border-left: 3px solid transparent !important;
+}
+
+.main-menu .ant-menu-sub .ant-menu-submenu-title:hover,
+.main-menu .ant-menu-sub > .ant-menu-item:hover,
+.main-menu .ant-menu-sub .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  background-color: rgba(var(--primary-color-rgb), 0.08) !important;
+  border-left-color: var(--primary-color) !important;
+  color: var(--primary-color) !important;
+}
+
+/* --- LEVEL 3 SUBMENU TITLES (e.g., "Nhân viên", "Biểu mẫu", "Kỹ năng") --- */
+.main-menu .ant-menu-sub .ant-menu-sub .ant-menu-submenu-title {
+  height: 36px !important;
+  line-height: 36px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  padding-left: 36px !important;
+  margin: 2px 6px !important;
+  background-color: rgba(var(--primary-color-rgb), 0.01) !important;
+  color: #333 !important;
+  border-left: 2px solid #e0e0e0 !important;
+  border-radius: 0 8px 8px 0 !important;
+}
+
+.main-menu .ant-menu-sub .ant-menu-sub .ant-menu-submenu-title:hover,
+.main-menu .ant-menu-sub .ant-menu-sub .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  background-color: rgba(var(--primary-color-rgb), 0.05) !important;
+  color: var(--primary-color) !important;
+  border-left-color: var(--primary-color) !important;
+}
+
+/* --- LEVEL 3 & 4 LEAF ITEMS (e.g., "Danh sách nhân viên", "Vòng đánh giá") --- */
+.main-menu .ant-menu-sub .ant-menu-sub .ant-menu-item {
+  height: 32px !important;
+  line-height: 32px !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  padding-left: 48px !important;
+  margin: 1px 6px !important;
+  background-color: transparent !important;
+  color: #555 !important;
+  border-left: 1px solid #eee !important;
+  border-radius: 0 8px 8px 0 !important;
+}
+
+.main-menu .ant-menu-sub .ant-menu-sub .ant-menu-item:hover {
+  background-color: #f8f9fa !important;
+  padding-left: 52px !important;
+  color: var(--primary-color) !important;
+  border-left-color: var(--primary-color) !important;
+}
+
+/* Selected State Synchronization */
+.main-menu .ant-menu-item-selected {
+  background: var(--color-primary-gradient) !important;
+  color: white !important;
+  box-shadow: var(--shadow-primary);
+}
+
+.main-menu .ant-menu-item-selected span,
+.main-menu .ant-menu-item-selected svg {
+  color: white !important;
+}
+
+/* Arrow Colors */
+.main-menu .ant-menu-submenu-arrow {
+  color: var(--primary-color) !important;
+  opacity: 0.5;
+}
+
+/* Theme Selector Styles */
+.theme-selector {
+  padding: 16px;
+  border-top: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.theme-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.theme-select {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.theme-colors {
+  display: flex;
+  gap: 3px;
+}
+
+.color-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Collapse Toggle Button */
+.collapse-toggle {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.collapse-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.sidebar-menu.collapsed .theme-selector,
+.sidebar-menu.collapsed .theme-title,
+.sidebar-menu.collapsed .theme-colors {
+  display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sidebar-menu {
+    width: 80px;
+  }
+  .sidebar-menu.collapsed {
+    width: 0;
+    transform: translateX(-100%);
+  }
+}

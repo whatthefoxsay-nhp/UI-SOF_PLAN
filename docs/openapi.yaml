@@ -1,0 +1,853 @@
+openapi: 3.0.3
+info:
+  title: PMBH Cafe POS Platform API
+  description: |
+    Bộ tài liệu OpenAPI mô tả các dịch vụ cốt lõi của PMBH Cafe POS, bao gồm
+    xác thực người dùng, quản lý danh mục sản phẩm, tồn kho, vận hành bán hàng
+    tại quầy và các tích hợp thanh toán (VNPay, MoMo, ZaloPay).
+
+    Phần mềm sử dụng cơ chế gọi hàm theo cặp `table/func` trên GMAC Service Bus.
+    Các endpoint trong tài liệu này chuẩn hóa payload, đồng thời ghi chú
+    cặp `table/func` thực sự bằng extension `x-gmac` để nhà phát triển dễ đối chiếu.
+  version: 1.0.0
+  contact:
+    name: PMBH Engineering
+    email: dev@pmbh.vn
+servers:
+  - url: http://localhost:4000
+    description: Local swagger server (proxy-server.js)
+  - url: http://192.168.1.19/gmac
+    description: GMAC production gateway
+tags:
+  - name: Auth
+    description: Đăng nhập và vòng đời token
+  - name: Catalog
+    description: Danh mục sản phẩm, nhóm hàng, BOM
+  - name: Inventory
+    description: Kho, chứng từ nhập xuất, kiểm kê
+  - name: POS
+    description: Nghiệp vụ bán hàng tại quầy (bàn/khu vực/hóa đơn)
+  - name: Payments
+    description: Tích hợp thanh toán (VNPay IPN & theo dõi)
+  - name: Reports
+    description: Báo cáo tồn kho, doanh thu
+security:
+  - BearerAuth: []
+paths:
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Đăng nhập lấy GMAC session token
+      description: |
+        Gọi trực tiếp `login.sof.vn/index.php` để nhận token Bearer dùng cho tất cả
+        các lệnh `services.sof.vn`. Ứng dụng desktop tự refresh token trước khi hết hạn.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            example:
+              txtUserName: ca_phe_admin
+              txtPassword: superSecure123
+      responses:
+        '200':
+          description: Đăng nhập thành công
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+              example:
+                token: eyJhbGciOi...
+                code: CN001
+                userId: admin01
+                role: manager
+                chiNhanh: CN1
+        '401':
+          description: Sai thông tin đăng nhập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security: []
+  /auth/logout:
+    post:
+      tags: [Auth]
+      summary: Đăng xuất & thu hồi token GMAC
+      description: Thực thi `signout.sof.vn/index.php` để hủy token hiện tại.
+      responses:
+        '204':
+          description: Đăng xuất thành công
+        '401':
+          description: Token hết hạn hoặc không hợp lệ
+      security:
+        - BearerAuth: []
+  /services/catalog/categories/query:
+    post:
+      tags: [Catalog]
+      summary: Lấy danh sách loại sản phẩm
+      description: |-
+        Tra cứu toàn bộ danh mục loại sản phẩm (`Mb_loaiSanPham.data`). Payload tối thiểu
+        chỉ chứa cặp table/func; có thể bổ sung tiêu chí lọc tùy backend.
+      x-gmac:
+        table: Mb_loaiSanPham
+        func: data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GmacEnvelope'
+            example:
+              table: Mb_loaiSanPham
+              func: data
+      responses:
+        '200':
+          description: Danh sách loại sản phẩm
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductCategory'
+  /services/catalog/categories:
+    post:
+      tags: [Catalog]
+      summary: Thêm loại sản phẩm mới
+      x-gmac:
+        table: Mb_loaiSanPham
+        func: add
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCategoryRequest'
+      responses:
+        '200':
+          description: Thao tác thành công (GMAC trả 1/true)
+        '400':
+          description: Dữ liệu thiếu hoặc trùng mã
+    put:
+      tags: [Catalog]
+      summary: Cập nhật loại sản phẩm
+      x-gmac:
+        table: Mb_loaiSanPham
+        func: edit
+      parameters:
+        - $ref: '#/components/parameters/CategoryId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCategoryRequest'
+      responses:
+        '200':
+          description: Cập nhật thành công
+    delete:
+      tags: [Catalog]
+      summary: Xóa loại sản phẩm
+      x-gmac:
+        table: Mb_loaiSanPham
+        func: delete
+      parameters:
+        - $ref: '#/components/parameters/CategoryId'
+      responses:
+        '200':
+          description: Đã xóa
+  /services/catalog/products/query:
+    post:
+      tags: [Catalog]
+      summary: Lấy danh sách sản phẩm
+      description: Sử dụng hàm `Mb_sanPham.data`.
+      x-gmac:
+        table: Mb_sanPham
+        func: data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductQueryRequest'
+      responses:
+        '200':
+          description: Danh sách sản phẩm
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+  /services/catalog/products:
+    post:
+      tags: [Catalog]
+      summary: Thêm sản phẩm
+      x-gmac:
+        table: Mb_sanPham
+        func: add
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductRequest'
+      responses:
+        '200':
+          description: Thành công
+  /services/catalog/products/{productId}:
+    put:
+      tags: [Catalog]
+      summary: Cập nhật thông tin sản phẩm
+      x-gmac:
+        table: Mb_sanPham
+        func: edit
+      parameters:
+        - $ref: '#/components/parameters/ProductId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductRequest'
+      responses:
+        '200':
+          description: Thành công
+    delete:
+      tags: [Catalog]
+      summary: Xóa sản phẩm
+      x-gmac:
+        table: Mb_sanPham
+        func: delete
+      parameters:
+        - $ref: '#/components/parameters/ProductId'
+      responses:
+        '200':
+          description: Đã xóa
+  /services/catalog/products/{productId}/bom:
+    get:
+      tags: [Catalog]
+      summary: Lấy cấu trúc BOM
+      x-gmac:
+        table: Mb_BOM
+        func: list
+      parameters:
+        - $ref: '#/components/parameters/ProductId'
+      responses:
+        '200':
+          description: BOM hiện tại
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductBOM'
+    put:
+      tags: [Catalog]
+      summary: Lưu cấu trúc BOM
+      x-gmac:
+        table: Mb_BOM
+        func: save
+      parameters:
+        - $ref: '#/components/parameters/ProductId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductBOM'
+      responses:
+        '200':
+          description: Lưu thành công
+  /services/inventory/warehouses/query:
+    post:
+      tags: [Inventory]
+      summary: Danh sách kho
+      x-gmac:
+        table: Mb_Kho
+        func: data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GmacEnvelope'
+            example:
+              table: Mb_Kho
+              func: data
+      responses:
+        '200':
+          description: Danh sách kho
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Warehouse'
+  /services/inventory/stock-levels:
+    post:
+      tags: [Inventory]
+      summary: Lấy tồn kho cho 1 hoặc nhiều sản phẩm
+      description: Mapping `Mb_Kho.LaySoLuongTonKho` & `LaySoLuongTonKhoNhieuSP`.
+      x-gmac:
+        table: Mb_Kho
+        func: LaySoLuongTonKho
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StockQueryRequest'
+      responses:
+        '200':
+          description: Thông tin tồn kho
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StockLevel'
+  /services/inventory/receipts:
+    post:
+      tags: [Inventory]
+      summary: Tạo phiếu nhập kho
+      x-gmac:
+        table: Mb_PhieuNhap
+        func: add
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseReceipt'
+      responses:
+        '200':
+          description: Ghi nhận thành công
+  /services/inventory/receipts/query:
+    post:
+      tags: [Inventory]
+      summary: Tra cứu phiếu nhập
+      x-gmac:
+        table: Mb_PhieuNhap
+        func: data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                table:
+                  type: string
+                  enum: [Mb_PhieuNhap]
+                func:
+                  type: string
+                  enum: [data]
+                maKho:
+                  type: string
+                  description: Mã kho lọc
+      responses:
+        '200':
+          description: Danh sách phiếu nhập
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PurchaseReceipt'
+  /services/pos/tables:
+    post:
+      tags: [POS]
+      summary: Tải danh sách bàn hiện hữu
+      x-gmac:
+        table: sl_lv0009
+        func: loadBan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GmacEnvelope'
+            example:
+              table: sl_lv0009
+              func: loadBan
+              chiNhanh: CN1
+      responses:
+        '200':
+          description: Danh sách bàn/mặt bằng
+  /services/pos/zones:
+    post:
+      tags: [POS]
+      summary: Danh sách khu vực
+      x-gmac:
+        table: sl_lv0008
+        func: loadKhuVuc
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GmacEnvelope'
+            example:
+              table: sl_lv0008
+              func: loadKhuVuc
+      responses:
+        '200':
+          description: Danh sách khu vực
+  /services/pos/orders:
+    post:
+      tags: [POS]
+      summary: Tạo/ghi nhận hóa đơn bán hàng
+      x-gmac:
+        table: Mb_thanhtoan
+        func: thanhToan_contract
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaleOrder'
+      responses:
+        '200':
+          description: Thanh toán thành công
+  /services/reports/inventory:
+    post:
+      tags: [Reports]
+      summary: Báo cáo kho theo điều kiện
+      x-gmac:
+        table: Mb_BaoCaoKho
+        func: baoCaoDieuKien
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryReportRequest'
+      responses:
+        '200':
+          description: Bộ dữ liệu báo cáo
+  /services/reports/stock-movements:
+    post:
+      tags: [Reports]
+      summary: Báo cáo xuất nhập tồn
+      x-gmac:
+        table: Mb_BaoCaoKho
+        func: baoCaoXuatNhapTon
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StockMovementReportRequest'
+      responses:
+        '200':
+          description: Chi tiết tồn chuyển động
+  /payments/vnpay/ipn:
+    get:
+      tags: [Payments]
+      summary: Webhook VNPay IPN
+      description: Endpoint GET nhận thông báo từ VNPay, chữ ký HMAC SHA512.
+      parameters:
+        - in: query
+          name: vnp_TmnCode
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: vnp_Amount
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: vnp_TxnRef
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: vnp_SecureHash
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: vnp_ResponseCode
+          schema:
+            type: string
+        - in: query
+          name: vnp_TransactionStatus
+          schema:
+            type: string
+      responses:
+        '200':
+          description: VNPay bắt buộc nhận mã phản hồi chuẩn
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VNPayIPNResponse'
+  /payments/vnpay/check-status/{txnRef}:
+    get:
+      tags: [Payments]
+      summary: Tra cứu trạng thái giao dịch
+      parameters:
+        - name: txnRef
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Trạng thái hiện tại
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentStatusResponse'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    CategoryId:
+      name: categoryId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Mã loại sản phẩm (lv001)
+    ProductId:
+      name: productId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Mã sản phẩm (lv001)
+  schemas:
+    LoginRequest:
+      type: object
+      required: [txtUserName, txtPassword]
+      properties:
+        txtUserName:
+          type: string
+        txtPassword:
+          type: string
+          format: password
+    AuthResponse:
+      type: object
+      required: [token, code]
+      properties:
+        token:
+          type: string
+        code:
+          type: string
+        userId:
+          type: string
+        role:
+          type: string
+        chiNhanh:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        errorCode:
+          type: string
+    GmacEnvelope:
+      type: object
+      properties:
+        table:
+          type: string
+        func:
+          type: string
+        payload:
+          type: object
+          additionalProperties: true
+    ProductCategory:
+      type: object
+      properties:
+        lv001:
+          type: string
+          description: Mã loại
+        lv002:
+          type: string
+          description: Tên loại
+        lv003:
+          type: string
+          description: Mô tả / ghi chú
+        lv004:
+          type: string
+        lv005:
+          type: string
+    CreateCategoryRequest:
+      allOf:
+        - $ref: '#/components/schemas/ProductCategory'
+      required: [lv001, lv002]
+      properties:
+        table:
+          type: string
+          example: Mb_loaiSanPham
+        func:
+          type: string
+          example: add
+    UpdateCategoryRequest:
+      allOf:
+        - $ref: '#/components/schemas/ProductCategory'
+      required: [lv001]
+      properties:
+        table:
+          type: string
+          example: Mb_loaiSanPham
+        func:
+          type: string
+          example: edit
+    Product:
+      type: object
+      properties:
+        lv001:
+          type: string
+          description: Mã sản phẩm
+        lv002:
+          type: string
+          description: Tên sản phẩm
+        lv003:
+          type: string
+          description: Mã loại
+        lv004:
+          type: string
+          description: Đơn vị tính
+        lv005:
+          type: string
+          description: Đơn vị quy đổi
+        lv006:
+          type: number
+          description: Tỷ lệ quy đổi
+        lv007:
+          type: number
+          description: Giá bán
+        lv008:
+          type: string
+          description: Loại tiền
+        lv009:
+          type: integer
+          description: Trạng thái hiển thị
+        lv010:
+          type: number
+          description: Định mức tồn tối thiểu
+        lv014:
+          type: string
+          description: URL hình ảnh
+    CreateProductRequest:
+      allOf:
+        - $ref: '#/components/schemas/Product'
+      required: [lv001, lv002, lv003]
+      properties:
+        table:
+          type: string
+          example: Mb_sanPham
+        func:
+          type: string
+          example: add
+    UpdateProductRequest:
+      allOf:
+        - $ref: '#/components/schemas/Product'
+      required: [lv001]
+      properties:
+        table:
+          type: string
+          example: Mb_sanPham
+        func:
+          type: string
+          example: edit
+    ProductBOM:
+      type: object
+      properties:
+        productId:
+          type: string
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductBOMComponent'
+    ProductBOMComponent:
+      type: object
+      required: [componentId, quantity]
+      properties:
+        componentId:
+          type: string
+        quantity:
+          type: number
+        unit:
+          type: string
+        wastagePercent:
+          type: number
+          format: float
+    ProductQueryRequest:
+      type: object
+      properties:
+        table:
+          type: string
+          example: Mb_sanPham
+        func:
+          type: string
+          example: data
+        maLoai:
+          type: string
+        keyword:
+          type: string
+    Warehouse:
+      type: object
+      properties:
+        maKho:
+          type: string
+        tenKho:
+          type: string
+        diaChi:
+          type: string
+        trangThai:
+          type: integer
+    StockQueryRequest:
+      type: object
+      properties:
+        table:
+          type: string
+          example: Mb_Kho
+        func:
+          type: string
+          example: LaySoLuongTonKhoNhieuSP
+        maKho:
+          type: string
+        danhSachSP:
+          type: array
+          items:
+            type: string
+    StockLevel:
+      type: object
+      properties:
+        maKho:
+          type: string
+        maSP:
+          type: string
+        soLuongTon:
+          type: number
+    PurchaseReceipt:
+      type: object
+      properties:
+        table:
+          type: string
+          example: Mb_PhieuNhap
+        func:
+          type: string
+          example: add
+        maKho:
+          type: string
+        maNguoiDung:
+          type: string
+        ghiChu:
+          type: string
+        loaiPhieu:
+          type: string
+        maThamChieu:
+          type: string
+        trangThai:
+          type: string
+        tongTien:
+          type: number
+        ngayNhap:
+          type: string
+          format: date-time
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReceiptLine'
+    ReceiptLine:
+      type: object
+      properties:
+        maSP:
+          type: string
+        soLuong:
+          type: number
+        donGia:
+          type: number
+    SaleOrder:
+      type: object
+      properties:
+        table:
+          type: string
+          example: Mb_thanhtoan
+        func:
+          type: string
+          example: thanhToan_contract
+        mahd:
+          type: string
+          description: Mã hóa đơn nội bộ
+        maBan:
+          type: string
+        thanhTien:
+          type: number
+        hinhThucThanhToan:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SaleOrderItem'
+    SaleOrderItem:
+      type: object
+      properties:
+        maSP:
+          type: string
+        soLuong:
+          type: number
+        donGia:
+          type: number
+    InventoryReportRequest:
+      type: object
+      properties:
+        table:
+          type: string
+          example: Mb_BaoCaoKho
+        func:
+          type: string
+          example: baoCaoDieuKien
+        maKho:
+          type: string
+        tuNgay:
+          type: string
+          format: date
+        denNgay:
+          type: string
+          format: date
+        keyword:
+          type: string
+    StockMovementReportRequest:
+      type: object
+      properties:
+        table:
+          type: string
+          example: Mb_BaoCaoKho
+        func:
+          type: string
+          example: baoCaoXuatNhapTon
+        maKho:
+          type: string
+        tuNgay:
+          type: string
+        denNgay:
+          type: string
+    VNPayIPNResponse:
+      type: object
+      properties:
+        RspCode:
+          type: string
+          enum: ['00','01','02','04','97','99']
+        Message:
+          type: string
+    PaymentStatusResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        status:
+          type: string
+          enum: [pending, success, failed]
+        message:
+          type: string
+        payment:
+          type: object
+          nullable: true

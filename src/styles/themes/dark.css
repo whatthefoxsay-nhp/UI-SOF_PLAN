@@ -1,0 +1,414 @@
+/* ================================================================
+   DARK THEME
+   Theme tối cho ứng dụng POS Cafe - Thân thiện với mắt ban đêm
+================================================================ */
+
+/* ============================================
+   DARK THEME VARIABLES
+============================================ */
+
+.theme-dark {
+  /* Primary colors remain same for brand consistency */
+  --color-primary: #3b82f6;
+  --color-primary-light: #60a5fa;
+  --color-primary-dark: #1d4ed8;
+  
+  /* Dark theme background colors */
+  --color-background: #0f172a;
+  --color-surface: #1e293b;
+  --color-surface-hover: #334155;
+  
+  /* Dark theme text colors */
+  --color-text: #f1f5f9;
+  --color-text-light: #94a3b8;
+  --color-text-lighter: #64748b;
+  --color-text-on-primary: #ffffff;
+  --color-text-on-secondary: #ffffff;
+  --color-text-on-surface: #f1f5f9;
+  
+  /* Dark theme gray scale */
+  --color-gray-50: #334155;
+  --color-gray-100: #475569;
+  --color-gray-200: #64748b;
+  --color-gray-300: #94a3b8;
+  --color-gray-400: #cbd5e1;
+  --color-gray-500: #e2e8f0;
+  --color-gray-600: #f1f5f9;
+  --color-gray-700: #f8fafc;
+  --color-gray-800: #0f172a;
+  --color-gray-900: #020617;
+  
+  /* Dark theme border colors */
+  --color-border: #334155;
+  --color-border-light: #475569;
+  --color-border-medium: #64748b;
+  --color-border-strong: #94a3b8;
+  
+  /* Dark theme status colors - adjusted for dark background */
+  --color-success: #10b981;
+  --color-success-light: rgba(16, 185, 129, 0.1);
+  --color-success-dark: #047857;
+  
+  --color-warning: #f59e0b;
+  --color-warning-light: rgba(245, 158, 11, 0.1);
+  --color-warning-dark: #d97706;
+  
+  --color-danger: #ef4444;
+  --color-danger-light: rgba(239, 68, 68, 0.1);
+  --color-danger-dark: #dc2626;
+  
+  --color-info: #06b6d4;
+  --color-info-light: rgba(6, 182, 212, 0.1);
+  --color-info-dark: #0891b2;
+  
+  /* Dark theme shadows */
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --shadow-strong-color: rgba(0, 0, 0, 0.5);
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-base: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.4), 0 10px 10px rgba(0, 0, 0, 0.3);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================
+   DARK THEME GLOBAL STYLES
+============================================ */
+
+.theme-dark body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+/* ============================================
+   DARK THEME COMPONENTS
+============================================ */
+
+/* Header in dark theme */
+.theme-dark .app-header {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Sidebar in dark theme */
+.theme-dark .app-sidebar {
+  background-color: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+}
+
+/* Cards in dark theme */
+.theme-dark .card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.theme-dark .card:hover {
+  background-color: var(--color-surface-hover);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Tables in dark theme */
+.theme-dark .table {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.theme-dark .table th {
+  background-color: var(--color-gray-800);
+  color: var(--color-text);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.theme-dark .table td {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.theme-dark .table tbody tr:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.theme-dark .table--striped tbody tr:nth-of-type(odd) td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Forms in dark theme */
+.theme-dark .form-input {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.theme-dark .form-input::placeholder {
+  color: var(--color-text-light);
+}
+
+.theme-dark .form-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.theme-dark .form-label {
+  color: var(--color-text);
+}
+
+/* Buttons in dark theme */
+.theme-dark .btn-ghost {
+  color: var(--color-text);
+}
+
+.theme-dark .btn-ghost:hover {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.theme-dark .btn-outline {
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.theme-dark .btn-outline:hover {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* ============================================
+   CAFE SPECIFIC DARK THEME
+============================================ */
+
+/* Tables (bàn) in dark theme */
+.theme-dark .ban-item--trong {
+  background-color: rgba(16, 185, 129, 0.15);
+  border-color: var(--color-success);
+  color: #6ee7b7;
+}
+
+.theme-dark .ban-item--co-khach {
+  background-color: rgba(239, 68, 68, 0.15);
+  border-color: var(--color-danger);
+  color: #fca5a5;
+}
+
+.theme-dark .ban-item--dat-truoc {
+  background-color: rgba(245, 158, 11, 0.15);
+  border-color: var(--color-warning);
+  color: #fbbf24;
+}
+
+.theme-dark .ban-item--don-dep {
+  background-color: rgba(6, 182, 212, 0.15);
+  border-color: var(--color-info);
+  color: #67e8f9;
+}
+
+/* Products in dark theme */
+.theme-dark .san-pham-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.theme-dark .san-pham-card:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-surface-hover);
+  box-shadow: var(--shadow-xl);
+}
+
+.theme-dark .san-pham-ten {
+  color: var(--color-text);
+}
+
+.theme-dark .san-pham-gia {
+  color: var(--color-primary);
+}
+
+.theme-dark .san-pham-mo-ta {
+  color: var(--color-text-light);
+}
+
+/* Cart in dark theme */
+.theme-dark .gio-hang-container {
+  background-color: var(--color-surface);
+}
+
+.theme-dark .gio-hang-header {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.theme-dark .gio-hang-item {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.theme-dark .gio-hang-item:hover {
+  background-color: var(--color-surface-hover);
+  box-shadow: var(--shadow-base);
+}
+
+.theme-dark .gio-hang-item-ten {
+  color: var(--color-text);
+}
+
+.theme-dark .gio-hang-item-gia {
+  color: var(--color-primary);
+}
+
+/* Payment in dark theme */
+.theme-dark .thanh-toan-container {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+.theme-dark .thanh-toan-section {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.theme-dark .phuong-thuc-item {
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.theme-dark .phuong-thuc-item:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-surface-hover);
+}
+
+.theme-dark .phuong-thuc-item--active {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+/* Invoice in dark theme */
+.theme-dark .hoa-don-container {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.theme-dark .hoa-don-table {
+  color: var(--color-text);
+}
+
+.theme-dark .hoa-don-table th {
+  background-color: var(--color-gray-800);
+  color: var(--color-text);
+}
+
+.theme-dark .hoa-don-table td {
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ============================================
+   AUTH MODULE DARK THEME
+============================================ */
+
+.theme-dark .auth-container {
+  background: linear-gradient(135deg, 
+    #0f172a 0%, 
+    #1e293b 50%, 
+    #334155 100%);
+}
+
+.theme-dark .auth-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.theme-dark .auth-form-input {
+  background-color: var(--color-background);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.theme-dark .auth-form-input::placeholder {
+  color: var(--color-text-light);
+}
+
+.theme-dark .auth-form-input:focus {
+  border-color: var(--color-primary);
+}
+
+.theme-dark .auth-form-label {
+  color: var(--color-text);
+}
+
+.theme-dark .auth-form-icon {
+  color: var(--color-text-light);
+}
+
+/* ============================================
+   SCROLLBAR DARK THEME
+============================================ */
+
+.theme-dark ::-webkit-scrollbar-track {
+  background-color: var(--color-gray-800);
+}
+
+.theme-dark ::-webkit-scrollbar-thumb {
+  background-color: var(--color-gray-600);
+}
+
+.theme-dark ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-gray-500);
+}
+
+/* ============================================
+   SELECTION DARK THEME
+============================================ */
+
+.theme-dark ::selection {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* ============================================
+   RESPONSIVE DARK THEME
+============================================ */
+
+@media (max-width: 768px) {
+  .theme-dark .auth-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+  
+  .theme-dark .san-pham-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+}
+
+/* ============================================
+   PRINT STYLES FOR DARK THEME
+============================================ */
+@media print {
+  .theme-dark {
+    --color-primary: #000000;
+    --color-text: #000000;
+    --color-background: #ffffff;
+    --color-surface: #ffffff;
+  }
+  
+  .theme-dark .hoa-don-container {
+    background-color: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+  
+  .theme-dark .hoa-don-table th {
+    background-color: #f5f5f5 !important;
+    color: black !important;
+  }
+  
+  .theme-dark .hoa-don-table td {
+    color: black !important;
+  }
+}

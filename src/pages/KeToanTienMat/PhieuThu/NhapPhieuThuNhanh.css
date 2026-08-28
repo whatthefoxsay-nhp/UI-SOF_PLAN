@@ -1,0 +1,309 @@
+/* =============================================================================
+   MODERN UI - NhapPhieuThuNhanh Component
+   Style: Glass morphism, Gradients, Micro-animations
+   Theme-aware: Supports Default (Blue Ocean) and Theme-1 (Cafe Classic)
+   ============================================================================= */
+
+/* === 1. CONTAINER & LAYOUT === */
+.nhap-phieu-thu-nhanh-container-wrapper {
+    padding: 20px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+    min-height: 100%;
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* === 2. CARD COMPONENT === */
+.nhap-phieu-thu-nhanh-card {
+    border: none !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 10px 15px -3px rgba(0, 0, 0, 0.08),
+        0 -1px 0 0 rgba(255, 255, 255, 0.8) inset !important;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 12px;
+}
+
+/* Gradient top accent - Default Blue Ocean */
+.nhap-phieu-thu-nhanh-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #197dd3 0%, #77d4fb 100%);
+    z-index: 10;
+}
+
+/* Card Header */
+.nhap-phieu-thu-nhanh-card .ant-card-head {
+    border-bottom: 1px solid #e2e8f0 !important;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+    padding: 8px 20px !important;
+    min-height: auto !important;
+}
+
+.nhap-phieu-thu-nhanh-card .ant-card-head-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    padding: 0 !important;
+}
+
+.nhap-phieu-thu-nhanh-card .ant-card-head-title::after {
+    display: none;
+}
+
+/* Card Body - Compact */
+.nhap-phieu-thu-nhanh-card .ant-card-body {
+    padding: 8px 16px !important;
+    background: transparent;
+}
+
+/* === 3. FORM STYLING === */
+.nhap-phieu-thu-form .ant-form-item {
+    margin-bottom: 8px;
+}
+
+.nhap-phieu-thu-form .ant-form-item-label {
+    padding-bottom: 0 !important;
+}
+
+.nhap-phieu-thu-form .ant-form-item-label>label {
+    color: #475569 !important;
+}
+
+.nhap-phieu-thu-form .ant-form-item-label>label::before {
+    display: none !important;
+}
+
+.nhap-phieu-thu-form .ant-form-item-required::after {
+    content: '*' !important;
+    color: #ef4444 !important;
+    margin-left: 4px !important;
+    display: inline !important;
+}
+
+/* Input Styling */
+.nhap-phieu-thu-form .ant-input,
+.nhap-phieu-thu-form .ant-input-number,
+.nhap-phieu-thu-form .ant-picker,
+.nhap-phieu-thu-form .ant-select-selector {
+    border-radius: 6px !important;
+    border: 1.5px solid #94a3b8 !important;
+    background: #ffffff !important;
+    transition: all 0.2s ease !important;
+}
+
+.nhap-phieu-thu-form .ant-input-number {
+    padding: 0 !important;
+}
+
+.nhap-phieu-thu-form .ant-input-number-input {
+    height: 30px !important;
+    padding: 0 12px !important;
+}
+
+.nhap-phieu-thu-form .ant-picker {
+    padding: 4px 12px !important;
+}
+
+.nhap-phieu-thu-form .ant-select-selector {
+    padding: 0 12px !important;
+}
+
+.nhap-phieu-thu-form .ant-select-selection-item,
+.nhap-phieu-thu-form .ant-select-selection-placeholder {
+    line-height: 36px !important;
+}
+
+.nhap-phieu-thu-form .ant-select-single .ant-select-selector .ant-select-selection-search-input {
+    height: 36px !important;
+}
+
+/* TextArea */
+.nhap-phieu-thu-form textarea.ant-input {
+    height: 32px !important;
+    min-height: 32px !important;
+    padding: 4px 12px !important;
+    resize: none;
+}
+
+/* Focus State - Default Blue Ocean */
+.nhap-phieu-thu-form .ant-input:focus,
+.nhap-phieu-thu-form .ant-input-number-focused,
+.nhap-phieu-thu-form .ant-picker-focused,
+.nhap-phieu-thu-form .ant-select-focused .ant-select-selector {
+    border-color: #197dd3 !important;
+    box-shadow: 0 0 0 4px rgba(25, 125, 211, 0.15) !important;
+}
+
+/* Hover State */
+.nhap-phieu-thu-form .ant-input:hover,
+.nhap-phieu-thu-form .ant-input-number:hover,
+.nhap-phieu-thu-form .ant-picker:hover,
+.nhap-phieu-thu-form .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+    border-color: #77d4fb !important;
+}
+
+/* === 4. BUTTONS === */
+.nhap-phieu-thu-nhanh-card .ant-btn-primary {
+    border-radius: 6px !important;
+    background: linear-gradient(135deg, #197dd3 0%, #77d4fb 100%) !important;
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(25, 125, 211, 0.35) !important;
+    transition: all 0.25s ease !important;
+}
+
+.nhap-phieu-thu-nhanh-card .ant-btn-primary:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px rgba(25, 125, 211, 0.45) !important;
+}
+
+.nhap-phieu-thu-nhanh-card .ant-btn-default {
+    border-radius: 6px !important;
+    border: 1.5px solid #e2e8f0 !important;
+    color: #64748b !important;
+    transition: all 0.2s ease !important;
+}
+
+.nhap-phieu-thu-nhanh-card .ant-btn-default:hover {
+    border-color: #cbd5e1 !important;
+    color: #475569 !important;
+    background: #f8fafc !important;
+}
+
+/* === 5. CHECKBOX === */
+.nhap-phieu-thu-form .ant-checkbox-wrapper {
+    margin-top: 20px;
+    padding: 0;
+    background: transparent;
+    border: none;
+}
+
+/* === 6. SECTION CHI TIET === */
+.section-chi-tiet .ant-card {
+    border: none !important;
+    border-radius: 16px !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 10px 15px -3px rgba(0, 0, 0, 0.08) !important;
+    overflow: hidden;
+    position: relative;
+}
+
+.section-chi-tiet .ant-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #197dd3 0%, #77d4fb 100%);
+    z-index: 10;
+}
+
+.section-chi-tiet .ant-card .ant-card-head {
+    border-bottom: 1px solid #e2e8f0 !important;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+    padding: 14px 0 !important;
+    min-height: auto !important;
+}
+
+.section-chi-tiet .ant-card .ant-card-head-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    padding: 0 !important;
+}
+
+.section-chi-tiet .ant-btn-primary {
+    margin-right: 14px;
+    height: 40px !important;
+    padding: 0 20px !important;
+    border-radius: 10px !important;
+    background: linear-gradient(135deg, #197dd3 0%, #77d4fb 100%) !important;
+    border: none !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 14px rgba(25, 125, 211, 0.35) !important;
+    transition: all 0.25s ease !important;
+}
+
+.section-chi-tiet .ant-btn-primary:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px rgba(25, 125, 211, 0.45) !important;
+}
+
+/* === 7. RESPONSIVE === */
+@media (max-width: 768px) {
+    .nhap-phieu-thu-nhanh-container-wrapper {
+        padding: 12px;
+    }
+
+    .nhap-phieu-thu-nhanh-card .ant-card-body {
+        padding: 16px !important;
+    }
+}
+
+/* Compact Tabs for the form */
+.nhap-phieu-thu-form .ant-tabs-tab {
+    padding: 5px 0 !important;
+}
+
+/* =============================================================================
+   THEME-1 OVERRIDES (Cafe Classic)
+   Applies when body has class "theme-1"
+   ============================================================================= */
+
+/* Card accent line - Cafe Brown */
+.theme-1 .nhap-phieu-thu-nhanh-card::before,
+.theme-1 .section-chi-tiet .ant-card::before {
+    background: linear-gradient(90deg, #8B4513 0%, #D2B48C 100%);
+}
+
+/* Focus state - Cafe Brown */
+.theme-1 .nhap-phieu-thu-form .ant-input:focus,
+.theme-1 .nhap-phieu-thu-form .ant-input-number-focused,
+.theme-1 .nhap-phieu-thu-form .ant-picker-focused,
+.theme-1 .nhap-phieu-thu-form .ant-select-focused .ant-select-selector {
+    border-color: #8B4513 !important;
+    box-shadow: 0 0 0 4px rgba(139, 69, 19, 0.15) !important;
+}
+
+/* Hover state - Cafe Brown */
+.theme-1 .nhap-phieu-thu-form .ant-input:hover,
+.theme-1 .nhap-phieu-thu-form .ant-input-number:hover,
+.theme-1 .nhap-phieu-thu-form .ant-picker:hover,
+.theme-1 .nhap-phieu-thu-form .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+    border-color: #D2B48C !important;
+}
+
+/* Primary buttons - Cafe Brown */
+.theme-1 .nhap-phieu-thu-nhanh-card .ant-btn-primary,
+.theme-1 .section-chi-tiet .ant-btn-primary {
+    background: linear-gradient(135deg, #8B4513 0%, #D2B48C 100%) !important;
+    box-shadow: 0 4px 14px rgba(139, 69, 19, 0.35) !important;
+}
+
+.theme-1 .nhap-phieu-thu-nhanh-card .ant-btn-primary:hover,
+.theme-1 .section-chi-tiet .ant-btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.45) !important;
+}

@@ -1,0 +1,583 @@
+/* =============================================================================
+   MODERN UI - NhapChiTietThuTien Component
+   Style: Glass morphism, Gradients, Micro-animations
+   Theme-aware: Supports Default (Blue Ocean) and Theme-1 (Cafe Classic)
+   ============================================================================= */
+
+/* === 1. CONTAINER & LAYOUT === */
+.chi-tiet-thu-tien-wrapper {
+    padding: 0 0 12px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+    min-height: 100%;
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* === 2. CARD COMPONENT === */
+.chi-tiet-thu-tien-card {
+    padding: 0 25px;
+    padding-bottom: 25px;
+    border: none !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 10px 15px -3px rgba(0, 0, 0, 0.08),
+        0 -1px 0 0 rgba(255, 255, 255, 0.8) inset !important;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Gradient top accent - Default Blue Ocean theme */
+.chi-tiet-thu-tien-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #197dd3 0%, #77d4fb 100%);
+    z-index: 10;
+}
+
+/* Card Header */
+.chi-tiet-thu-tien-card .ant-card-head {
+    border-bottom: 1px solid #e2e8f0 !important;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+    padding: 16px 24px !important;
+    min-height: auto !important;
+}
+
+.chi-tiet-thu-tien-card .ant-card-head-title {
+    padding: 0 !important;
+}
+
+.chi-tiet-thu-tien-card .ant-card-body {
+    padding: 0 !important;
+    background: transparent;
+}
+
+/* === 3. HEADER TITLE === */
+.chi-tiet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.chi-tiet-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: 14px;
+}
+
+/* Default Blue Ocean gradient for icon */
+.chi-tiet-header-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #197dd3 0%, #77d4fb 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(25, 125, 211, 0.35);
+}
+
+.chi-tiet-header-icon svg {
+    color: white;
+    width: 20px;
+    height: 20px;
+}
+
+.chi-tiet-header-title {
+    color: #0f172a;
+}
+
+.chi-tiet-header-subtitle {
+    color: #64748b;
+    margin-top: 2px;
+}
+
+/* === 4. ADD BUTTON - Default Blue Ocean === */
+.chi-tiet-add-btn {
+    border-radius: 6px !important;
+    background: linear-gradient(135deg, #197dd3 0%, #77d4fb 100%) !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    box-shadow: 0 4px 14px rgba(25, 125, 211, 0.35) !important;
+    transition: all 0.25s ease !important;
+}
+
+.chi-tiet-add-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(25, 125, 211, 0.45) !important;
+    filter: brightness(1.1) !important;
+}
+
+.chi-tiet-add-btn:active {
+    transform: translateY(0) !important;
+}
+
+/* === 5. TABLE STYLING === */
+.chi-tiet-table .ant-table {
+    background: transparent !important;
+    border-radius: 0 !important;
+}
+
+.chi-tiet-table .ant-table-container {
+    border-radius: 0 !important;
+}
+
+/* Table Header */
+.chi-tiet-table .ant-table-thead>tr>th {
+    background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%) !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+    text-transform: uppercase !important;
+    color: #475569 !important;
+    padding: 10px 12px !important;
+}
+
+.chi-tiet-table .ant-table-thead>tr>th:first-child {
+    padding-left: 24px !important;
+}
+
+.chi-tiet-table .ant-table-thead>tr>th:last-child {
+    padding-right: 24px !important;
+}
+
+/* Table Body */
+.chi-tiet-table .ant-table-tbody>tr>td {
+    padding: 8px 12px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    color: #334155 !important;
+    transition: all 0.2s ease !important;
+}
+
+.chi-tiet-table .ant-table-tbody>tr>td:first-child {
+    padding-left: 24px !important;
+}
+
+.chi-tiet-table .ant-table-tbody>tr>td:last-child {
+    padding-right: 24px !important;
+}
+
+/* Row Hover - Default Blue Ocean */
+.chi-tiet-table .ant-table-tbody>tr:hover>td {
+    background: rgba(25, 125, 211, 0.08) !important;
+}
+
+/* Zebra Stripe */
+.chi-tiet-table .ant-table-tbody>tr:nth-child(even)>td {
+    background: rgba(248, 250, 252, 0.5);
+}
+
+.chi-tiet-table .ant-table-tbody>tr:nth-child(even):hover>td {
+    background: rgba(25, 125, 211, 0.08) !important;
+}
+
+/* Row Animation */
+.chi-tiet-table .ant-table-tbody>tr {
+    animation: rowSlideIn 0.3s ease-out;
+    animation-fill-mode: both;
+}
+
+@keyframes rowSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Money columns */
+.chi-tiet-table .ant-table-tbody>tr>td:nth-child(1),
+.chi-tiet-table .ant-table-tbody>tr>td:nth-child(2) {
+    color: #059669;
+}
+
+/* === 6. ACTION BUTTONS === */
+.chi-tiet-action-btn {
+    padding: 6px 12px !important;
+    border-radius: 6px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Edit button - Default Blue Ocean */
+.chi-tiet-action-btn.edit-btn {
+    color: #197dd3 !important;
+}
+
+.chi-tiet-action-btn.edit-btn:hover {
+    background: rgba(25, 125, 211, 0.1) !important;
+    color: #1565c0 !important;
+}
+
+.chi-tiet-action-btn.delete-btn {
+    color: #ef4444 !important;
+}
+
+.chi-tiet-action-btn.delete-btn:hover {
+    background: rgba(239, 68, 68, 0.1) !important;
+    color: #dc2626 !important;
+}
+
+/* === 7. SUMMARY ROW === */
+
+.chi-tiet-table .ant-table-summary>tr>td {
+    padding: 10px 12px !important;
+    border-top: 2px solid #10b981 !important;
+}
+
+.chi-tiet-table .ant-table-summary>tr>td:first-child {
+    padding-left: 24px !important;
+    border-radius: 0 0 0 12px;
+}
+
+.chi-tiet-table .ant-table-summary>tr>td:last-child {
+    padding-right: 24px !important;
+    border-radius: 0 0 12px 0;
+}
+
+.summary-total-value {
+    color: #059669;
+}
+
+/* === 8. PAGINATION === */
+.chi-tiet-table .ant-pagination {
+    padding: 16px 24px !important;
+    margin: 0 !important;
+    background: rgba(248, 250, 252, 0.5);
+}
+
+.chi-tiet-table .ant-pagination-item {
+    border-radius: 6px !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+/* Pagination active - Default Blue Ocean */
+.chi-tiet-table .ant-pagination-item-active {
+    background: linear-gradient(135deg, #197dd3 0%, #77d4fb 100%) !important;
+    border: none !important;
+}
+
+.chi-tiet-table .ant-pagination-item-active a {
+    color: white !important;
+}
+
+/* === 9. MODAL STYLING === */
+.chi-tiet-modal .ant-modal-content {
+    border-radius: 20px !important;
+    overflow: hidden;
+    box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.25),
+        0 -1px 0 0 rgba(255, 255, 255, 0.1) inset !important;
+}
+
+/* Modal header - Default Blue Ocean */
+.chi-tiet-modal .ant-modal-header {
+    background: linear-gradient(135deg, #197dd3 0%, #77d4fb 100%) !important;
+    padding: 20px 24px !important;
+    border-bottom: none !important;
+}
+
+.chi-tiet-modal .ant-modal-title {
+    color: white !important;
+}
+
+.chi-tiet-modal .ant-modal-close {
+    color: rgba(255, 255, 255, 0.8) !important;
+    top: 16px !important;
+}
+
+.chi-tiet-modal .ant-modal-close:hover {
+    color: white !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.chi-tiet-modal .ant-modal-body {
+    padding: 24px !important;
+    background: #ffffff;
+}
+
+.chi-tiet-modal .ant-modal-footer {
+    padding: 16px 24px !important;
+    border-top: 1px solid #f1f5f9 !important;
+    background: #fafafa;
+}
+
+/* === 10. FORM STYLING === */
+.chi-tiet-form .ant-form-item {
+    margin-bottom: 20px;
+}
+
+.chi-tiet-form .ant-form-item-label>label {
+    color: #475569 !important;
+}
+
+.chi-tiet-form .ant-form-item-label>label::before {
+    display: none !important;
+}
+
+.chi-tiet-form .ant-form-item-required::after {
+    content: '*' !important;
+    color: #ef4444 !important;
+    margin-left: 4px !important;
+    display: inline !important;
+}
+
+/* Input Styling */
+.chi-tiet-form .ant-input,
+.chi-tiet-form .ant-input-number,
+.chi-tiet-form .ant-select-selector {
+    height: 44px !important;
+    border-radius: 10px !important;
+    border: 2px solid #e2e8f0 !important;
+    background: #ffffff !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+}
+
+.chi-tiet-form .ant-input-number {
+    padding: 0 !important;
+}
+
+.chi-tiet-form .ant-input-number-input {
+    height: 40px !important;
+    padding: 0 12px !important;
+}
+
+.chi-tiet-form .ant-select-selector {
+    padding: 0 12px !important;
+}
+
+.chi-tiet-form .ant-select-selection-item,
+.chi-tiet-form .ant-select-selection-placeholder {
+    line-height: 40px !important;
+}
+
+/* TextArea */
+.chi-tiet-form textarea.ant-input {
+    height: auto !important;
+    min-height: 88px !important;
+    padding: 12px !important;
+    resize: none;
+}
+
+/* Focus State - Default Blue Ocean */
+.chi-tiet-form .ant-input:focus,
+.chi-tiet-form .ant-input-number-focused,
+.chi-tiet-form .ant-select-focused .ant-select-selector {
+    border-color: #197dd3 !important;
+    box-shadow: 0 0 0 4px rgba(25, 125, 211, 0.15) !important;
+}
+
+/* Hover State */
+.chi-tiet-form .ant-input:hover,
+.chi-tiet-form .ant-input-number:hover,
+.chi-tiet-form .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+    border-color: #77d4fb !important;
+}
+
+/* === 11. MODAL BUTTONS === */
+.chi-tiet-modal .ant-btn-primary {
+    height: 42px !important;
+    padding: 0 24px !important;
+    border-radius: 10px !important;
+    background: linear-gradient(135deg, #197dd3 0%, #77d4fb 100%) !important;
+    border: none !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 14px rgba(25, 125, 211, 0.35) !important;
+    transition: all 0.25s ease !important;
+}
+
+.chi-tiet-modal .ant-btn-primary:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px rgba(25, 125, 211, 0.45) !important;
+}
+
+.chi-tiet-modal .ant-btn-default {
+    height: 42px !important;
+    padding: 0 24px !important;
+    border-radius: 10px !important;
+    border: 2px solid #e2e8f0 !important;
+    font-weight: 600 !important;
+    color: #64748b !important;
+    transition: all 0.2s ease !important;
+}
+
+.chi-tiet-modal .ant-btn-default:hover {
+    border-color: #cbd5e1 !important;
+    color: #475569 !important;
+    background: #f8fafc !important;
+}
+
+/* === 12. EMPTY STATE === */
+.chi-tiet-table .ant-empty {
+    padding: 48px 24px;
+}
+
+.chi-tiet-table .ant-empty-description {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* === 13. LOADING STATE - Default Blue Ocean === */
+.chi-tiet-table .ant-spin-dot-item {
+    background: #197dd3 !important;
+}
+
+/* === 14. RESPONSIVE === */
+@media (max-width: 768px) {
+    .chi-tiet-thu-tien-wrapper {
+        padding: 16px 0;
+    }
+
+    .chi-tiet-header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .chi-tiet-add-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    .chi-tiet-table .ant-table-thead>tr>th,
+    .chi-tiet-table .ant-table-tbody>tr>td {
+        padding: 12px !important;
+    }
+
+    .chi-tiet-table .ant-table-thead>tr>th:first-child,
+    .chi-tiet-table .ant-table-tbody>tr>td:first-child {
+        padding-left: 16px !important;
+    }
+}
+
+/* === 15. TOOLTIP === */
+.chi-tiet-tooltip .ant-tooltip-inner {
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 12px;
+}
+
+/* === 16. POPCONFIRM === */
+.ant-popconfirm .ant-popconfirm-buttons .ant-btn-primary {
+    background: #ef4444 !important;
+    border-color: #ef4444 !important;
+}
+
+.ant-popconfirm .ant-popconfirm-buttons .ant-btn-primary:hover {
+    background: #dc2626 !important;
+}
+
+/* =============================================================================
+   THEME-1 OVERRIDES (Cafe Classic)
+   Applies when body has class "theme-1"
+   Color palette: #8B4513, #D2B48C, #5D2F0A, #F4A460
+   ============================================================================= */
+
+/* Card accent line - Cafe Brown */
+.theme-1 .chi-tiet-thu-tien-card::before {
+    background: linear-gradient(90deg, #8B4513 0%, #D2B48C 100%);
+}
+
+/* Header icon - Cafe Brown */
+.theme-1 .chi-tiet-header-icon {
+    background: linear-gradient(135deg, #8B4513 0%, #D2B48C 100%);
+    box-shadow: 0 4px 14px rgba(139, 69, 19, 0.35);
+}
+
+/* Add button - Cafe Brown */
+.theme-1 .chi-tiet-add-btn {
+    background: linear-gradient(135deg, #8B4513 0%, #D2B48C 100%) !important;
+    box-shadow: 0 4px 14px rgba(139, 69, 19, 0.35) !important;
+}
+
+.theme-1 .chi-tiet-add-btn:hover {
+    box-shadow: 0 8px 25px rgba(139, 69, 19, 0.45) !important;
+}
+
+/* Row hover - Cafe Brown overlay */
+.theme-1 .chi-tiet-table .ant-table-tbody>tr:hover>td {
+    background: rgba(139, 69, 19, 0.08) !important;
+}
+
+.theme-1 .chi-tiet-table .ant-table-tbody>tr:nth-child(even):hover>td {
+    background: rgba(139, 69, 19, 0.08) !important;
+}
+
+/* Edit button - Cafe Brown */
+.theme-1 .chi-tiet-action-btn.edit-btn {
+    color: #8B4513 !important;
+}
+
+.theme-1 .chi-tiet-action-btn.edit-btn:hover {
+    background: rgba(139, 69, 19, 0.1) !important;
+    color: #5D2F0A !important;
+}
+
+/* Pagination active - Cafe Brown */
+.theme-1 .chi-tiet-table .ant-pagination-item-active {
+    background: linear-gradient(135deg, #8B4513 0%, #D2B48C 100%) !important;
+}
+
+/* Modal header - Cafe Brown */
+.theme-1 .chi-tiet-modal .ant-modal-header {
+    background: linear-gradient(135deg, #8B4513 0%, #D2B48C 100%) !important;
+}
+
+/* Focus state - Cafe Brown */
+.theme-1 .chi-tiet-form .ant-input:focus,
+.theme-1 .chi-tiet-form .ant-input-number-focused,
+.theme-1 .chi-tiet-form .ant-select-focused .ant-select-selector {
+    border-color: #8B4513 !important;
+    box-shadow: 0 0 0 4px rgba(139, 69, 19, 0.15) !important;
+}
+
+/* Hover state - Cafe Brown */
+.theme-1 .chi-tiet-form .ant-input:hover,
+.theme-1 .chi-tiet-form .ant-input-number:hover,
+.theme-1 .chi-tiet-form .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+    border-color: #D2B48C !important;
+}
+
+/* Modal primary button - Cafe Brown */
+.theme-1 .chi-tiet-modal .ant-btn-primary {
+    background: linear-gradient(135deg, #8B4513 0%, #D2B48C 100%) !important;
+    box-shadow: 0 4px 14px rgba(139, 69, 19, 0.35) !important;
+}
+
+.theme-1 .chi-tiet-modal .ant-btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.45) !important;
+}
+
+/* Loading spinner - Cafe Brown */
+.theme-1 .chi-tiet-table .ant-spin-dot-item {
+    background: #8B4513 !important;
+}

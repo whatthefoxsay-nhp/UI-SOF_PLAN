@@ -1,0 +1,556 @@
+/* Reset và base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --sidebar-width: 250px;
+}
+
+html, body, #root {
+  height: 100%;
+  min-height: 100dvh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  overflow: hidden;
+}
+
+/* Đặt nền gradient ở cấp root để tránh vùng trắng lộ ra dưới màn hình login
+   khi cửa sổ Electron đang ở trạng thái zoom/scale không chuẩn */
+html:has(.login-container),
+body:has(.login-container),
+#root:has(.login-container) {
+  background: linear-gradient(135deg, #197dd3 0%, #77d4fb 100%);
+}
+
+body {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Antd customizations */
+.ant-layout {
+  background: transparent;
+}
+
+/* Electron App: Fix Drawer click issues (close button, form fields) overlapping with window drag regions */
+.ant-drawer-root {
+  z-index: 2000 !important;
+}
+
+.ant-drawer-root .ant-drawer {
+  -webkit-app-region: no-drag !important;
+}
+
+.ant-drawer-root .ant-drawer * {
+  -webkit-app-region: no-drag !important;
+}
+
+/* Fixed layout styles */
+.app-layout {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.app-content {
+  height: calc(100vh - 64px);
+  margin-left: var(--sidebar-width, 250px);
+  transition: margin-left 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden; /* Chặn hoàn toàn scroll */
+  overflow-x: hidden;
+}
+
+.page-scroll-wrapper {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.page-scroll-wrapper--banhang {
+  overflow: hidden;
+}
+
+/* Scrollbar styles removed - no scroll needed */
+/*
+.app-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.app-content::-webkit-scrollbar-track {
+  background: rgba(25, 125, 211, 0.1);
+  border-radius: 4px;
+}
+
+.app-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #197dd3, #77d4fb);
+  border-radius: 4px;
+}
+
+.app-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #77d4fb, #197dd3);
+}
+*/
+
+.ant-layout-sider {
+  background: #fff !important;
+  border-right: 1px solid #f0f0f0;
+  position: fixed !important;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  z-index: 1001;
+}
+
+.ant-layout-header {
+  background: #fff !important;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 0;
+  height: 64px;
+  line-height: 20px;
+  position: fixed !important;
+  top: 0;
+  left: var(--sidebar-width, 250px);
+  right: 0;
+  z-index: 1000;
+}
+
+.ant-layout-content {
+  background: transparent;
+  min-height: calc(100vh - 64px);
+  position: relative;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.ant-layout-content::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../assets/Img/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 0.6;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Card styles */
+.ant-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+  border: 1px solid #f0f0f0;
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(2px);
+}
+
+/* Generic container backgrounds */
+.container:not(.container-sm):not(.container-md):not(.container-lg):not(.container-xl),
+.page-container,
+.main-container,
+.content-container {
+  position: relative;
+}
+
+.container:not(.container-sm):not(.container-md):not(.container-lg):not(.container-xl)::before,
+.page-container::before,
+.main-container::before,
+.content-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../assets/Img/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 0.6;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ant-card-head-title {
+  font-weight: 600;
+  color: #262626;
+}
+
+/* Button styles */
+.ant-btn {
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  position: relative;
+  z-index: 1;
+}
+
+.ant-btn-primary {
+  background: linear-gradient(135deg, #1890ff, #096dd9);
+  border: none;
+}
+
+.ant-btn-primary:hover {
+  background: linear-gradient(135deg, #096dd9, #0050b3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+}
+
+/* Input styles */
+.ant-input,
+.ant-input-number,
+.ant-select-selector {
+  border-radius: 6px;
+  border: 1px solid #d9d9d9;
+  transition: all 0.3s;
+}
+
+.ant-input:focus,
+.ant-input-focused,
+.ant-input-number:focus,
+.ant-input-number-focused,
+.ant-select-focused .ant-select-selector {
+  border-color: #1890ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+/* Table styles */
+.ant-table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ant-table-thead > tr > th {
+  background-color: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+  font-weight: 600;
+  color: #262626;
+}
+
+.ant-table-tbody > tr > td {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ant-table-tbody > tr:hover > td {
+  background-color: #f5f5f5;
+}
+
+/* ERP table standard: sync list screens with src/pages/NhanVien/NhanVien.jsx */
+:root {
+  --erp-table-fixed-height: calc(100vh - 350px);
+  --erp-table-border: #c1d9f3;
+  --erp-table-blue: #197dd3;
+  --erp-page-bg: #edf3fb;
+}
+
+.app-content :where([class*="khoContainer"], [class*="pageContainer"], [class*="page-container"]) {
+  background: var(--erp-page-bg) !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+.app-content :where(
+  [class*="compactToolbar"],
+  [class*="toolbarRow"],
+  [class*="filterToolbar"],
+  [class*="actionToolbar"],
+  [class*="batchActionBar"]
+) {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 5px 12px !important;
+  background: #ffffff !important;
+  border: 1px solid var(--erp-table-border) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 8px rgba(25, 125, 211, 0.07) !important;
+  margin-bottom: 8px !important;
+  min-height: 40px !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+}
+
+.app-content :where([class*="toolbarTitle"], [class*="pageTitle"]) {
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  white-space: nowrap !important;
+  color: var(--erp-table-blue) !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  line-height: 1.3 !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+.app-content :where([class*="toolbarSearch"], [class*="khoSearch"]) {
+  width: 200px !important;
+  flex: 0 0 200px !important;
+}
+
+.app-content :where([class*="toolbarDivider"]) {
+  width: 1px !important;
+  height: 18px !important;
+  background: var(--erp-table-border) !important;
+  flex-shrink: 0 !important;
+}
+
+.app-content :where(
+  [class*="mainCard"],
+  [class*="tableCard"],
+  [class*="mainTable"],
+  [class*="customTable"]
+) {
+  border-radius: 18px !important;
+  border: 1px solid var(--erp-table-border) !important;
+  background: #ffffff !important;
+  box-shadow: 0 12px 28px rgba(31, 108, 186, 0.08) !important;
+  overflow: hidden !important;
+}
+
+.app-content :where([class*="mainCard"], [class*="tableCard"]) > .ant-card-body,
+.app-content :where([class*="mainCard"], [class*="tableCard"]) .ant-card-body {
+  padding: 0 !important;
+}
+
+.app-content .ant-table-wrapper {
+  --erp-active-table-height: var(--erp-table-fixed-height);
+}
+
+.app-content .ant-table-wrapper .ant-table {
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 13px !important;
+}
+
+.app-content .ant-table-wrapper .ant-table-thead > tr > th {
+  background: #e4f1ff !important;
+  color: #4b4344 !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  padding: 6px 8px !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  border-bottom: 1px solid var(--erp-table-border) !important;
+}
+
+.app-content .ant-table-wrapper .ant-table-tbody > tr > td {
+  padding: 5px 8px !important;
+  color: #1e293b !important;
+  font-size: 14px !important;
+  line-height: 22px !important;
+  vertical-align: middle !important;
+}
+
+.app-content .ant-table-wrapper .ant-table-tbody > tr:nth-child(odd) > td {
+  background: #f4f9ff;
+}
+
+.app-content .ant-table-wrapper .ant-table-row:hover > td {
+  background-color: #e8f2ff !important;
+}
+
+.app-content .ant-table-wrapper .ant-table-cell:not(.ant-table-selection-column) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-content .ant-table-wrapper .ant-table-body {
+  min-height: var(--erp-active-table-height) !important;
+  max-height: var(--erp-active-table-height) !important;
+  overflow: auto !important;
+}
+
+.app-content .ant-table-wrapper .ant-table-container:not(:has(.ant-table-body)) .ant-table-content {
+  min-height: var(--erp-active-table-height) !important;
+  max-height: var(--erp-active-table-height) !important;
+  overflow: auto !important;
+}
+
+.app-content .ant-table-wrapper .ant-table-placeholder {
+  min-height: var(--erp-active-table-height) !important;
+}
+
+.app-content .ant-table-wrapper .ant-table-placeholder .ant-table-cell {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: var(--erp-active-table-height) !important;
+}
+
+.app-content .ant-table-wrapper .ant-pagination {
+  margin: 8px 12px !important;
+}
+
+/* Modal styles */
+.ant-modal {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ant-modal-header {
+  border-bottom: 1px solid #f0f0f0;
+  border-radius: 8px 8px 0 0;
+}
+
+.ant-modal-title {
+  font-weight: 600;
+  color: #262626;
+}
+
+/* Form styles */
+.ant-form-item-label > label {
+  font-weight: 500;
+  color: #262626;
+}
+
+.ant-form-item-explain-error {
+  font-size: 12px;
+}
+
+/* Menu styles */
+.ant-menu {
+  border: none;
+}
+
+.ant-menu-item {
+  margin: 4px 8px;
+  border-radius: 6px;
+  height: 40px;
+  line-height: 40px;
+}
+
+.ant-menu-item-selected {
+  background-color: #e6f7ff;
+  color: #1890ff;
+}
+
+.ant-menu-item:hover {
+  background-color: #f5f5f5;
+}
+
+/* Tag styles */
+.ant-tag {
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+/* Statistic styles */
+.ant-statistic {
+  text-align: center;
+}
+
+.ant-statistic-title {
+  color: #8c8c8c;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.ant-statistic-content {
+  color: #262626;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Common page styles */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-header h2 {
+  margin: 0;
+  color: #262626;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ant-layout-sider {
+    position: fixed !important;
+    z-index: 100;
+    height: 100vh;
+  }
+  
+  .ant-layout-content {
+    margin-left: 0 !important;
+  }
+  
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  
+  .page-header h2 {
+    text-align: center;
+  }
+}
+
+/* Loading animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading {
+  animation: spin 1s linear infinite;
+}
+
+/* Transition animations */
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}

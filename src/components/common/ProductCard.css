@@ -1,0 +1,283 @@
+/* ProductCard.css - Modern Square POS Design */
+
+/* Main product card - Vertical square layout for POS grid */
+.product-card {
+  border: none;
+  border-radius: 12px;
+  padding: 0;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+  height: 250px;
+  aspect-ratio: 1 / 1.4;
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 12px rgba(25, 125, 211, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.product-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.product-card.selected {
+  background: linear-gradient(145deg, #e3f2fd 0%, #bbdefb 100%);
+  box-shadow: 
+    0 0 0 2px #197dd3,
+    0 4px 12px rgba(25, 125, 211, 0.2);
+}
+
+.product-card.loading {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Image section - Top, takes most space */
+.product-image-wrapper {
+  width: 100%;
+  flex: 3;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+.product-image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transition: transform 0.2s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+.product-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  position: relative;
+}
+
+.product-image-placeholder img {
+  width: 180px !important;
+  height: 180px !important;
+  object-fit: contain;
+  opacity: 0.35;
+}
+
+/* Info section - Bottom, compact */
+/* Info section - Bottom, compact */
+.product-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Đổi từ center sang flex-start để nội dung đẩy từ trên xuống */
+  align-items: center;
+  padding: 8px 6px; /* Tăng padding */
+  background: #ffffff;
+  box-sizing: border-box;
+  margin: 0;
+  gap: 6px; /* Tăng gap để tách tên và giá */
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  min-height: auto; /* Bỏ fix cứng min-height */
+  max-height: none; /* Bỏ fix cứng max-height */
+  flex-shrink: 0;
+  flex: 1; /* Cho phép chiếm không gian còn lại */
+}
+
+.product-name {
+  display: block !important;
+  display: -webkit-box !important;
+  font-size: 12px !important; /* Tăng font size */
+  font-weight: 500 !important;
+  color: #374151 !important;
+  margin: 0 !important;
+  line-height: 1.3 !important;
+  max-height: none; /* Bỏ giới hạn chiều cao cứng */
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  text-align: center !important;
+  padding: 0 2px !important;
+  box-sizing: border-box !important;
+  word-break: break-word;
+  order: 1;
+  width: 100%;
+}
+
+.product-price {
+  display: inline-block !important;
+  font-size: 14px !important; /* Tăng nhẹ font size giá */
+  font-weight: 700 !important;
+  color: #197dd3 !important;
+  margin: 0 !important;
+  padding: 4px 10px !important; /* Tăng padding nút giá */
+  text-align: center !important;
+  white-space: nowrap !important;
+  line-height: 1.1 !important;
+  box-sizing: border-box !important;
+  order: 2;
+  background: linear-gradient(135deg, rgba(25, 125, 211, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%);
+  border-radius: 6px;
+}
+
+.product-description {
+  display: none !important;
+}
+
+/* Category-specific accent - Left border */
+.category-coffee {
+  border-left: 3px solid #d97706;
+}
+
+.category-tea {
+  border-left: 3px solid #22c55e;
+}
+
+.category-juice {
+  border-left: 3px solid #f97316;
+}
+
+.category-cake {
+  border-left: 3px solid #e879f9;
+}
+
+.category-snack {
+  border-left: 3px solid #fbbf24;
+}
+
+.category-other {
+  border-left: 3px solid #94a3b8;
+}
+
+/* Badge styling - Top right corner */
+.product-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+  color: white;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  min-width: 18px;
+  text-align: center;
+  font-weight: 700;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
+  letter-spacing: 0.02em;
+}
+
+.product-badge.new {
+  background: linear-gradient(135deg, #22c55e 0%, #4ade80 100%);
+  box-shadow: 0 2px 6px rgba(34, 197, 94, 0.4);
+}
+
+.product-badge.hot {
+  background: linear-gradient(135deg, #f97316 0%, #fbbf24 100%);
+  box-shadow: 0 2px 6px rgba(249, 115, 22, 0.4);
+}
+
+.product-badge.sale {
+  background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+  box-shadow: 0 2px 6px rgba(236, 72, 153, 0.4);
+}
+
+/* Responsive adjustments for square grid */
+@media (max-width: 1200px) {
+  .product-name {
+    font-size: 10px !important;
+  }
+  
+  .product-price {
+    font-size: 12px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-info {
+    padding: 4px 6px 8px;
+  }
+  
+  .product-image-placeholder img {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  
+  .product-name {
+    font-size: 10px !important;
+    max-height: 26px;
+  }
+  
+  .product-price {
+    font-size: 11px !important;
+    padding: 2px 6px !important;
+  }
+}
+
+/* Extra actions styling */
+.product-extra-actions {
+  display: none;
+}
+
+/* Quick Add Button - Bottom Right Corner */
+.product-quick-add-btn {
+  position: absolute !important;
+  bottom: 8px !important;
+  right: 8px !important;
+  z-index: 10 !important;
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(135deg, #197dd3 0%, #77d4fb 100%) !important;
+  border: none !important;
+  box-shadow: 0 2px 6px rgba(25, 125, 211, 0.4) !important;
+  transition: all 0.2s ease !important;
+  opacity: 0.85;
+}
+
+.product-quick-add-btn:hover {
+  transform: scale(1.1) !important;
+  opacity: 1 !important;
+  box-shadow: 0 4px 12px rgba(25, 125, 211, 0.5) !important;
+  background: linear-gradient(135deg, #77d4fb 0%, #197dd3 100%) !important;
+}
+
+.product-quick-add-btn:active {
+  transform: scale(0.95) !important;
+}
+
+.product-card:hover .product-quick-add-btn {
+  opacity: 1;
+}

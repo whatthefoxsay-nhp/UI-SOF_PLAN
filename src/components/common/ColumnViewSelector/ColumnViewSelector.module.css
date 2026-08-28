@@ -1,0 +1,54 @@
+.container {
+    display: inline-flex;
+    align-items: center;
+}
+
+.segmented {
+    background-color: #f1f5f9 !important;
+    border: 1px solid #c1d9f3 !important;
+    border-radius: 10px !important;
+    padding: 3px !important;
+    transition: all 0.3s ease;
+}
+
+.segmented:hover {
+    border-color: #197dd3 !important;
+}
+
+.optionLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #4b4344;
+    transition: color 0.2s ease;
+}
+
+.optionLabel svg {
+    color: #8c8c8c;
+    transition: color 0.2s ease;
+}
+
+.segmented :global(.ant-segmented-item-selected) {
+    background-color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(25, 125, 211, 0.15) !important;
+    border-radius: 8px !important;
+}
+
+.segmented :global(.ant-segmented-item-selected) .optionLabel {
+    color: #197dd3 !important;
+}
+
+.segmented :global(.ant-segmented-item-selected) svg {
+    color: #197dd3 !important;
+}
+
+.segmented :global(.ant-segmented-item:not(.ant-segmented-item-selected):hover) .optionLabel {
+    color: #197dd3 !important;
+}
+
+.segmented :global(.ant-segmented-item:not(.ant-segmented-item-selected):hover) svg {
+    color: #197dd3 !important;
+}

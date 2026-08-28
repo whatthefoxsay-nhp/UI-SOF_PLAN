@@ -1,0 +1,21 @@
+{
+  "short_name": "SOF PLAN",
+  "name": "SOF PLAN - Phan mem Quan ly Ke hoach va Cong viec",
+  "description": "Ứng dụng Quản trị Doanh nghiệp - Desktop App",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#197dd3",
+  "background_color": "#ffffff",
+  "categories": [
+    "business",
+    "productivity",
+    "lifestyle"
+  ]
+}

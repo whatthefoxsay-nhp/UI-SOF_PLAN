@@ -1,0 +1,357 @@
+/* Table Operations Styles */
+.table-operations-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.table-operations-toolbar .ant-btn {
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.table-operations-toolbar .ant-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(25, 125, 211, 0.2);
+}
+
+/* Table Merge Animation System */
+@keyframes tableMergeSlide {
+  0% {
+    transform: scale(1) translateX(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.8) translateX(20px);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(0) translateX(40px);
+    opacity: 0;
+  }
+}
+
+@keyframes tableMergeGrow {
+  0% {
+    transform: scale(1);
+    background-color: #fff;
+    border-color: #d9d9d9;
+  }
+  50% {
+    transform: scale(1.1);
+    background-color: #f0f8ff;
+    border-color: #197dd3;
+    box-shadow: 0 4px 16px rgba(25, 125, 211, 0.3);
+  }
+  100% {
+    transform: scale(1);
+    background-color: #e6f7ff;
+    border-color: #197dd3;
+    box-shadow: 0 2px 8px rgba(25, 125, 211, 0.2);
+  }
+}
+
+@keyframes tableMergePulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes mergeSuccess {
+  0% {
+    transform: scale(1);
+    background: linear-gradient(135deg, #52c41a, #73d13d);
+  }
+  50% {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #73d13d, #95de64);
+  }
+  100% {
+    transform: scale(1);
+    background: linear-gradient(135deg, #52c41a, #73d13d);
+  }
+}
+
+/* Table Card States */
+.table-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+  position: relative;
+  overflow: hidden;
+}
+
+.table-card.merging-source {
+  animation: tableMergeSlide 1.5s ease-in-out forwards;
+  z-index: 10;
+}
+
+.table-card.merging-target {
+  animation: tableMergeGrow 1.5s ease-in-out forwards;
+  z-index: 5;
+}
+
+.table-card.merge-success {
+  animation: mergeSuccess 1s ease-in-out;
+  background: linear-gradient(135deg, #52c41a, #73d13d) !important;
+  color: white !important;
+}
+
+.table-card.merge-processing {
+  animation: tableMergePulse 2s infinite;
+}
+
+/* Merge Progress Overlay */
+.merge-progress-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(25, 125, 211, 0.8), rgba(119, 212, 251, 0.8));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  z-index: 100;
+  opacity: 0;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; }
+  20%, 80% { opacity: 1; }
+}
+
+/* Merge Connection Line */
+.merge-connection-line {
+  position: absolute;
+  height: 3px;
+  background: linear-gradient(90deg, #197dd3, #77d4fb);
+  z-index: 50;
+  opacity: 0;
+  animation: drawLine 1.5s ease-in-out;
+}
+
+@keyframes drawLine {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    width: 100%;
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+    opacity: 0;
+  }
+}
+
+/* Merged Table Indicator */
+.merged-table-indicator {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: linear-gradient(135deg, #52c41a, #73d13d);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: bounceIn 0.5s ease-in-out;
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Table selection cards in modals */
+.table-select-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table-select-card:hover {
+  box-shadow: 0 4px 12px rgba(25, 125, 211, 0.15);
+  transform: translateY(-2px);
+}
+
+.table-select-card.selected {
+  border-color: #197dd3 !important;
+  background-color: #f0f8ff !important;
+  box-shadow: 0 4px 16px rgba(25, 125, 211, 0.2);
+}
+
+.table-select-card .ant-badge {
+  font-weight: 600;
+  color: #4b4344;
+}
+
+.table-select-card.selected .ant-badge {
+  color: #197dd3;
+}
+
+/* Operation modal content */
+.operation-modal-content {
+  padding: 16px 0;
+}
+
+.operation-modal-selection {
+  margin-top: 16px;
+  padding: 12px;
+  background: #f0f0f0;
+  border-radius: 6px;
+  border: 1px solid #d9d9d9;
+}
+
+.operation-warning-box {
+  background: #fff2e8;
+  border: 1px solid #ffec8b;
+  border-radius: 6px;
+  padding: 12px;
+  margin: 16px 0;
+}
+
+.operation-warning-box .ant-typography {
+  margin: 0;
+}
+
+/* Table operations buttons in invoice view */
+.invoice-operations {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.invoice-operations .ant-btn {
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.invoice-operations .ant-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Merge button */
+.btn-merge {
+  background: #52c41a;
+  border-color: #52c41a;
+  color: white;
+}
+
+.btn-merge:hover {
+  background: #389e0d !important;
+  border-color: #389e0d !important;
+  color: white !important;
+}
+
+/* Split button */
+.btn-split {
+  background: #fa8c16;
+  border-color: #fa8c16;
+  color: white;
+}
+
+.btn-split:hover {
+  background: #d46b08 !important;
+  border-color: #d46b08 !important;
+  color: white !important;
+}
+
+/* Transfer button */
+.btn-transfer {
+  background: #1890ff;
+  border-color: #1890ff;
+  color: white;
+}
+
+.btn-transfer:hover {
+  background: #096dd9 !important;
+  border-color: #096dd9 !important;
+  color: white !important;
+}
+
+/* Modal styles for table operations */
+.table-operation-modal .ant-modal-header {
+  background: linear-gradient(135deg, #197dd3, #77d4fb);
+  border-radius: 8px 8px 0 0;
+}
+
+.table-operation-modal .ant-modal-title {
+  color: white;
+  font-weight: 600;
+}
+
+.table-operation-modal .ant-modal-close-x {
+  color: white;
+}
+
+.table-operation-modal .ant-modal-close-x:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+/* Empty state for table selection */
+.table-selection-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px dashed #d9d9d9;
+}
+
+.table-selection-empty .anticon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: #bfbfbf;
+}
+
+/* Loading states for operations */
+.operation-loading {
+  text-align: center;
+  padding: 20px;
+}
+
+.operation-loading .anticon {
+  color: #197dd3;
+}

@@ -1,0 +1,417 @@
+/* ============================================
+   ENHANCED RESPONSIVE COMPONENTS
+   Tăng cường responsive cho các component chính của ứng dụng POS
+============================================ */
+
+/* ============================================
+   BUTTON OVERFLOW PREVENTION
+============================================ */
+
+/* Container for buttons that need to wrap */
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  width: 100%;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Ant Design Space component enhancements */
+.ant-space.responsive-wrap {
+  flex-wrap: wrap !important;
+}
+
+.ant-space.responsive-wrap .ant-space-item {
+  flex: 1 1 auto;
+  min-width: fit-content;
+}
+
+@media (max-width: 640px) {
+  .button-container,
+  .button-row {
+    gap: var(--space-1);
+  }
+  
+  .button-container .btn,
+  .button-row .btn {
+    flex: 1 1 auto;
+    min-width: var(--touch-target-min);
+    max-width: none;
+  }
+}
+
+/* ============================================
+   FORM CONTROLS - TOUCH OPTIMIZED
+============================================ */
+
+input, select, textarea, .ant-input, .ant-select {
+  min-height: var(--form-control-height);
+  padding: var(--form-control-padding);
+  font-size: var(--font-size-base);
+  border-radius: var(--form-control-radius);
+  transition: var(--transition-base);
+}
+
+@media (min-width: 1024px) {
+  input, select, textarea, .ant-input, .ant-select {
+    min-height: var(--form-control-height-lg);
+    padding: var(--form-control-padding-lg);
+    font-size: var(--font-size-lg);
+  }
+}
+
+@media (min-width: 1920px) {
+  input, select, textarea, .ant-input, .ant-select {
+    font-size: var(--font-size-xl);
+    padding: var(--space-6);
+  }
+}
+
+/* ============================================
+   CARD COMPONENTS - RESPONSIVE PADDING
+============================================ */
+
+.card, .ant-card {
+  padding: var(--card-padding);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+}
+
+@media (min-width: 1024px) {
+  .card, .ant-card {
+    padding: var(--card-padding-lg);
+  }
+}
+
+@media (min-width: 1920px) {
+  .card, .ant-card {
+    padding: var(--space-10);
+  }
+}
+
+/* ============================================
+   TABLE COMPONENTS - ENHANCED SPACING
+============================================ */
+
+.table td, .table th, .ant-table-cell {
+  padding: var(--table-cell-padding);
+  font-size: var(--font-size-base);
+}
+
+@media (min-width: 1024px) {
+  .table td, .table th, .ant-table-cell {
+    padding: var(--table-cell-padding-lg);
+    font-size: var(--font-size-lg);
+  }
+}
+
+@media (min-width: 1920px) {
+  .table td, .table th, .ant-table-cell {
+    padding: var(--space-6) var(--space-8);
+    font-size: var(--font-size-xl);
+  }
+}
+
+/* ============================================
+   NAVIGATION COMPONENTS
+============================================ */
+
+.nav-item, .ant-menu-item {
+  min-height: var(--touch-target-min);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-base);
+}
+
+@media (min-width: 1024px) {
+  .nav-item, .ant-menu-item {
+    min-height: var(--touch-target-comfortable);
+    padding: var(--space-4) var(--space-6);
+    font-size: var(--font-size-lg);
+  }
+}
+
+/* ============================================
+   MODAL AND DIALOG ENHANCEMENTS
+============================================ */
+
+.modal, .ant-modal {
+  width: 90%;
+  max-width: 600px;
+}
+
+@media (min-width: 768px) {
+  .modal, .ant-modal {
+    width: 80%;
+    max-width: 800px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .modal, .ant-modal {
+    width: 70%;
+    max-width: 1000px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .modal, .ant-modal {
+    width: 60%;
+    max-width: 1200px;
+  }
+}
+
+/* ============================================
+   LAYOUT COMPONENTS
+============================================ */
+
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: var(--content-max-width);
+    padding-left: var(--content-padding);
+    padding-right: var(--content-padding);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: var(--content-max-width-lg);
+    padding-left: var(--content-padding-lg);
+    padding-right: var(--content-padding-lg);
+  }
+}
+
+/* ============================================
+   SIDEBAR RESPONSIVE BEHAVIOR
+============================================ */
+
+.sidebar {
+  width: var(--sidebar-width);
+  transition: width var(--transition-base);
+}
+
+.sidebar.collapsed {
+  width: var(--sidebar-collapsed-width);
+}
+
+@media (min-width: 1440px) {
+  .sidebar {
+    width: var(--sidebar-width-lg);
+  }
+}
+
+/* ============================================
+   HEADER RESPONSIVE BEHAVIOR
+============================================ */
+
+.header {
+  height: var(--header-height);
+  padding: 0 var(--space-4);
+}
+
+@media (min-width: 1024px) {
+  .header {
+    height: var(--header-height-lg);
+    padding: 0 var(--space-6);
+  }
+}
+
+@media (min-width: 1920px) {
+  .header {
+    padding: 0 var(--space-8);
+  }
+}
+
+/* ============================================
+   POS SPECIFIC COMPONENTS
+============================================ */
+
+/* Category Buttons */
+.category-button {
+  min-height: var(--btn-height-lg);
+  padding: var(--btn-padding-lg);
+  font-size: var(--font-size-base);
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@media (min-width: 1024px) {
+  .category-button {
+    min-height: var(--btn-height-xl);
+    padding: var(--btn-padding-xl);
+    font-size: var(--font-size-lg);
+  }
+}
+
+@media (min-width: 1920px) {
+  .category-button {
+    min-height: var(--btn-height-2xl);
+    font-size: var(--font-size-xl);
+  }
+}
+
+/* Payment Buttons */
+.payment-button {
+  min-height: 80px;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4) var(--space-6);
+}
+
+@media (min-width: 1024px) {
+  .payment-button {
+    min-height: 90px;
+    font-size: var(--font-size-2xl);
+    padding: var(--space-6) var(--space-8);
+  }
+}
+
+@media (min-width: 1920px) {
+  .payment-button {
+    min-height: 100px;
+    font-size: var(--font-size-3xl);
+    padding: var(--space-8) var(--space-10);
+  }
+}
+
+/* Table Status Buttons */
+.table-status-button {
+  min-width: 100px;
+  min-height: var(--btn-height-lg);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .table-status-button {
+    min-width: 120px;
+    min-height: var(--btn-height-xl);
+    font-size: var(--font-size-lg);
+  }
+}
+
+@media (min-width: 1440px) {
+  .table-status-button {
+    min-width: 140px;
+    min-height: 80px;
+    font-size: var(--font-size-xl);
+  }
+}
+
+@media (min-width: 1920px) {
+  .table-status-button {
+    min-width: 160px;
+    min-height: 90px;
+    font-size: var(--font-size-2xl);
+  }
+}
+
+/* Product Cards */
+.product-card {
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+@media (min-width: 1024px) {
+  .product-card {
+    padding: var(--space-6);
+  }
+}
+
+@media (min-width: 1920px) {
+  .product-card {
+    padding: var(--space-8);
+  }
+}
+
+/* ============================================
+   TOUCH DEVICE OPTIMIZATIONS
+============================================ */
+
+@media (pointer: coarse) {
+  /* When primary input method is touch */
+  button, .btn, input, select, textarea {
+    min-height: var(--touch-target-comfortable);
+  }
+  
+  .clickable, .selectable {
+    min-height: var(--touch-target-min);
+    min-width: var(--touch-target-min);
+  }
+  
+  /* Increase spacing for touch targets */
+  .touch-spacing > * + * {
+    margin-top: var(--space-2);
+  }
+  
+  /* Touch-friendly scrollbars */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-gray-400);
+    border-radius: var(--radius-full);
+    min-height: 40px;
+  }
+}
+
+/* ============================================
+   HIGH DPI DISPLAY OPTIMIZATIONS
+============================================ */
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .crisp-edges {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+  
+  border, .border {
+    border-width: 0.5px;
+  }
+}
+
+/* ============================================
+   REDUCED MOTION SUPPORT
+============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

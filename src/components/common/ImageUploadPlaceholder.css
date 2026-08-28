@@ -1,0 +1,144 @@
+/* Image Upload Placeholder Styles */
+.image-upload-placeholder {
+  display: inline-block;
+  position: relative;
+}
+
+.image-upload-container {
+  position: relative;
+  display: inline-block;
+}
+
+.image-upload-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.image-upload-container:hover .image-upload-overlay {
+  opacity: 1;
+}
+
+.upload-button,
+.preview-button,
+.delete-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #197dd3;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.upload-button:hover {
+  background: #197dd3;
+  color: white;
+  transform: scale(1.1);
+}
+
+.preview-button:hover {
+  background: #77d4fb;
+  color: white;
+  transform: scale(1.1);
+}
+
+.delete-button {
+  color: #ff4d4f;
+}
+
+.delete-button:hover {
+  background: #ff4d4f;
+  color: white;
+  transform: scale(1.1);
+}
+
+/* Loading state */
+.image-upload-placeholder .uploading {
+  opacity: 0.7;
+  animation: uploadPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes uploadPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Circle shape overlay */
+.image-upload-container .circle .image-upload-overlay {
+  border-radius: 50%;
+}
+
+/* Rounded shape overlay */
+.image-upload-container .rounded .image-upload-overlay {
+  border-radius: 8px;
+}
+
+/* Square shape overlay */
+.image-upload-container .square .image-upload-overlay {
+  border-radius: 0;
+}
+
+/* Disabled state */
+.image-upload-placeholder.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.image-upload-placeholder.disabled .image-upload-overlay {
+  display: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .upload-button,
+  .preview-button,
+  .delete-button {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+  
+  .image-upload-overlay {
+    gap: 6px;
+  }
+}
+
+/* Focus styles for accessibility */
+.upload-button:focus,
+.preview-button:focus,
+.delete-button:focus {
+  outline: 2px solid #197dd3;
+  outline-offset: 2px;
+}
+
+/* Error state */
+.image-upload-placeholder.error .image-upload-container {
+  border: 2px solid #ff4d4f;
+  border-radius: inherit;
+}
+
+/* Success state */
+.image-upload-placeholder.success .image-upload-container {
+  border: 2px solid #52c41a;
+  border-radius: inherit;
+}

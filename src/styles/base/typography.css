@@ -1,0 +1,411 @@
+/**
+ * TYPOGRAPHY.CSS
+ * Định nghĩa tất cả các kiểu chữ và text styles
+ * Sử dụng cho toàn bộ ứng dụng POS PMBH
+ */
+
+/* ==================== BASE TYPOGRAPHY ==================== */
+
+body {
+  font-family: var(--font-vietnamese);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--color-gray-800);
+  letter-spacing: 0.02em;
+}
+
+/* ==================== HEADINGS ==================== */
+
+.heading-1,
+.h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-6);
+}
+
+.heading-2,
+.h2 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-5);
+}
+
+.heading-3,
+.h3 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+  color: var(--color-gray-800);
+  margin-bottom: var(--space-4);
+}
+
+.heading-4,
+.h4 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  color: var(--color-gray-800);
+  margin-bottom: var(--space-3);
+}
+
+.heading-5,
+.h5 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  color: var(--color-gray-700);
+  margin-bottom: var(--space-3);
+}
+
+.heading-6,
+.h6 {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  color: var(--color-gray-700);
+  margin-bottom: var(--space-2);
+}
+
+/* ==================== BODY TEXT ==================== */
+
+.text-xs {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-normal);
+}
+
+.text-sm {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+.text-base {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+}
+
+.text-md {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+}
+
+.text-lg {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+}
+
+.text-xl {
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-relaxed);
+}
+
+/* ==================== FONT WEIGHTS ==================== */
+
+.font-light {
+  font-weight: var(--font-weight-light);
+}
+
+.font-normal {
+  font-weight: var(--font-weight-normal);
+}
+
+.font-medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.font-semibold {
+  font-weight: var(--font-weight-semibold);
+}
+
+.font-bold {
+  font-weight: var(--font-weight-bold);
+}
+
+.font-extrabold {
+  font-weight: var(--font-weight-extrabold);
+}
+
+/* ==================== TEXT COLORS ==================== */
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+.text-accent {
+  color: var(--color-accent);
+}
+
+.text-success {
+  color: var(--color-success);
+}
+
+.text-warning {
+  color: var(--color-warning);
+}
+
+.text-error {
+  color: var(--color-error);
+}
+
+.text-info {
+  color: var(--color-info);
+}
+
+.text-gray-50 { color: var(--color-gray-50); }
+.text-gray-100 { color: var(--color-gray-100); }
+.text-gray-200 { color: var(--color-gray-200); }
+.text-gray-300 { color: var(--color-gray-300); }
+.text-gray-400 { color: var(--color-gray-400); }
+.text-gray-500 { color: var(--color-gray-500); }
+.text-gray-600 { color: var(--color-gray-600); }
+.text-gray-700 { color: var(--color-gray-700); }
+.text-gray-800 { color: var(--color-gray-800); }
+.text-gray-900 { color: var(--color-gray-900); }
+
+.text-white {
+  color: var(--color-white);
+}
+
+.text-black {
+  color: var(--color-black);
+}
+
+/* ==================== TEXT ALIGNMENT ==================== */
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+/* ==================== TEXT DECORATION ==================== */
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.text-line-through {
+  text-decoration: line-through;
+}
+
+.text-no-decoration {
+  text-decoration: none;
+}
+
+/* ==================== TEXT TRANSFORM ==================== */
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-lowercase {
+  text-transform: lowercase;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.text-normal-case {
+  text-transform: none;
+}
+
+/* ==================== LINE HEIGHT ==================== */
+
+.leading-tight {
+  line-height: var(--line-height-tight);
+}
+
+.leading-normal {
+  line-height: var(--line-height-normal);
+}
+
+.leading-relaxed {
+  line-height: var(--line-height-relaxed);
+}
+
+.leading-loose {
+  line-height: var(--line-height-loose);
+}
+
+/* ==================== LETTER SPACING ==================== */
+
+.tracking-tight {
+  letter-spacing: -0.025em;
+}
+
+.tracking-normal {
+  letter-spacing: 0em;
+}
+
+.tracking-wide {
+  letter-spacing: 0.025em;
+}
+
+.tracking-wider {
+  letter-spacing: 0.05em;
+}
+
+.tracking-widest {
+  letter-spacing: 0.1em;
+}
+
+/* ==================== TEXT OVERFLOW ==================== */
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-clip {
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+.text-break {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.text-nowrap {
+  white-space: nowrap;
+}
+
+.text-wrap {
+  white-space: normal;
+}
+
+/* ==================== SPECIFIC POS TYPOGRAPHY ==================== */
+
+/* Logo và branding */
+.logo-text {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  letter-spacing: 0.05em;
+}
+
+/* Tiền tệ */
+.price-text {
+  font-family: var(--font-monospace);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+}
+
+.price-large {
+  font-size: var(--font-size-xl);
+}
+
+.price-medium {
+  font-size: var(--font-size-lg);
+}
+
+.price-small {
+  font-size: var(--font-size-base);
+}
+
+/* Mã code (mã sản phẩm, mã đơn hàng) */
+.code-text {
+  font-family: var(--font-monospace);
+  font-size: var(--font-size-sm);
+  background-color: var(--color-gray-100);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  color: var(--color-gray-700);
+}
+
+/* Thông báo trạng thái */
+.status-text {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Label form */
+.label-text {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-700);
+  margin-bottom: var(--space-1);
+  display: block;
+}
+
+/* Helper text */
+.helper-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-500);
+  margin-top: var(--space-1);
+}
+
+/* Error text */
+.error-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+  margin-top: var(--space-1);
+}
+
+/* Success text */
+.success-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-success);
+  margin-top: var(--space-1);
+}
+
+/* Page title */
+.page-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-6);
+}
+
+/* Section title */
+.section-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-800);
+  margin-bottom: var(--space-4);
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: var(--space-2);
+}
+
+/* Card title */
+.card-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-800);
+  margin-bottom: var(--space-3);
+}
+
+/* Breadcrumb */
+.breadcrumb-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+}
+
+.breadcrumb-current {
+  color: var(--color-gray-800);
+  font-weight: var(--font-weight-medium);
+}

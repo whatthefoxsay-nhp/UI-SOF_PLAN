@@ -1,0 +1,1145 @@
+/* ================================================================
+   HELPER UTILITIES
+   Các utility classes hữu ích cho development
+================================================================ */
+
+/* ============================================
+   DISPLAY UTILITIES
+============================================ */
+
+.show {
+  display: block !important;
+}
+
+.hide {
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden !important;
+}
+
+.visible {
+  visibility: visible !important;
+}
+
+.block {
+  display: block !important;
+}
+
+.inline {
+  display: inline !important;
+}
+
+.inline-block {
+  display: inline-block !important;
+}
+
+.flex {
+  display: flex !important;
+}
+
+.inline-flex {
+  display: inline-flex !important;
+}
+
+.grid {
+  display: grid !important;
+}
+
+.inline-grid {
+  display: inline-grid !important;
+}
+
+.table {
+  display: table !important;
+}
+
+.table-row {
+  display: table-row !important;
+}
+
+.table-cell {
+  display: table-cell !important;
+}
+
+/* ============================================
+   FLEXBOX UTILITIES
+============================================ */
+
+/* Flex Direction */
+.flex-row {
+  flex-direction: row !important;
+}
+
+.flex-row-reverse {
+  flex-direction: row-reverse !important;
+}
+
+.flex-col {
+  flex-direction: column !important;
+}
+
+.flex-col-reverse {
+  flex-direction: column-reverse !important;
+}
+
+/* Flex Wrap */
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap !important;
+}
+
+.flex-wrap-reverse {
+  flex-wrap: wrap-reverse !important;
+}
+
+/* Flex */
+.flex-1 {
+  flex: 1 1 0% !important;
+}
+
+.flex-auto {
+  flex: 1 1 auto !important;
+}
+
+.flex-initial {
+  flex: 0 1 auto !important;
+}
+
+.flex-none {
+  flex: none !important;
+}
+
+/* Flex Grow */
+.flex-grow {
+  flex-grow: 1 !important;
+}
+
+.flex-grow-0 {
+  flex-grow: 0 !important;
+}
+
+/* Flex Shrink */
+.flex-shrink {
+  flex-shrink: 1 !important;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0 !important;
+}
+
+/* Justify Content */
+.justify-start {
+  justify-content: flex-start !important;
+}
+
+.justify-end {
+  justify-content: flex-end !important;
+}
+
+.justify-center {
+  justify-content: center !important;
+}
+
+.justify-between {
+  justify-content: space-between !important;
+}
+
+.justify-around {
+  justify-content: space-around !important;
+}
+
+.justify-evenly {
+  justify-content: space-evenly !important;
+}
+
+/* Align Items */
+.items-start {
+  align-items: flex-start !important;
+}
+
+.items-end {
+  align-items: flex-end !important;
+}
+
+.items-center {
+  align-items: center !important;
+}
+
+.items-baseline {
+  align-items: baseline !important;
+}
+
+.items-stretch {
+  align-items: stretch !important;
+}
+
+/* Align Self */
+.self-auto {
+  align-self: auto !important;
+}
+
+.self-start {
+  align-self: flex-start !important;
+}
+
+.self-end {
+  align-self: flex-end !important;
+}
+
+.self-center {
+  align-self: center !important;
+}
+
+.self-stretch {
+  align-self: stretch !important;
+}
+
+.self-baseline {
+  align-self: baseline !important;
+}
+
+/* ============================================
+   GRID UTILITIES
+============================================ */
+
+/* Grid Template Columns */
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-12 {
+  grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-none {
+  grid-template-columns: none !important;
+}
+
+/* Grid Template Rows */
+.grid-rows-1 {
+  grid-template-rows: repeat(1, minmax(0, 1fr)) !important;
+}
+
+.grid-rows-2 {
+  grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.grid-rows-3 {
+  grid-template-rows: repeat(3, minmax(0, 1fr)) !important;
+}
+
+.grid-rows-4 {
+  grid-template-rows: repeat(4, minmax(0, 1fr)) !important;
+}
+
+.grid-rows-5 {
+  grid-template-rows: repeat(5, minmax(0, 1fr)) !important;
+}
+
+.grid-rows-6 {
+  grid-template-rows: repeat(6, minmax(0, 1fr)) !important;
+}
+
+.grid-rows-none {
+  grid-template-rows: none !important;
+}
+
+/* Grid Column Span */
+.col-auto {
+  grid-column: auto !important;
+}
+
+.col-span-1 {
+  grid-column: span 1 / span 1 !important;
+}
+
+.col-span-2 {
+  grid-column: span 2 / span 2 !important;
+}
+
+.col-span-3 {
+  grid-column: span 3 / span 3 !important;
+}
+
+.col-span-4 {
+  grid-column: span 4 / span 4 !important;
+}
+
+.col-span-5 {
+  grid-column: span 5 / span 5 !important;
+}
+
+.col-span-6 {
+  grid-column: span 6 / span 6 !important;
+}
+
+.col-span-full {
+  grid-column: 1 / -1 !important;
+}
+
+/* Grid Row Span */
+.row-auto {
+  grid-row: auto !important;
+}
+
+.row-span-1 {
+  grid-row: span 1 / span 1 !important;
+}
+
+.row-span-2 {
+  grid-row: span 2 / span 2 !important;
+}
+
+.row-span-3 {
+  grid-row: span 3 / span 3 !important;
+}
+
+.row-span-4 {
+  grid-row: span 4 / span 4 !important;
+}
+
+.row-span-5 {
+  grid-row: span 5 / span 5 !important;
+}
+
+.row-span-6 {
+  grid-row: span 6 / span 6 !important;
+}
+
+.row-span-full {
+  grid-row: 1 / -1 !important;
+}
+
+/* Grid Gap */
+.gap-0 {
+  gap: 0 !important;
+}
+
+.gap-1 {
+  gap: var(--space-1) !important;
+}
+
+.gap-2 {
+  gap: var(--space-2) !important;
+}
+
+.gap-3 {
+  gap: var(--space-3) !important;
+}
+
+.gap-4 {
+  gap: var(--space-4) !important;
+}
+
+.gap-5 {
+  gap: var(--space-5) !important;
+}
+
+.gap-6 {
+  gap: var(--space-6) !important;
+}
+
+.gap-8 {
+  gap: var(--space-8) !important;
+}
+
+.gap-10 {
+  gap: var(--space-10) !important;
+}
+
+.gap-12 {
+  gap: var(--space-12) !important;
+}
+
+/* ============================================
+   POSITION UTILITIES
+============================================ */
+
+.static {
+  position: static !important;
+}
+
+.fixed {
+  position: fixed !important;
+}
+
+.absolute {
+  position: absolute !important;
+}
+
+.relative {
+  position: relative !important;
+}
+
+.sticky {
+  position: sticky !important;
+}
+
+/* Top/Right/Bottom/Left */
+.inset-0 {
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+}
+
+.top-0 {
+  top: 0 !important;
+}
+
+.right-0 {
+  right: 0 !important;
+}
+
+.bottom-0 {
+  bottom: 0 !important;
+}
+
+.left-0 {
+  left: 0 !important;
+}
+
+.top-auto {
+  top: auto !important;
+}
+
+.right-auto {
+  right: auto !important;
+}
+
+.bottom-auto {
+  bottom: auto !important;
+}
+
+.left-auto {
+  left: auto !important;
+}
+
+/* ============================================
+   Z-INDEX UTILITIES
+============================================ */
+
+.z-0 {
+  z-index: 0 !important;
+}
+
+.z-10 {
+  z-index: 10 !important;
+}
+
+.z-20 {
+  z-index: 20 !important;
+}
+
+.z-30 {
+  z-index: 30 !important;
+}
+
+.z-40 {
+  z-index: 40 !important;
+}
+
+.z-50 {
+  z-index: 50 !important;
+}
+
+.z-auto {
+  z-index: auto !important;
+}
+
+/* ============================================
+   OVERFLOW UTILITIES
+============================================ */
+
+.overflow-auto {
+  overflow: auto !important;
+}
+
+.overflow-hidden {
+  overflow: hidden !important;
+}
+
+.overflow-visible {
+  overflow: visible !important;
+}
+
+.overflow-scroll {
+  overflow: scroll !important;
+}
+
+.overflow-x-auto {
+  overflow-x: auto !important;
+}
+
+.overflow-y-auto {
+  overflow-y: auto !important;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden !important;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden !important;
+}
+
+.overflow-x-scroll {
+  overflow-x: scroll !important;
+}
+
+.overflow-y-scroll {
+  overflow-y: scroll !important;
+}
+
+/* ============================================
+   FLOAT UTILITIES
+============================================ */
+
+.float-right {
+  float: right !important;
+}
+
+.float-left {
+  float: left !important;
+}
+
+.float-none {
+  float: none !important;
+}
+
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* ============================================
+   OBJECT FIT UTILITIES
+============================================ */
+
+.object-contain {
+  object-fit: contain !important;
+}
+
+.object-cover {
+  object-fit: cover !important;
+}
+
+.object-fill {
+  object-fit: fill !important;
+}
+
+.object-none {
+  object-fit: none !important;
+}
+
+.object-scale-down {
+  object-fit: scale-down !important;
+}
+
+/* Object Position */
+.object-bottom {
+  object-position: bottom !important;
+}
+
+.object-center {
+  object-position: center !important;
+}
+
+.object-left {
+  object-position: left !important;
+}
+
+.object-left-bottom {
+  object-position: left bottom !important;
+}
+
+.object-left-top {
+  object-position: left top !important;
+}
+
+.object-right {
+  object-position: right !important;
+}
+
+.object-right-bottom {
+  object-position: right bottom !important;
+}
+
+.object-right-top {
+  object-position: right top !important;
+}
+
+.object-top {
+  object-position: top !important;
+}
+
+/* ============================================
+   CURSOR UTILITIES
+============================================ */
+
+.cursor-auto {
+  cursor: auto !important;
+}
+
+.cursor-default {
+  cursor: default !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.cursor-wait {
+  cursor: wait !important;
+}
+
+.cursor-text {
+  cursor: text !important;
+}
+
+.cursor-move {
+  cursor: move !important;
+}
+
+.cursor-help {
+  cursor: help !important;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+}
+
+.cursor-grab {
+  cursor: grab !important;
+}
+
+.cursor-grabbing {
+  cursor: grabbing !important;
+}
+
+/* ============================================
+   USER SELECT UTILITIES
+============================================ */
+
+.select-none {
+  user-select: none !important;
+}
+
+.select-text {
+  user-select: text !important;
+}
+
+.select-all {
+  user-select: all !important;
+}
+
+.select-auto {
+  user-select: auto !important;
+}
+
+/* ============================================
+   POINTER EVENTS UTILITIES
+============================================ */
+
+.pointer-events-none {
+  pointer-events: none !important;
+}
+
+.pointer-events-auto {
+  pointer-events: auto !important;
+}
+
+/* ============================================
+   RESIZE UTILITIES
+============================================ */
+
+.resize-none {
+  resize: none !important;
+}
+
+.resize-y {
+  resize: vertical !important;
+}
+
+.resize-x {
+  resize: horizontal !important;
+}
+
+.resize {
+  resize: both !important;
+}
+
+/* ============================================
+   APPEARANCE UTILITIES
+============================================ */
+
+.appearance-none {
+  appearance: none !important;
+}
+
+/* ============================================
+   OUTLINE UTILITIES
+============================================ */
+
+.outline-none {
+  outline: 2px solid transparent !important;
+  outline-offset: 2px !important;
+}
+
+.outline {
+  outline: 2px solid var(--color-primary) !important;
+  outline-offset: 2px !important;
+}
+
+/* ============================================
+   BACKGROUND UTILITIES
+============================================ */
+
+.bg-transparent {
+  background-color: transparent !important;
+}
+
+.bg-current {
+  background-color: currentColor !important;
+}
+
+.bg-white {
+  background-color: var(--color-white) !important;
+}
+
+.bg-gray-50 {
+  background-color: var(--color-gray-50) !important;
+}
+
+.bg-gray-100 {
+  background-color: var(--color-gray-100) !important;
+}
+
+.bg-gray-200 {
+  background-color: var(--color-gray-200) !important;
+}
+
+.bg-primary {
+  background-color: var(--color-primary) !important;
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary) !important;
+}
+
+.bg-success {
+  background-color: var(--color-success) !important;
+}
+
+.bg-warning {
+  background-color: var(--color-warning) !important;
+}
+
+.bg-danger {
+  background-color: var(--color-danger) !important;
+}
+
+.bg-info {
+  background-color: var(--color-info) !important;
+}
+
+/* ============================================
+   TEXT COLOR UTILITIES
+============================================ */
+
+.text-inherit {
+  color: inherit !important;
+}
+
+.text-current {
+  color: currentColor !important;
+}
+
+.text-transparent {
+  color: transparent !important;
+}
+
+.text-white {
+  color: var(--color-white) !important;
+}
+
+.text-gray-500 {
+  color: var(--color-gray-500) !important;
+}
+
+.text-gray-600 {
+  color: var(--color-gray-600) !important;
+}
+
+.text-gray-700 {
+  color: var(--color-gray-700) !important;
+}
+
+.text-gray-800 {
+  color: var(--color-gray-800) !important;
+}
+
+.text-gray-900 {
+  color: var(--color-gray-900) !important;
+}
+
+.text-primary {
+  color: var(--color-primary) !important;
+}
+
+.text-secondary {
+  color: var(--color-secondary) !important;
+}
+
+.text-success {
+  color: var(--color-success) !important;
+}
+
+.text-warning {
+  color: var(--color-warning) !important;
+}
+
+.text-danger {
+  color: var(--color-danger) !important;
+}
+
+.text-info {
+  color: var(--color-info) !important;
+}
+
+/* ============================================
+   BORDER UTILITIES
+============================================ */
+
+.border {
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: var(--color-border) !important;
+}
+
+.border-0 {
+  border-width: 0 !important;
+}
+
+.border-2 {
+  border-width: 2px !important;
+}
+
+.border-4 {
+  border-width: 4px !important;
+}
+
+.border-t {
+  border-top-width: 1px !important;
+  border-top-style: solid !important;
+  border-top-color: var(--color-border) !important;
+}
+
+.border-r {
+  border-right-width: 1px !important;
+  border-right-style: solid !important;
+  border-right-color: var(--color-border) !important;
+}
+
+.border-b {
+  border-bottom-width: 1px !important;
+  border-bottom-style: solid !important;
+  border-bottom-color: var(--color-border) !important;
+}
+
+.border-l {
+  border-left-width: 1px !important;
+  border-left-style: solid !important;
+  border-left-color: var(--color-border) !important;
+}
+
+/* Border Colors */
+.border-transparent {
+  border-color: transparent !important;
+}
+
+.border-current {
+  border-color: currentColor !important;
+}
+
+.border-white {
+  border-color: var(--color-white) !important;
+}
+
+.border-gray-200 {
+  border-color: var(--color-gray-200) !important;
+}
+
+.border-gray-300 {
+  border-color: var(--color-gray-300) !important;
+}
+
+.border-primary {
+  border-color: var(--color-primary) !important;
+}
+
+.border-secondary {
+  border-color: var(--color-secondary) !important;
+}
+
+.border-success {
+  border-color: var(--color-success) !important;
+}
+
+.border-warning {
+  border-color: var(--color-warning) !important;
+}
+
+.border-danger {
+  border-color: var(--color-danger) !important;
+}
+
+.border-info {
+  border-color: var(--color-info) !important;
+}
+
+/* Border Radius */
+.rounded-none {
+  border-radius: 0 !important;
+}
+
+.rounded-sm {
+  border-radius: var(--radius-sm) !important;
+}
+
+.rounded {
+  border-radius: var(--radius-base) !important;
+}
+
+.rounded-md {
+  border-radius: var(--radius-base) !important;
+}
+
+.rounded-lg {
+  border-radius: var(--radius-lg) !important;
+}
+
+.rounded-xl {
+  border-radius: var(--radius-xl) !important;
+}
+
+.rounded-2xl {
+  border-radius: var(--radius-2xl) !important;
+}
+
+.rounded-full {
+  border-radius: var(--radius-full) !important;
+}
+
+/* ============================================
+   SHADOW UTILITIES
+============================================ */
+
+.shadow-none {
+  box-shadow: none !important;
+}
+
+.shadow-sm {
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.shadow {
+  box-shadow: var(--shadow-base) !important;
+}
+
+.shadow-base {
+  box-shadow: var(--shadow-base) !important;
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.shadow-xl {
+  box-shadow: var(--shadow-xl) !important;
+}
+
+.shadow-2xl {
+  box-shadow: var(--shadow-2xl) !important;
+}
+
+/* ============================================
+   OPACITY UTILITIES
+============================================ */
+
+.opacity-0 {
+  opacity: 0 !important;
+}
+
+.opacity-25 {
+  opacity: 0.25 !important;
+}
+
+.opacity-50 {
+  opacity: 0.5 !important;
+}
+
+.opacity-75 {
+  opacity: 0.75 !important;
+}
+
+.opacity-100 {
+  opacity: 1 !important;
+}
+
+/* ============================================
+   CAFE SPECIFIC HELPERS
+============================================ */
+
+/* Price formatting */
+.price {
+  font-family: var(--font-family-mono) !important;
+  font-weight: var(--font-weight-semibold) !important;
+  color: var(--color-primary) !important;
+}
+
+.price::after {
+  content: 'đ';
+  margin-left: 2px;
+  font-size: 0.9em;
+}
+
+/* Status badges */
+.status-trong {
+  background-color: var(--color-success-light) !important;
+  color: var(--color-success-dark) !important;
+  border: 1px solid var(--color-success) !important;
+}
+
+.status-co-khach {
+  background-color: var(--color-danger-light) !important;
+  color: var(--color-danger-dark) !important;
+  border: 1px solid var(--color-danger) !important;
+}
+
+.status-dat-truoc {
+  background-color: var(--color-warning-light) !important;
+  color: var(--color-warning-dark) !important;
+  border: 1px solid var(--color-warning) !important;
+}
+
+.status-don-dep {
+  background-color: var(--color-info-light) !important;
+  color: var(--color-info-dark) !important;
+  border: 1px solid var(--color-info) !important;
+}
+
+/* Quantity display */
+.quantity {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 32px !important;
+  height: 32px !important;
+  border-radius: var(--radius-full) !important;
+  background-color: var(--color-primary) !important;
+  color: var(--color-white) !important;
+  font-weight: var(--font-weight-bold) !important;
+  font-size: var(--font-size-sm) !important;
+}
+
+/* Truncate text */
+.truncate {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.line-clamp-1 {
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 1 !important;
+  line-clamp: 1 !important;
+}
+
+.line-clamp-2 {
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
+}
+
+.line-clamp-3 {
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 3 !important;
+  line-clamp: 3 !important;
+}
+
+/* ============================================
+   DEBUG UTILITIES
+============================================ */
+
+.debug-red * {
+  border: 1px solid red !important;
+}
+
+.debug-blue * {
+  border: 1px solid blue !important;
+}
+
+.debug-green * {
+  border: 1px solid green !important;
+}
+
+.debug-bg {
+  background-color: rgba(255, 0, 0, 0.1) !important;
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.not-sr-only {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+}

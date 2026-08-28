@@ -1,0 +1,149 @@
+/**
+ * MAIN.CSS
+ * File CSS chính - Import tất cả các file CSS khác
+ * Đây là entry point cho toàn bộ hệ thống CSS
+ */
+
+/* ==================== BASE STYLES ==================== */
+/* Các file CSS cơ bản phải được import đầu tiên */
+
+@import './base/variables.css';     /* Biến CSS toàn cục */
+@import './base/reset.css';         /* CSS Reset */
+@import './base/typography.css';    /* Typography system */
+@import './base/layout.css';        /* Layout & Grid system */
+
+/* ==================== THEME STYLES ==================== */
+/* Theme mặc định và các theme khác */
+
+@import './themes/default.css';        /* Theme mặc định (Cafe Brown) */
+@import './themes/theme-1.css';        /* Theme 1 (Blue Ocean) */
+/* @import './themes/dark.css'; */        /* Theme tối */
+/* @import './themes/cafe.css'; */        /* Theme đặc biệt cho cafe */
+
+/* ==================== UTILITY STYLES ==================== */
+/* Các utility classes và helper functions */
+
+@import './utils/background.css';      /* Background utilities */
+@import './utils/responsive.css';      /* Responsive utilities - ENABLED */
+/* @import './utils/animations.css'; */   /* Animations & Transitions */
+/* @import './utils/helpers.css'; */      /* Helper classes */
+
+/* ==================== COMPONENT STYLES ==================== */
+/* Các component độc lập - có thể tái sử dụng */
+
+@import './components/buttons.css';    /* Buttons */
+@import './components/forms.css';      /* Form elements */
+@import './components/cards.css';      /* Cards */
+@import './components/tables.css';     /* Tables */
+@import './components/product-card.css'; /* Product cards */
+@import './components/theme-selector.css'; /* Theme selector */
+@import './components/enhanced-responsive.css'; /* Enhanced responsive components */
+/* @import './components/modals.css'; */     /* Modals & Dialogs */
+/* @import './components/navigation.css'; */ /* Navigation */
+/* @import './components/badges.css'; */     /* Badges & Tags */
+/* @import './components/tooltips.css'; */   /* Tooltips */
+/* @import './components/alerts.css'; */     /* Alerts & Messages */
+/* @import './components/loading.css'; */    /* Loading states */
+
+/* ==================== MODULE STYLES ==================== */
+/* Styles cho từng module cụ thể */
+
+@import './modules/auth.css';          /* Authentication */
+@import './modules/banhang.css';       /* Bán hàng module */
+/* @import './modules/sanpham.css'; */       /* Sản phẩm module */
+/* @import './modules/khachhang.css'; */     /* Khách hàng module */
+/* @import './modules/nhanvien.css'; */      /* Nhân viên module */
+@import './modules/baocao.css';        /* Báo cáo module */
+@import './modules/caidat.css';        /* Cài đặt module */
+
+/* ==================== PAGE STYLES ==================== */
+/* Styles cho từng page cụ thể */
+
+@import './pages/login.css';           /* Login page */
+@import './pages/pos.css';             /* POS interface */
+@import './pages/reports.css';         /* Reports pages */
+@import './pages/settings.css';        /* Settings pages */
+
+/* ==================== VENDOR OVERRIDES ==================== */
+/* Override styles cho các thư viện bên ngoài */
+
+@import './vendor/antd-overrides.css'; /* Ant Design overrides */
+@import './vendor/print.css';          /* Print styles */
+
+/* ==================== CUSTOM STYLES ==================== */
+/* Styles tùy chỉnh cuối cùng - có priority cao nhất */
+
+@import './custom/overrides.css';      /* Global overrides */
+@import './custom/patches.css';        /* Temporary fixes */
+@import './patches/button-overflow-fixes.css'; /* Button overflow fixes */
+
+/* ==================== GLOBAL STYLES ==================== */
+/* Một số styles toàn cục cần thiết */
+
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: var(--font-vietnamese);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-gray-800);
+  background-color: var(--bg-secondary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus outline cho accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Selection styles */
+::selection {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gray-400);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-500);
+}
+
+/* Print styles */
+@media print {
+  @page {
+    margin: 0.5in;
+  }
+  
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}

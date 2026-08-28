@@ -1,0 +1,2442 @@
+{
+  "generatedAt": "2026-07-29T09:36:10.242Z",
+  "counts": {
+    "routeImports": 43,
+    "traversedFrontendFiles": 164,
+    "usedServiceCodes": 154,
+    "backendIndexLines": 16354,
+    "clsallPhpFiles": 1532,
+    "directClsMatches": 126,
+    "directSwitchCaseMatches": 116,
+    "codesFoundSomewhereInIndex": 123,
+    "missingDirectMatches": 7,
+    "clsallRemovalCandidatesByDirectUseOnly": 1406
+  },
+  "routeImports": [
+    "./pages/QuanLyKeHoach/QuanLyKeHoach",
+    "./pages/QuanLyKeHoach/ChiTietKeHoach",
+    "./pages/QuanLyCongViec/LapKeHoach/XemKeHoach/QuanLyKeHoach",
+    "./pages/QuanLyCongViec/QuanLyCongViec/NhapCongViec/NhapCongViec",
+    "./pages/QuanLyCongViec/QuanLyCongViec/CongViecPhaiLam/CongViecPhaiLam",
+    "./pages/QuanLyCongViec/QuanLyCongViec/CongViecPhaiLamGiaoViec/CongViecPhaiLamGiaoViec",
+    "./pages/QuanLyCongViec/QuanLyCongViec/CongViecDoiDuyet/CongViecDoiDuyet",
+    "./pages/QuanLyCongViec/QuanLyCongViec/CongViecKhongHoanThanh/CongViecKhongHoanThanh",
+    "./pages/QuanLyCongViec/QuanLyCongViec/CongViecHoanThanh/CongViecHoanThanh",
+    "./pages/QuanLyCongViec/QuanLyCongViec/BaoCaoCongViecHangNgay/BaoCaoCongViecHangNgay",
+    "./pages/QuanLyCongViec/QuanLyCongViec/CongViecHangNgay/CongViecHangNgay",
+    "./pages/QuanLyCongViec/QuanLyCongViec/CongViecChuaBaoCao/CongViecChuaBaoCao.jsx",
+    "./pages/QuanLyCongViec/QuanLyCongViec/BaoCaoDuAn/BaoCaoDuAn",
+    "./pages/QuanLyCongViec/QuanLyCongViec/LuocDoKeHoach/LuocDoKeHoach",
+    "./pages/QuanLyCongViec/CanhBao/CanhBaoModules",
+    "./pages/QuanLyCongViec/CanhBao/CanhBaoModules",
+    "./pages/QuanLyCongViec/CanhBao/CanhBaoModules",
+    "./pages/QuanLyCongViec/CanhBao/CanhBaoModules",
+    "./pages/QuanLyCongViec/LapKeHoach/DanhMucCongViec/DanhMucPages",
+    "./pages/QuanLyCongViec/LapKeHoach/DanhMucCongViec/DanhMucPages",
+    "./pages/QuanLyCongViec/LapKeHoach/DanhMucCongViec/DanhMucPages",
+    "./pages/QuanLyCongViec/LapKeHoach/DanhMucCongViec/DanhMucPages",
+    "./pages/QuanLyCongViec/LapKeHoach/DanhMucCongViec/DanhMucPages",
+    "./pages/QuanLyCongViec/LapKeHoach/DanhMucCongViec/DanhMucPages",
+    "./pages/QuanLyCongViec/LapKeHoach/DanhMucCongViec/DanhMucPages",
+    "./pages/DieuKhienKPI/CacTieuChiKPI/CacTieuChiKPI",
+    "./pages/DieuKhienKPI/ThietLapKPI/ThietLapKPI",
+    "./pages/DieuKhienKPI/ThietLapKPI/ChiTietKPI",
+    "./pages/DieuKhienKPI/KPIHangThang/KPIHangThang",
+    "./pages/DieuKhienKPI/KPIGiamDoc/KPIGiamDoc",
+    "./pages/DieuKhienKPI/KPINhanSu/KPINhanSu",
+    "./pages/DieuKhienKPI/KPIQuanLy/KPIQuanLy",
+    "./pages/DieuKhienKPI/KPIBaoCao/KPIBaoCao",
+    "./pages/QuanLyNghiPhep/TrangThaiDonXinPhep/TrangThaiDonXinPhep",
+    "./pages/QuanLyNghiPhep/BaoCaoDonXinPhep/BaoCaoDonXinPhep",
+    "./pages/QuanLyNghiPhep/DonXinPhep/DonXinPhep",
+    "./pages/QuanLyNghiPhep/DonXinPhepTheoPhongBan/DonXinPhepTheoPhongBan",
+    "./pages/QuanLyNghiPhep/BgdDuyetDon/BgdDuyetDon",
+    "./pages/QuanLyNghiPhep/QuanLyTrucTiepDuyetDon/QuanLyTrucTiepDuyetDon",
+    "./pages/QuanLyDuAn/KabanPhongBan/KabanPhongBan",
+    "./pages/QuanLyDuAn/DanhMucDuAn/DanhMucDuAn",
+    "./pages/QuanLyDuAn/DanhMucDuAn/DanhMucDuAn",
+    "./pages/Common/UnderDevelopment"
+  ],
+  "byPrefix": {
+    "ac": 9,
+    "cr": 64,
+    "hr": 17,
+    "jo": 12,
+    "ki": 11,
+    "lv": 2,
+    "sl": 15,
+    "tc": 12,
+    "wh": 12
+  },
+  "usedServiceCodes": [
+    {
+      "code": "ac_lv0002_select_kttm",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selecttaikhoan.jsx"
+      ]
+    },
+    {
+      "code": "ac_lv0004_select_kttm",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectmalienket.jsx"
+      ]
+    },
+    {
+      "code": "ac_lv0005",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/denghichitiendetaildrawer.jsx",
+        "src/pages/quanlykehoach/denghichitiendetaildrawer.jsx"
+      ]
+    },
+    {
+      "code": "ac_lv0019",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/denghichitiendetaildrawer.jsx",
+        "src/pages/quanlykehoach/denghichitiendetaildrawer.jsx",
+        "src/pages/quanlykehoach/tabs/chitientab.jsx"
+      ]
+    },
+    {
+      "code": "ac_lv0030",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/danhmuccongviec/danhmuccongviec.config.js",
+        "src/pages/quanlycongviec/quanlycongviec/nhapcongviec/nhapcongviec.jsx",
+        "src/pages/quanlykehoach/tabs/xemtongcvtab.jsx"
+      ]
+    },
+    {
+      "code": "ac_lv0030_select_kttm",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectnguonphieu.jsx"
+      ]
+    },
+    {
+      "code": "ac_lv0075",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/ketoantienmat/phieuchi/nhapphieuchinhanhcontent.jsx",
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "ac_lv0077",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/ketoantienmat/phieuchi/nhapchitietphieuchi.jsx"
+      ]
+    },
+    {
+      "code": "ac_lv0302_select_kttm",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectsodot.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0002",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/danhmuccongviec/danhmuccongviec.config.js"
+      ]
+    },
+    {
+      "code": "cr_lv0003",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/danhmuccongviec/danhmuccongviec.config.js"
+      ]
+    },
+    {
+      "code": "cr_lv0004",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/congvieckhonghoanthanh/congvieckhonghoanthanh.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/congviecphailamgiaoviec/congviecphailamgiaoviec.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0005",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/xemtongcvtab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0005-1",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0005_12",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlykehoach/chitietkehoach.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0005_select_kttm",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectcongviec.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0006",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/baocaocongviechangngay/baocaocongviechangngay.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0007",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectloaihinhduan.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0008",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectkhuvucduan.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0025",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0025-1",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0025-21",
+      "directCls": false,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0025_xemtongcv",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/nhapcongviec/nhapcongviec.jsx",
+        "src/pages/quanlykehoach/tabs/giaoviectab.jsx",
+        "src/pages/quanlykehoach/tabs/hopdongtab.jsx",
+        "src/pages/quanlykehoach/tabs/nhapcongviectab.jsx",
+        "src/pages/quanlykehoach/tabs/xemtongcvtab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0031",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/danhmuccongviec/danhmuccongviec.config.js"
+      ]
+    },
+    {
+      "code": "cr_lv0032",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/thutientab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0033",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0037",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/nhapkhotab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0038",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/xuatkhotab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0046",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/canhbao/canhbaomodules.jsx",
+        "src/pages/quanlykehoach/tabs/canhbaotab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0047",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/canhbaotab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0048",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/canhbao/canhbaomodules.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0071",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0071-1",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0083",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selecttiendokehoach.jsx",
+        "src/pages/quanlycongviec/lapkehoach/danhmuccongviec/danhmuccongviec.config.js"
+      ]
+    },
+    {
+      "code": "cr_lv0085",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/congviecphailam/congviecphailam.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0085_overdue",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/baocaocongviecphailamquahan/baocaocongviecphailamquahan.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0086",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/congviecdoiduyet/congviecdoiduyet.jsx",
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "cr_lv0087",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/congviechoanthanh/congviechoanthanh.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0088",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/congvieckhonghoanthanh/congvieckhonghoanthanh.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0092",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/congviechoanthanh/congviechoanthanh.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/nhapcongviec/nhapcongviec.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0092-1",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlykehoach/chitietkehoach.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0093",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selecttrangthaiduan.jsx",
+        "src/pages/quanlycongviec/lapkehoach/danhmuccongviec/danhmuccongviec.config.js"
+      ]
+    },
+    {
+      "code": "cr_lv0094",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectkehoach.jsx",
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/quanlykehoach.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/quanlykehoach.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0094_detail",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/quanlykehoach.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/quanlykehoach.jsx",
+        "src/pages/quanlykehoach/tabs/baogiatab.jsx",
+        "src/pages/quanlykehoach/tabs/baohanhpbhtab.jsx",
+        "src/pages/quanlykehoach/tabs/canhbaotab.jsx",
+        "src/pages/quanlykehoach/tabs/dsnhanvienthamgiatab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0129",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/thongtinlienhetab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0141",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/baocaoduan/baocaoduan.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0145",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0150",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectphieudnvt.jsx",
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/denghivattutab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0150-17",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/denghivattutab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0151",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlykehoach/tabs/denghivattutab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0155",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlykehoach/tabs/denghivattutab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0157",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/danhmuccongviec/danhmuccongviec.config.js"
+      ]
+    },
+    {
+      "code": "cr_lv0158",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/congviecchuabaocao/congviecchuabaocao.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/congviechangngay/congviechangngay.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0158_unfinished",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/baocaocongviecchuahoanthanh/baocaocongviecchuahoanthanh.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0202",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/danhsachdenghimodal.jsx",
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/denghichitiendetaildrawer.jsx",
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/taodenghichitienmodal.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/danhsachdenghimodal.jsx",
+        "src/pages/quanlykehoach/denghichitiendetaildrawer.jsx",
+        "src/pages/quanlykehoach/tabs/denghichitientab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0202-16",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/denghichitientab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0203",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/denghichitiendetaildrawer.jsx",
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/taodenghichitienmodal.jsx",
+        "src/pages/quanlykehoach/denghichitiendetaildrawer.jsx",
+        "src/pages/quanlykehoach/tabs/denghichitientab.jsx",
+        "src/pages/quanlykehoach/taodenghichitienmodal.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0211",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/congviecchuabaocao/congviecchuabaocao.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/congviechangngay/congviechangngay.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0212",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/canhbao/canhbaomodules.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0216",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/congviecphailamgiaoviec/congviecphailamgiaoviec.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0278",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "cr_lv0313",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlykehoach/tabs/denghivattutab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0318",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "cr_lv0319",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "cr_lv0322",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "cr_lv0328",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "cr_lv0330",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/baohanhpbhtab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0330-11",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/baohanhpbhtab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0384",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlykehoach/tabs/denghivattutab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0408",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/luocdokehoach/luocdokehoach.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0409",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/tiendotab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0414",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/dssalethamgiatab.jsx"
+      ]
+    },
+    {
+      "code": "cr_lv0416",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/canhbao/canhbaomodules.jsx"
+      ]
+    },
+    {
+      "code": "hr_lv0001",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/services/apiservices.js",
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "hr_lv0002",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/baocaocongviechangngay/baocaocongviechangngay.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/congviechoanthanh/congviechoanthanh.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/congvieckhonghoanthanh/congvieckhonghoanthanh.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/congviecphailamgiaoviec/congviecphailamgiaoviec.jsx",
+        "src/services/apiservices.js",
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "hr_lv0002_select",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/checkbox/checkboxphongban.jsx",
+        "src/components/dropdown/selectphongban.jsx",
+        "src/pages/quanlykehoach/tabs/dsnhanvienthamgiatab.jsx"
+      ]
+    },
+    {
+      "code": "hr_lv0003",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/services/apiservices.js",
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "hr_lv0004",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "hr_lv0014",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "hr_lv0018",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selecttiente.jsx",
+        "src/services/apiservices.js",
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "hr_lv0020",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectchinhanh.jsx",
+        "src/components/dropdown/selectnhanvien.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/baocaocongviechangngay/baocaocongviechangngay.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/congviechoanthanh/congviechoanthanh.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/congvieckhonghoanthanh/congvieckhonghoanthanh.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/congviecphailamgiaoviec/congviecphailamgiaoviec.jsx",
+        "src/pages/quanlykehoach/tabs/denghivattutab.jsx",
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "hr_lv0020_select_kttm",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectnhanvien.jsx",
+        "src/pages/quanlykehoach/tabs/dsnhanvienthamgiatab.jsx",
+        "src/pages/quanlykehoach/tabs/thongtinlienhetab.jsx"
+      ]
+    },
+    {
+      "code": "hr_lv0024",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "hr_lv0026",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "hr_lv0035",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/services/apiservices.js",
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "hr_lv0036",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "hr_lv0040",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selecttailieu.jsx",
+        "src/pages/quanlykehoach/tabs/xemtongcvchild/tailieutab.jsx"
+      ]
+    },
+    {
+      "code": "hr_lv0042",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "hr_lv0043",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/services/apiservices.js",
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "hr_nhansu",
+      "directCls": false,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "jo_lv0003",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlynghiphep/trangthaidonxinphep/trangthaidonxinphep.jsx"
+      ]
+    },
+    {
+      "code": "jo_lv0004",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlynghiphep/donxinphep/donxinphep.jsx",
+        "src/pages/quanlynghiphep/donxinpheptheophongban/donxinpheptheophongban.jsx"
+      ]
+    },
+    {
+      "code": "jo_lv0004_1",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlynghiphep/donxinpheptheophongban/donxinpheptheophongban.jsx"
+      ]
+    },
+    {
+      "code": "jo_lv0008",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlynghiphep/quanlytructiepduyetdon/quanlytructiepduyetdon.jsx"
+      ]
+    },
+    {
+      "code": "jo_lv0009",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlynghiphep/quanlytructiepduyetdon/quanlytructiepduyetdon.jsx"
+      ]
+    },
+    {
+      "code": "jo_lv0010",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlynghiphep/quanlytructiepduyetdon/quanlytructiepduyetdon.jsx"
+      ]
+    },
+    {
+      "code": "jo_lv0012",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlynghiphep/bgdduyetdon/bgdduyetdon.jsx"
+      ]
+    },
+    {
+      "code": "jo_lv0013",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlynghiphep/bgdduyetdon/bgdduyetdon.jsx"
+      ]
+    },
+    {
+      "code": "jo_lv0014",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlynghiphep/bgdduyetdon/bgdduyetdon.jsx"
+      ]
+    },
+    {
+      "code": "jo_lv0016",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "jo_lv0040",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlynghiphep/baocaodonxinphep/baocaodonxinphep.jsx"
+      ]
+    },
+    {
+      "code": "jo_lv0100_select",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/checkbox/checkboxmaubaocao.jsx",
+        "src/components/dropdown/selecthinhthuc.jsx"
+      ]
+    },
+    {
+      "code": "ki_lv0001",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectkieudanhgia.jsx"
+      ]
+    },
+    {
+      "code": "ki_lv0001_select",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectkieudanhgia.jsx"
+      ]
+    },
+    {
+      "code": "ki_lv0002",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selecttieuchikpi.jsx",
+        "src/pages/dieukhienkpi/cactieuchikpi/cactieuchikpi.jsx"
+      ]
+    },
+    {
+      "code": "ki_lv0002_select",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selecttieuchikpi.jsx",
+        "src/pages/dieukhienkpi/thietlapkpi/chitietkpi.jsx",
+        "src/pages/dieukhienkpi/thietlapkpi/chitietkpiform.jsx"
+      ]
+    },
+    {
+      "code": "ki_lv0003",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/dieukhienkpi/thietlapkpi/thietlapkpi.jsx"
+      ]
+    },
+    {
+      "code": "ki_lv0004",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/dieukhienkpi/thietlapkpi/chitietkpi.jsx"
+      ]
+    },
+    {
+      "code": "ki_lv0005",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/dieukhienkpi/kpihangthang/kpihangthang.jsx"
+      ]
+    },
+    {
+      "code": "ki_lv0007",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/dieukhienkpi/kpigiamdoc/kpigiamdoc.jsx"
+      ]
+    },
+    {
+      "code": "ki_lv0008",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/dieukhienkpi/kpinhansu/kpinhansu.jsx"
+      ]
+    },
+    {
+      "code": "ki_lv0009",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/dieukhienkpi/kpiquanly/kpiquanly.jsx"
+      ]
+    },
+    {
+      "code": "ki_lv0010",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/dieukhienkpi/kpibaocao/kpibaocao.jsx"
+      ]
+    },
+    {
+      "code": "lv_loaddataapi",
+      "directCls": false,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/hooks/useapiqueries.js",
+        "src/hooks/usecmstablecolumns.js",
+        "src/hooks/usesavedtablepreferences.js",
+        "src/pages/dieukhienkpi/cactieuchikpi/cactieuchikpi.jsx",
+        "src/pages/dieukhienkpi/kpibaocao/kpibaocao.jsx",
+        "src/pages/dieukhienkpi/kpigiamdoc/kpigiamdoc.jsx",
+        "src/pages/dieukhienkpi/kpihangthang/kpihangthang.jsx",
+        "src/pages/dieukhienkpi/kpinhansu/kpinhansu.jsx"
+      ]
+    },
+    {
+      "code": "lv_loadnhanvien",
+      "directCls": false,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "sl_lv0001",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectkhachhang.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/congviechoanthanh/congviechoanthanh.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/congvieckhonghoanthanh/congvieckhonghoanthanh.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/congviecphailamgiaoviec/congviecphailamgiaoviec.jsx",
+        "src/pages/quanlykehoach/tabs/thongtinlienhetab.jsx"
+      ]
+    },
+    {
+      "code": "sl_lv0005",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/services/apiservices.js",
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "sl_lv0005_select_kttm",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectdonvi.jsx"
+      ]
+    },
+    {
+      "code": "sl_lv0006",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/services/apiservices.js",
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "sl_lv0007",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectsanpham.jsx",
+        "src/pages/quanlykehoach/tabs/denghivattutab.jsx",
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "sl_lv0008",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "sl_lv0009",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "sl_lv0010",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/baogiatab.jsx"
+      ]
+    },
+    {
+      "code": "sl_lv0010-1",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/baogiatab.jsx"
+      ]
+    },
+    {
+      "code": "sl_lv0013",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/hopdongtab.jsx",
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "sl_lv0013-1",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/hopdongtab.jsx"
+      ]
+    },
+    {
+      "code": "sl_lv0014",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "sl_lv0016",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "sl_lv0034",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectdoituongkhachhang.jsx",
+        "src/pages/quanlykehoach/tabs/thongtinlienhetab.jsx"
+      ]
+    },
+    {
+      "code": "sl_lv0201",
+      "directCls": false,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "tc_lv0001",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "tc_lv0002",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "tc_lv0002_select",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectloaidon.jsx"
+      ]
+    },
+    {
+      "code": "tc_lv0003",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "tc_lv0004",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "tc_lv0004_select",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectca.jsx"
+      ]
+    },
+    {
+      "code": "tc_lv0005",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "tc_lv0013",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/congviechoanthanh/congviechoanthanh.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/congvieckhonghoanthanh/congvieckhonghoanthanh.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/congviecphailamgiaoviec/congviecphailamgiaoviec.jsx",
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "tc_lv0013_select",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectlantinhluong.jsx"
+      ]
+    },
+    {
+      "code": "tc_lv0017",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "tc_lv0018",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "tc_lv0045",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/utils/vietnamesecolumntitles.js"
+      ]
+    },
+    {
+      "code": "wh_lv0001",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "wh_lv0002",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "wh_lv0003",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/quanlycongviec/congviechoanthanh/congviechoanthanh.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/congvieckhonghoanthanh/congvieckhonghoanthanh.jsx",
+        "src/pages/quanlycongviec/quanlycongviec/congviecphailamgiaoviec/congviecphailamgiaoviec.jsx",
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "wh_lv0003_select_kttm",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectncc.jsx"
+      ]
+    },
+    {
+      "code": "wh_lv0004",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "wh_lv0005",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "wh_lv0006",
+      "directCls": false,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "wh_lv0007",
+      "directCls": false,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "wh_lv0008",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/services/apiservices.js"
+      ]
+    },
+    {
+      "code": "wh_lv0021",
+      "directCls": true,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/muahangtab.jsx"
+      ]
+    },
+    {
+      "code": "wh_lv0021-1",
+      "directCls": true,
+      "directSwitchCase": false,
+      "foundInIndex": false,
+      "files": [
+        "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+        "src/pages/quanlykehoach/chitietkehoach.jsx",
+        "src/pages/quanlykehoach/tabs/muahangtab.jsx"
+      ]
+    },
+    {
+      "code": "wh_lv0021_select_kttm",
+      "directCls": false,
+      "directSwitchCase": true,
+      "foundInIndex": true,
+      "files": [
+        "src/components/dropdown/selectpmh.jsx"
+      ]
+    }
+  ],
+  "missingDirect": [
+    "cr_lv0025-21",
+    "hr_nhansu",
+    "lv_loaddataapi",
+    "lv_loadnhanvien",
+    "sl_lv0201",
+    "wh_lv0006",
+    "wh_lv0007"
+  ],
+  "directCls": [
+    "ac_lv0019",
+    "ac_lv0030",
+    "ac_lv0075",
+    "ac_lv0077",
+    "cr_lv0002",
+    "cr_lv0003",
+    "cr_lv0004",
+    "cr_lv0005",
+    "cr_lv0005-1",
+    "cr_lv0005_12",
+    "cr_lv0006",
+    "cr_lv0007",
+    "cr_lv0008",
+    "cr_lv0025",
+    "cr_lv0025-1",
+    "cr_lv0031",
+    "cr_lv0032",
+    "cr_lv0033",
+    "cr_lv0037",
+    "cr_lv0038",
+    "cr_lv0046",
+    "cr_lv0047",
+    "cr_lv0048",
+    "cr_lv0071",
+    "cr_lv0071-1",
+    "cr_lv0083",
+    "cr_lv0085",
+    "cr_lv0086",
+    "cr_lv0087",
+    "cr_lv0088",
+    "cr_lv0092",
+    "cr_lv0092-1",
+    "cr_lv0093",
+    "cr_lv0094",
+    "cr_lv0129",
+    "cr_lv0141",
+    "cr_lv0145",
+    "cr_lv0150",
+    "cr_lv0150-17",
+    "cr_lv0151",
+    "cr_lv0155",
+    "cr_lv0157",
+    "cr_lv0158",
+    "cr_lv0202",
+    "cr_lv0202-16",
+    "cr_lv0203",
+    "cr_lv0211",
+    "cr_lv0212",
+    "cr_lv0216",
+    "cr_lv0278",
+    "cr_lv0313",
+    "cr_lv0318",
+    "cr_lv0319",
+    "cr_lv0322",
+    "cr_lv0328",
+    "cr_lv0330",
+    "cr_lv0330-11",
+    "cr_lv0384",
+    "cr_lv0408",
+    "cr_lv0409",
+    "cr_lv0414",
+    "cr_lv0416",
+    "hr_lv0001",
+    "hr_lv0002",
+    "hr_lv0003",
+    "hr_lv0004",
+    "hr_lv0014",
+    "hr_lv0018",
+    "hr_lv0020",
+    "hr_lv0024",
+    "hr_lv0026",
+    "hr_lv0035",
+    "hr_lv0036",
+    "hr_lv0040",
+    "hr_lv0042",
+    "hr_lv0043",
+    "jo_lv0003",
+    "jo_lv0004",
+    "jo_lv0004_1",
+    "jo_lv0008",
+    "jo_lv0009",
+    "jo_lv0010",
+    "jo_lv0012",
+    "jo_lv0013",
+    "jo_lv0014",
+    "jo_lv0016",
+    "jo_lv0040",
+    "ki_lv0001",
+    "ki_lv0002",
+    "ki_lv0003",
+    "ki_lv0004",
+    "ki_lv0005",
+    "ki_lv0007",
+    "ki_lv0008",
+    "ki_lv0009",
+    "ki_lv0010",
+    "sl_lv0001",
+    "sl_lv0005",
+    "sl_lv0006",
+    "sl_lv0007",
+    "sl_lv0008",
+    "sl_lv0009",
+    "sl_lv0010",
+    "sl_lv0010-1",
+    "sl_lv0013",
+    "sl_lv0013-1",
+    "sl_lv0014",
+    "sl_lv0016",
+    "sl_lv0034",
+    "tc_lv0001",
+    "tc_lv0002",
+    "tc_lv0003",
+    "tc_lv0004",
+    "tc_lv0005",
+    "tc_lv0013",
+    "tc_lv0017",
+    "tc_lv0018",
+    "tc_lv0045",
+    "wh_lv0001",
+    "wh_lv0002",
+    "wh_lv0003",
+    "wh_lv0004",
+    "wh_lv0005",
+    "wh_lv0008",
+    "wh_lv0021",
+    "wh_lv0021-1"
+  ],
+  "inCases": [
+    "ac_lv0002_select_kttm",
+    "ac_lv0004_select_kttm",
+    "ac_lv0005",
+    "ac_lv0019",
+    "ac_lv0030",
+    "ac_lv0030_select_kttm",
+    "ac_lv0075",
+    "ac_lv0077",
+    "ac_lv0302_select_kttm",
+    "cr_lv0002",
+    "cr_lv0003",
+    "cr_lv0005_select_kttm",
+    "cr_lv0006",
+    "cr_lv0007",
+    "cr_lv0008",
+    "cr_lv0025_xemtongcv",
+    "cr_lv0031",
+    "cr_lv0046",
+    "cr_lv0048",
+    "cr_lv0083",
+    "cr_lv0085",
+    "cr_lv0085_overdue",
+    "cr_lv0086",
+    "cr_lv0087",
+    "cr_lv0088",
+    "cr_lv0092",
+    "cr_lv0093",
+    "cr_lv0094",
+    "cr_lv0094_detail",
+    "cr_lv0141",
+    "cr_lv0150",
+    "cr_lv0151",
+    "cr_lv0155",
+    "cr_lv0157",
+    "cr_lv0158",
+    "cr_lv0158_unfinished",
+    "cr_lv0202",
+    "cr_lv0203",
+    "cr_lv0211",
+    "cr_lv0212",
+    "cr_lv0216",
+    "cr_lv0278",
+    "cr_lv0313",
+    "cr_lv0318",
+    "cr_lv0319",
+    "cr_lv0322",
+    "cr_lv0328",
+    "cr_lv0384",
+    "cr_lv0408",
+    "cr_lv0416",
+    "hr_lv0001",
+    "hr_lv0002",
+    "hr_lv0002_select",
+    "hr_lv0003",
+    "hr_lv0004",
+    "hr_lv0014",
+    "hr_lv0018",
+    "hr_lv0020",
+    "hr_lv0020_select_kttm",
+    "hr_lv0024",
+    "hr_lv0026",
+    "hr_lv0035",
+    "hr_lv0036",
+    "hr_lv0040",
+    "hr_lv0042",
+    "hr_lv0043",
+    "jo_lv0003",
+    "jo_lv0004",
+    "jo_lv0004_1",
+    "jo_lv0008",
+    "jo_lv0009",
+    "jo_lv0010",
+    "jo_lv0012",
+    "jo_lv0013",
+    "jo_lv0014",
+    "jo_lv0016",
+    "jo_lv0040",
+    "jo_lv0100_select",
+    "ki_lv0001_select",
+    "ki_lv0002",
+    "ki_lv0002_select",
+    "ki_lv0003",
+    "ki_lv0004",
+    "ki_lv0005",
+    "ki_lv0007",
+    "ki_lv0008",
+    "ki_lv0009",
+    "ki_lv0010",
+    "sl_lv0001",
+    "sl_lv0005",
+    "sl_lv0005_select_kttm",
+    "sl_lv0006",
+    "sl_lv0007",
+    "sl_lv0008",
+    "sl_lv0009",
+    "sl_lv0013",
+    "sl_lv0014",
+    "sl_lv0016",
+    "sl_lv0034",
+    "tc_lv0001",
+    "tc_lv0002",
+    "tc_lv0002_select",
+    "tc_lv0003",
+    "tc_lv0004",
+    "tc_lv0004_select",
+    "tc_lv0005",
+    "tc_lv0013",
+    "tc_lv0013_select",
+    "tc_lv0017",
+    "tc_lv0018",
+    "tc_lv0045",
+    "wh_lv0001",
+    "wh_lv0003_select_kttm",
+    "wh_lv0008",
+    "wh_lv0021",
+    "wh_lv0021_select_kttm"
+  ],
+  "inIndexText": [
+    "ac_lv0002_select_kttm",
+    "ac_lv0004_select_kttm",
+    "ac_lv0005",
+    "ac_lv0019",
+    "ac_lv0030",
+    "ac_lv0030_select_kttm",
+    "ac_lv0075",
+    "ac_lv0077",
+    "ac_lv0302_select_kttm",
+    "cr_lv0002",
+    "cr_lv0003",
+    "cr_lv0004",
+    "cr_lv0005",
+    "cr_lv0005_select_kttm",
+    "cr_lv0006",
+    "cr_lv0007",
+    "cr_lv0008",
+    "cr_lv0025",
+    "cr_lv0025-1",
+    "cr_lv0025_xemtongcv",
+    "cr_lv0031",
+    "cr_lv0046",
+    "cr_lv0048",
+    "cr_lv0083",
+    "cr_lv0085",
+    "cr_lv0085_overdue",
+    "cr_lv0086",
+    "cr_lv0087",
+    "cr_lv0088",
+    "cr_lv0092",
+    "cr_lv0093",
+    "cr_lv0094",
+    "cr_lv0094_detail",
+    "cr_lv0141",
+    "cr_lv0150",
+    "cr_lv0151",
+    "cr_lv0155",
+    "cr_lv0157",
+    "cr_lv0158",
+    "cr_lv0158_unfinished",
+    "cr_lv0202",
+    "cr_lv0203",
+    "cr_lv0211",
+    "cr_lv0212",
+    "cr_lv0216",
+    "cr_lv0278",
+    "cr_lv0313",
+    "cr_lv0318",
+    "cr_lv0319",
+    "cr_lv0322",
+    "cr_lv0328",
+    "cr_lv0330",
+    "cr_lv0384",
+    "cr_lv0408",
+    "cr_lv0416",
+    "hr_lv0001",
+    "hr_lv0002",
+    "hr_lv0002_select",
+    "hr_lv0003",
+    "hr_lv0004",
+    "hr_lv0014",
+    "hr_lv0018",
+    "hr_lv0020",
+    "hr_lv0020_select_kttm",
+    "hr_lv0024",
+    "hr_lv0026",
+    "hr_lv0035",
+    "hr_lv0036",
+    "hr_lv0040",
+    "hr_lv0042",
+    "hr_lv0043",
+    "jo_lv0003",
+    "jo_lv0004",
+    "jo_lv0004_1",
+    "jo_lv0008",
+    "jo_lv0009",
+    "jo_lv0010",
+    "jo_lv0012",
+    "jo_lv0013",
+    "jo_lv0014",
+    "jo_lv0016",
+    "jo_lv0040",
+    "jo_lv0100_select",
+    "ki_lv0001",
+    "ki_lv0001_select",
+    "ki_lv0002",
+    "ki_lv0002_select",
+    "ki_lv0003",
+    "ki_lv0004",
+    "ki_lv0005",
+    "ki_lv0007",
+    "ki_lv0008",
+    "ki_lv0009",
+    "ki_lv0010",
+    "sl_lv0001",
+    "sl_lv0005",
+    "sl_lv0005_select_kttm",
+    "sl_lv0006",
+    "sl_lv0007",
+    "sl_lv0008",
+    "sl_lv0009",
+    "sl_lv0013",
+    "sl_lv0014",
+    "sl_lv0016",
+    "sl_lv0034",
+    "tc_lv0001",
+    "tc_lv0002",
+    "tc_lv0002_select",
+    "tc_lv0003",
+    "tc_lv0004",
+    "tc_lv0004_select",
+    "tc_lv0005",
+    "tc_lv0013",
+    "tc_lv0013_select",
+    "tc_lv0017",
+    "tc_lv0018",
+    "tc_lv0045",
+    "wh_lv0001",
+    "wh_lv0003",
+    "wh_lv0003_select_kttm",
+    "wh_lv0008",
+    "wh_lv0021",
+    "wh_lv0021_select_kttm"
+  ],
+  "touchedFiles": [
+    "src/auth/logo.png",
+    "src/components/checkbox/checkboxmaubaocao.jsx",
+    "src/components/checkbox/checkboxphongban.jsx",
+    "src/components/checkbox/checkboxtrangthainv.jsx",
+    "src/components/common/columnselector/columnselector.jsx",
+    "src/components/common/columnselector/columnselector.module.css",
+    "src/components/common/index.js",
+    "src/components/dropdown/selectca.jsx",
+    "src/components/dropdown/selectchinhanh.jsx",
+    "src/components/dropdown/selectcongviec.jsx",
+    "src/components/dropdown/selectdoituongkhachhang.jsx",
+    "src/components/dropdown/selectdonvi.jsx",
+    "src/components/dropdown/selectduan.jsx",
+    "src/components/dropdown/selecthinhthuc.jsx",
+    "src/components/dropdown/selectkehoach.jsx",
+    "src/components/dropdown/selectkhachhang.jsx",
+    "src/components/dropdown/selectkhuvucduan.jsx",
+    "src/components/dropdown/selectkieudanhgia.jsx",
+    "src/components/dropdown/selectlantinhluong.jsx",
+    "src/components/dropdown/selectloaidon.jsx",
+    "src/components/dropdown/selectloaihinhduan.jsx",
+    "src/components/dropdown/selectmalienket.jsx",
+    "src/components/dropdown/selectncc.jsx",
+    "src/components/dropdown/selectnguonphieu.jsx",
+    "src/components/dropdown/selectnhanvien.jsx",
+    "src/components/dropdown/selectphieudnvt.jsx",
+    "src/components/dropdown/selectphongban.jsx",
+    "src/components/dropdown/selectpmh.jsx",
+    "src/components/dropdown/selectsanpham.jsx",
+    "src/components/dropdown/selectsodot.jsx",
+    "src/components/dropdown/selecttaikhoan.jsx",
+    "src/components/dropdown/selecttailieu.jsx",
+    "src/components/dropdown/selecttiendokehoach.jsx",
+    "src/components/dropdown/selecttiente.jsx",
+    "src/components/dropdown/selecttieuchikpi.jsx",
+    "src/components/dropdown/selecttrangthaiduan.jsx",
+    "src/components/order/editphieumuahangdrawer.jsx",
+    "src/contexts/authcontext.jsx",
+    "src/contexts/tabcontext.jsx",
+    "src/hooks/useapiqueries.js",
+    "src/hooks/usebackendcolumnmanager.js",
+    "src/hooks/usecmstablecolumns.js",
+    "src/hooks/usesavedtablepreferences.js",
+    "src/pages/chamcong&tienluong/chamcong/chitietchamcong/styles.module.css",
+    "src/pages/chamcong&tienluong/thongtincc/style.module.css",
+    "src/pages/common/underdevelopment.jsx",
+    "src/pages/dieukhienkpi/cactieuchikpi/cactieuchikpi.css",
+    "src/pages/dieukhienkpi/cactieuchikpi/cactieuchikpi.jsx",
+    "src/pages/dieukhienkpi/cactieuchikpi/cactieuchikpiform.jsx",
+    "src/pages/dieukhienkpi/kpibaocao/kpibaocao.css",
+    "src/pages/dieukhienkpi/kpibaocao/kpibaocao.jsx",
+    "src/pages/dieukhienkpi/kpigiamdoc/kpigiamdoc.css",
+    "src/pages/dieukhienkpi/kpigiamdoc/kpigiamdoc.jsx",
+    "src/pages/dieukhienkpi/kpihangthang/kpihangthang.css",
+    "src/pages/dieukhienkpi/kpihangthang/kpihangthang.jsx",
+    "src/pages/dieukhienkpi/kpinhansu/kpinhansu.css",
+    "src/pages/dieukhienkpi/kpinhansu/kpinhansu.jsx",
+    "src/pages/dieukhienkpi/kpiquanly/kpiquanly.css",
+    "src/pages/dieukhienkpi/kpiquanly/kpiquanly.jsx",
+    "src/pages/dieukhienkpi/thietlapkpi/chitietkpi.jsx",
+    "src/pages/dieukhienkpi/thietlapkpi/chitietkpiform.jsx",
+    "src/pages/dieukhienkpi/thietlapkpi/thietlapkpi.css",
+    "src/pages/dieukhienkpi/thietlapkpi/thietlapkpi.jsx",
+    "src/pages/dieukhienkpi/thietlapkpi/thietlapkpiform.jsx",
+    "src/pages/ketoantienmat/phieuchi/ketoanluong/tratienluong.css",
+    "src/pages/ketoantienmat/phieuchi/nhapchitietphieuchi.jsx",
+    "src/pages/ketoantienmat/phieuchi/nhapphieuchinhanh.jsx",
+    "src/pages/ketoantienmat/phieuchi/nhapphieuchinhanhcontent.jsx",
+    "src/pages/ketoantienmat/phieuthu/nhapchitietthutien.css",
+    "src/pages/ketoantienmat/phieuthu/nhapphieuthunhanh.css",
+    "src/pages/nhanvien/styles.module.css",
+    "src/pages/phieumuahang/phieuchitabui.jsx",
+    "src/pages/phieumuahang/phieumuahang.css",
+    "src/pages/quanlycongviec/canhbao/canhbaomodules.jsx",
+    "src/pages/quanlycongviec/lapkehoach/danhmuccongviec/danhmuccongviec.config.js",
+    "src/pages/quanlycongviec/lapkehoach/danhmuccongviec/danhmuccongviec.jsx",
+    "src/pages/quanlycongviec/lapkehoach/danhmuccongviec/danhmuccongviec.module.css",
+    "src/pages/quanlycongviec/lapkehoach/danhmuccongviec/danhmucpages.jsx",
+    "src/pages/quanlycongviec/lapkehoach/xemkehoach/danhsachdenghimodal.jsx",
+    "src/pages/quanlycongviec/lapkehoach/xemkehoach/denghichitiendetaildrawer.jsx",
+    "src/pages/quanlycongviec/lapkehoach/xemkehoach/kehoachdetaildrawer.jsx",
+    "src/pages/quanlycongviec/lapkehoach/xemkehoach/quanlykehoach.jsx",
+    "src/pages/quanlycongviec/lapkehoach/xemkehoach/quanlykehoach.module.css",
+    "src/pages/quanlycongviec/lapkehoach/xemkehoach/taodenghichitienmodal.jsx",
+    "src/pages/quanlycongviec/quanlycongviec/baocaocongviecchuahoanthanh/baocaocongviecchuahoanthanh.jsx",
+    "src/pages/quanlycongviec/quanlycongviec/baocaocongviechangngay/baocaocongviechangngay.jsx",
+    "src/pages/quanlycongviec/quanlycongviec/baocaocongviechangngay/styles.module.css",
+    "src/pages/quanlycongviec/quanlycongviec/baocaocongviecphailamquahan/baocaocongviecphailamquahan.jsx",
+    "src/pages/quanlycongviec/quanlycongviec/baocaoduan/baocaoduan.jsx",
+    "src/pages/quanlycongviec/quanlycongviec/congviecchuabaocao/congviecchuabaocao.jsx",
+    "src/pages/quanlycongviec/quanlycongviec/congviecchuabaocao/styles.module.css",
+    "src/pages/quanlycongviec/quanlycongviec/congviecdoiduyet/congviecdoiduyet.jsx",
+    "src/pages/quanlycongviec/quanlycongviec/congviechangngay/congviechangngay.jsx",
+    "src/pages/quanlycongviec/quanlycongviec/congviechangngay/styles.module.css",
+    "src/pages/quanlycongviec/quanlycongviec/congviechoanthanh/congviechoanthanh.jsx",
+    "src/pages/quanlycongviec/quanlycongviec/congviechoanthanh/styles.module.css",
+    "src/pages/quanlycongviec/quanlycongviec/congvieckhonghoanthanh/congvieckhonghoanthanh.jsx",
+    "src/pages/quanlycongviec/quanlycongviec/congvieckhonghoanthanh/styles.module.css",
+    "src/pages/quanlycongviec/quanlycongviec/congviecphailam/congviecphailam.jsx",
+    "src/pages/quanlycongviec/quanlycongviec/congviecphailamgiaoviec/congviecphailamgiaoviec.jsx",
+    "src/pages/quanlycongviec/quanlycongviec/congviecphailamgiaoviec/styles.module.css",
+    "src/pages/quanlycongviec/quanlycongviec/luocdokehoach/luocdokehoach.jsx",
+    "src/pages/quanlycongviec/quanlycongviec/nhapcongviec/nhapcongviec.jsx",
+    "src/pages/quanlycongviec/quanlycongviec/nhapcongviec/styles.module.css",
+    "src/pages/quanlydenghivattu/quanlydenghivattu.css",
+    "src/pages/quanlyduan/danhmucduan/danhmucduan.jsx",
+    "src/pages/quanlyduan/kabanphongban/kabanphongban.jsx",
+    "src/pages/quanlyduan/kabanphongban/kabanphongban.module.css",
+    "src/pages/quanlykehoach/chitietkehoach.jsx",
+    "src/pages/quanlykehoach/danhsachdenghimodal.jsx",
+    "src/pages/quanlykehoach/denghichitiendetaildrawer.jsx",
+    "src/pages/quanlykehoach/quanlykehoach.jsx",
+    "src/pages/quanlykehoach/quanlykehoach.module.css",
+    "src/pages/quanlykehoach/tabs/baogiatab.jsx",
+    "src/pages/quanlykehoach/tabs/baohanhpbhtab.jsx",
+    "src/pages/quanlykehoach/tabs/canhbaotab.jsx",
+    "src/pages/quanlykehoach/tabs/chitientab.jsx",
+    "src/pages/quanlykehoach/tabs/denghichitientab.jsx",
+    "src/pages/quanlykehoach/tabs/denghivattutab.jsx",
+    "src/pages/quanlykehoach/tabs/dsnhanvienthamgiatab.jsx",
+    "src/pages/quanlykehoach/tabs/dssalethamgiatab.jsx",
+    "src/pages/quanlykehoach/tabs/giaoviectab.jsx",
+    "src/pages/quanlykehoach/tabs/hopdongtab.jsx",
+    "src/pages/quanlykehoach/tabs/kanbantab.jsx",
+    "src/pages/quanlykehoach/tabs/muahangdetail/purchasechildmodule.jsx",
+    "src/pages/quanlykehoach/tabs/muahangtab.jsx",
+    "src/pages/quanlykehoach/tabs/nhapcongviectab.jsx",
+    "src/pages/quanlykehoach/tabs/nhapkhotab.jsx",
+    "src/pages/quanlykehoach/tabs/themicontab.jsx",
+    "src/pages/quanlykehoach/tabs/thongtinlienhetab.jsx",
+    "src/pages/quanlykehoach/tabs/thutientab.jsx",
+    "src/pages/quanlykehoach/tabs/tiendotab.jsx",
+    "src/pages/quanlykehoach/tabs/tonghoptab.jsx",
+    "src/pages/quanlykehoach/tabs/xemtongcvchild/childapi.js",
+    "src/pages/quanlykehoach/tabs/xemtongcvchild/giaoviecphongbantab.jsx",
+    "src/pages/quanlykehoach/tabs/xemtongcvchild/lienketcvtab.jsx",
+    "src/pages/quanlykehoach/tabs/xemtongcvchild/phanhoicongviectab.jsx",
+    "src/pages/quanlykehoach/tabs/xemtongcvchild/tailieutab.jsx",
+    "src/pages/quanlykehoach/tabs/xemtongcvchild/xemtongcvchilddrawer.jsx",
+    "src/pages/quanlykehoach/tabs/xemtongcvtab.jsx",
+    "src/pages/quanlykehoach/tabs/xuatkhotab.jsx",
+    "src/pages/quanlykehoach/taodenghichitienmodal.jsx",
+    "src/pages/quanlynghiphep/baocaodonxinphep/baocaodonxinphep.css",
+    "src/pages/quanlynghiphep/baocaodonxinphep/baocaodonxinphep.jsx",
+    "src/pages/quanlynghiphep/bgdduyetdon/bgdduyetdon.jsx",
+    "src/pages/quanlynghiphep/bgdduyetdon/bgdduyetdon.module.css",
+    "src/pages/quanlynghiphep/donxinphep/donxinphep.jsx",
+    "src/pages/quanlynghiphep/donxinphep/donxinphep.module.css",
+    "src/pages/quanlynghiphep/donxinpheptheophongban/donxinpheptheophongban.jsx",
+    "src/pages/quanlynghiphep/donxinpheptheophongban/donxinpheptheophongban.module.css",
+    "src/pages/quanlynghiphep/quanlytructiepduyetdon/quanlytructiepduyetdon.jsx",
+    "src/pages/quanlynghiphep/quanlytructiepduyetdon/quanlytructiepduyetdon.module.css",
+    "src/pages/quanlynghiphep/trangthaidonxinphep/trangthaidonxinphep.jsx",
+    "src/pages/quanlynghiphep/trangthaidonxinphep/trangthaidonxinphep.module.css",
+    "src/services/apilogin.js",
+    "src/services/apiservices.js",
+    "src/services/imageservice.js",
+    "src/services/url.js",
+    "src/utils/approvaleventbus.js",
+    "src/utils/environment.js",
+    "src/utils/helpers.jsx",
+    "src/utils/listjsonaliashelpers.js",
+    "src/utils/menuutils.js",
+    "src/utils/vietnamesecolumntitles.js"
+  ],
+  "sampleRemovalCandidates": [
+    "acc_lv0002",
+    "acc_lv0004",
+    "acc_lv0017",
+    "acc_lv0018",
+    "acc_lv0019",
+    "acc_lv0031",
+    "acc_lv0032",
+    "acc_lv0033",
+    "acc_lv0034",
+    "acc_lv0074",
+    "acc_lv0075",
+    "acc_lv0076",
+    "acc_lv0077",
+    "acc_lv0102",
+    "acc_lv0103",
+    "acc_lv0114",
+    "acc_menusl0017",
+    "acc_menusl0018",
+    "acc_menusl0019",
+    "ac_lv0001",
+    "ac_lv0002",
+    "ac_lv0003",
+    "ac_lv0004",
+    "ac_lv0011",
+    "ac_lv0012",
+    "ac_lv0014",
+    "ac_lv0016",
+    "ac_lv0017",
+    "ac_lv0018-1",
+    "ac_lv0018",
+    "ac_lv0019-1",
+    "ac_lv0019all",
+    "ac_lv0020-1",
+    "ac_lv0020",
+    "ac_lv0020_prev",
+    "ac_lv0021-1",
+    "ac_lv0021",
+    "ac_lv0021_prev",
+    "ac_lv0023-1",
+    "ac_lv0023",
+    "ac_lv0023_prev",
+    "ac_lv0024-1",
+    "ac_lv0024",
+    "ac_lv0024all",
+    "ac_lv0024_prev",
+    "ac_lv0025 copy",
+    "ac_lv0025-2",
+    "ac_lv0025",
+    "ac_lv0026",
+    "ac_lv0028",
+    "ac_lv0031",
+    "ac_lv0032",
+    "ac_lv0033",
+    "ac_lv0034",
+    "ac_lv0035",
+    "ac_lv0036",
+    "ac_lv0038-1",
+    "ac_lv0038-2",
+    "ac_lv0038",
+    "ac_lv0039",
+    "ac_lv0041 - copy",
+    "ac_lv0041",
+    "ac_lv00410",
+    "ac_lv0042",
+    "ac_lv0043",
+    "ac_lv0044",
+    "ac_lv0045",
+    "ac_lv0047",
+    "ac_lv0048",
+    "ac_lv0049",
+    "ac_lv0050",
+    "ac_lv0051",
+    "ac_lv0052",
+    "ac_lv0053",
+    "ac_lv0054",
+    "ac_lv0055",
+    "ac_lv0056",
+    "ac_lv0057",
+    "ac_lv0058",
+    "ac_lv0058_1",
+    "ac_lv0059",
+    "ac_lv0060",
+    "ac_lv0060_1",
+    "ac_lv0061-1",
+    "ac_lv0061",
+    "ac_lv0062-1",
+    "ac_lv0062",
+    "ac_lv0063",
+    "ac_lv0064",
+    "ac_lv0065",
+    "ac_lv0066",
+    "ac_lv0067",
+    "ac_lv0068",
+    "ac_lv0069",
+    "ac_lv0070",
+    "ac_lv0072",
+    "ac_lv0073",
+    "ac_lv0074",
+    "ac_lv0076",
+    "ac_lv0078",
+    "ac_lv0079",
+    "ac_lv0080",
+    "ac_lv0082",
+    "ac_lv0083",
+    "ac_lv0084",
+    "ac_lv0084_1",
+    "ac_lv0084_v1",
+    "ac_lv0085",
+    "ac_lv0086",
+    "ac_lv0087",
+    "ac_lv0087_v1",
+    "ac_lv0102",
+    "ac_lv0103-1",
+    "ac_lv0103",
+    "ac_lv0103_v1",
+    "ac_lv0103_v2 copy",
+    "ac_lv0103_v2",
+    "ac_lv0105",
+    "ac_lv0106",
+    "ac_lv0107",
+    "ac_lv0108",
+    "ac_lv0109",
+    "ac_lv0110",
+    "ac_lv0111",
+    "ac_lv0113",
+    "ac_lv0114",
+    "ac_lv0115",
+    "ac_lv0116",
+    "ac_lv0117",
+    "ac_lv0118",
+    "ac_lv0120",
+    "ac_lv0121",
+    "ac_lv0123",
+    "ac_lv0124",
+    "ac_lv0125",
+    "ac_lv0126",
+    "ac_lv0127",
+    "ac_lv0128",
+    "ac_lv0129-2",
+    "ac_lv0129",
+    "ac_lv0130-2",
+    "ac_lv0130",
+    "ac_lv0131-2",
+    "ac_lv0131",
+    "ac_lv0132",
+    "ac_lv0133",
+    "ac_lv0134",
+    "ac_lv0135",
+    "ac_lv0136",
+    "ac_lv0137",
+    "ac_lv0138",
+    "ac_lv0139",
+    "ac_lv0140",
+    "ac_lv0141",
+    "ac_lv0142",
+    "ac_lv0143",
+    "ac_lv0144",
+    "ac_lv0145",
+    "ac_lv0146",
+    "ac_lv0147",
+    "ac_lv0148",
+    "ac_lv0233",
+    "ac_lv0234 copy",
+    "ac_lv0234",
+    "ac_lv0275",
+    "ac_lv0277",
+    "ac_lv0302",
+    "ac_lv0314",
+    "ac_lv0315-1",
+    "ac_lv0315-21",
+    "ac_lv0315",
+    "ac_lv0316",
+    "ac_menuac0039",
+    "ac_menusl0002",
+    "ac_menusl0014",
+    "ac_menusl0017",
+    "ac_menusl0018",
+    "ac_menusl0019",
+    "ac_menusl0020",
+    "ac_menusl0021",
+    "ac_menusl0023",
+    "ac_menusl0024",
+    "ac_menusl0025",
+    "ac_menusl0026",
+    "ac_menusl0028",
+    "ac_menusl0038",
+    "ac_menusl0042",
+    "ac_menusl0061",
+    "ac_menusl0062",
+    "ac_menusl0063",
+    "ac_menusl0108",
+    "ac_menusl0110",
+    "ac_menusl0114",
+    "ac_menusl0117",
+    "ac_menusl0144",
+    "ac_menusl0145",
+    "ac_menusl0146",
+    "ac_menusl0147",
+    "class.phpmailer",
+    "class.pop3",
+    "class.smtp",
+    "cri_lv0013",
+    "cri_lv0028",
+    "cri_lv0109",
+    "cri_lv0149",
+    "cri_lv0151",
+    "cri_lv0166",
+    "cri_lv0176",
+    "cri_lv0177",
+    "cri_lv0191",
+    "cri_lv0192",
+    "cri_lv0194",
+    "cri_lv0195",
+    "cri_lv0243",
+    "cri_lv0244",
+    "cri_lv0247",
+    "cri_lv0248",
+    "cri_lv0265",
+    "cri_lv0276",
+    "cri_lv0289",
+    "cri_lv0365",
+    "cri_lv0376",
+    "cr_ch0009",
+    "cr_ch0010",
+    "cr_ch0011",
+    "cr_ch0012",
+    "cr_ch0014",
+    "cr_ch0015",
+    "cr_ch1224",
+    "cr_ch1225",
+    "cr_ch1226",
+    "cr_ch1227",
+    "cr_ch1228",
+    "cr_ch1229",
+    "cr_ch1230",
+    "cr_ch1231",
+    "cr_ch1232",
+    "cr_lh0001",
+    "cr_lh0002",
+    "cr_lh0003",
+    "cr_lh0004",
+    "cr_lh0005",
+    "cr_lh0074",
+    "cr_lh0075",
+    "cr_lv0005-14",
+    "cr_lv0005-2",
+    "cr_lv0005_22",
+    "cr_lv0010",
+    "cr_lv0011",
+    "cr_lv0012",
+    "cr_lv0013",
+    "cr_lv0014",
+    "cr_lv0015",
+    "cr_lv0016",
+    "cr_lv0018",
+    "cr_lv0022-1",
+    "cr_lv0022",
+    "cr_lv0023",
+    "cr_lv0024-1",
+    "cr_lv0024-2",
+    "cr_lv0024",
+    "cr_lv0025-14",
+    "cr_lv0026",
+    "cr_lv0027",
+    "cr_lv0028",
+    "cr_lv0029",
+    "cr_lv0030",
+    "cr_lv0030_1",
+    "cr_lv0035",
+    "cr_lv0036",
+    "cr_lv0039",
+    "cr_lv0040",
+    "cr_lv0041",
+    "cr_lv0042",
+    "cr_lv0043",
+    "cr_lv0044",
+    "cr_lv0049-1",
+    "cr_lv0049",
+    "cr_lv0050",
+    "cr_lv0051",
+    "cr_lv0052-10",
+    "cr_lv0052",
+    "cr_lv0053",
+    "cr_lv0054",
+    "cr_lv0055",
+    "cr_lv0056",
+    "cr_lv0059-1",
+    "cr_lv0059-2",
+    "cr_lv0059",
+    "cr_lv0060",
+    "cr_lv0061",
+    "cr_lv0062",
+    "cr_lv0065",
+    "cr_lv0066",
+    "cr_lv0067",
+    "cr_lv0068",
+    "cr_lv0070-1",
+    "cr_lv0070-2",
+    "cr_lv0070-3",
+    "cr_lv0070"
+  ]
+}

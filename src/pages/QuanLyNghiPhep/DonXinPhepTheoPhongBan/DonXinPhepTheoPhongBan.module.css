@@ -1,0 +1,124 @@
+/* ==========================================================================
+   Premium Design System - DonXinPhepTheoPhongBan
+   ========================================================================== */
+
+.container {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #4b4344;
+    background: #edf3fb;
+    padding: 24px;
+    min-height: 100vh;
+    border-radius: 16px;
+}
+
+.pageTitle {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    margin-bottom: 20px !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Premium Form Card */
+.formCard {
+    background: #ffffff !important;
+    border-radius: 14px !important;
+    border: 1px solid #c1d9f3 !important;
+    margin-bottom: 24px !important;
+    box-shadow: 0 4px 12px rgba(25, 125, 211, 0.03) !important;
+}
+
+.formCard :global(.ant-card-head) {
+    background: #e4f1ff !important;
+    border-bottom: 1px solid #c1d9f3 !important;
+}
+
+.formCard :global(.ant-card-head-title) {
+    font-weight: 700 !important;
+    color: #197dd3 !important;
+    font-size: 15px !important;
+}
+
+.formCard :global(.ant-card-body) {
+    padding: 24px !important;
+}
+
+/* Form input custom overrides */
+.customForm :global(.ant-input),
+.customForm :global(.ant-input-number),
+.customForm :global(.ant-select-selector),
+.customForm :global(.ant-picker) {
+    border-radius: 10px !important;
+    border: 1px solid #c1d9f3 !important;
+    height: 40px !important;
+    display: flex;
+    align-items: center;
+}
+
+.customForm :global(.ant-form-item-label > label) {
+    font-weight: 600 !important;
+    color: #4b4344 !important;
+    font-size: 13px;
+}
+
+/* Search Toolbar Row */
+.toolbarRow {
+    margin-bottom: 20px !important;
+    padding: 14px 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.toolbarRow :global(.ant-btn) {
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+/* Main Grid Customization */
+.mainTable :global(.ant-table) {
+    border-radius: 12px !important;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+.mainTable :global(.ant-table-thead > tr > th) {
+    background: #e4f1ff !important;
+    color: #1e293b !important;
+    font-weight: 700 !important;
+    font-size: 13px;
+    padding: 12px 10px !important;
+    text-align: center !important;
+    border-bottom: 1px solid #c1d9f3 !important;
+}
+
+.mainTable :global(.ant-table-tbody > tr > td) {
+    padding: 8px 10px !important;
+    font-size: 13px;
+    color: #334155;
+    border-bottom: 1px solid #f1f5f9 !important;
+    transition: background-color 0.2s ease;
+}
+
+/* Alternating Row Coloring */
+.mainTable :global(.ant-table-tbody > tr:nth-child(odd) > td) {
+    background: #f8fbff;
+}
+
+/* Hover highlight on standard rows */
+.mainTable :global(.ant-table-row:hover > td) {
+    background-color: #edf5ff !important;
+}
+
+.pageWrapper {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}

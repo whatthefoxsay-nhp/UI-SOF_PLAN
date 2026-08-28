@@ -1,0 +1,472 @@
+/* Container chính */
+.quill-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid #c1d9f3;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* 1. Phần Toolbar */
+.quill-toolbar-container {
+    flex: 0 0 auto;
+    border-bottom: 1px solid #dbe6f5;
+    background-color: #f8fafc;
+    padding: 6px 8px;
+    z-index: 10;
+}
+
+#custom-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 0;
+}
+
+/* Từng nhóm công cụ */
+.toolbar-group {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 6px;
+    padding-right: 6px;
+    border-right: 1px solid #e2e8f0;
+    gap: 4px;
+}
+
+.toolbar-group:last-child,
+.last-group {
+    border-right: none;
+    margin-right: 0;
+    padding-right: 0;
+}
+
+/* Các nút tùy chỉnh */
+.custom-toolbar-btn {
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    color: #475569;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+    padding: 0;
+}
+
+.custom-toolbar-btn:hover {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #0f172a;
+}
+
+/* Nút Save nổi bật */
+.save-btn {
+    width: auto;
+    padding: 0 8px;
+    background-color: #1677ff;
+    color: #ffffff;
+    border-color: #1677ff;
+}
+
+.save-btn:hover {
+    background-color: #4096ff;
+    border-color: #4096ff;
+    color: #ffffff;
+}
+
+.save-btn-text {
+    margin-left: 6px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+/* Nút đang kích hoạt */
+.active-mode {
+    background-color: #e6f4ff !important;
+    border-color: #91caff !important;
+    color: #0958d9 !important;
+}
+
+/* Select trong toolbar */
+#custom-toolbar select {
+    height: 28px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 0 4px;
+    background-color: #ffffff;
+    color: #334155;
+    outline: none;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.ql-font {
+    width: 130px;
+}
+
+.ql-size {
+    width: 75px;
+}
+
+.ql-header {
+    width: 125px;
+}
+
+/* 2. Màu chữ & Màu nền (Phân biệt rõ) */
+.color-pickers-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.color-picker-wrapper {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    border-radius: 4px;
+    padding: 2px 4px;
+    height: 28px;
+}
+
+.color-picker-wrapper .color-label {
+    display: inline-flex;
+    align-items: center;
+    color: #64748b;
+    margin-right: 2px;
+}
+
+/* Tùy chỉnh màu sắc khác biệt */
+.color-picker-wrapper.text-color {
+    border-left: 3px solid #1677ff;
+}
+
+.color-picker-wrapper.bg-color {
+    border-left: 3px solid #eab308;
+}
+
+/* 3. Phần Editor (Giảm chiều cao vùng trống) */
+.quill-editor-container {
+    flex: 1 1 auto;
+    position: relative;
+    overflow: hidden;
+    min-height: var(--quill-min-height, 240px);
+    background: #ffffff;
+}
+
+.ql-container.ql-snow {
+    border: none !important;
+    height: 100%;
+}
+
+.ql-editor {
+    min-height: var(--quill-min-height, 240px);
+    max-height: 480px;
+    overflow-y: auto !important;
+    padding: 12px 16px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #1e293b;
+}
+
+/* 4. Xem trước (Preview Mode) */
+.quill-preview-container {
+    background-color: #f1f5f9;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    min-height: 240px;
+    overflow-y: auto;
+}
+
+/* Desktop Preview */
+.desktop-preview-frame-wrapper {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    border: 1px solid #e2e8f0;
+}
+
+.desktop-preview-frame {
+    padding: 24px;
+    min-height: 240px;
+    background: #ffffff;
+}
+
+/* Mobile Preview */
+.mobile-phone-frame {
+    width: 375px;
+    height: 640px;
+    background: #0f172a;
+    border-radius: 36px;
+    padding: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.20);
+    display: flex;
+    flex-direction: column;
+    border: 4px solid #334155;
+    position: relative;
+}
+
+.mobile-phone-header {
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+.phone-camera {
+    width: 8px;
+    height: 8px;
+    background: #1e293b;
+    border-radius: 50%;
+}
+
+.phone-speaker {
+    width: 40px;
+    height: 4px;
+    background: #1e293b;
+    border-radius: 2px;
+}
+
+.mobile-phone-screen {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 20px;
+    overflow-y: auto !important;
+    padding: 14px;
+    font-size: 14px;
+}
+
+.mobile-phone-footer {
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.phone-home-button {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #334155;
+    background: #1e293b;
+    cursor: pointer;
+}
+
+/* 5. Footer hiển thị Thống kê & Lưu nháp */
+.quill-editor-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    padding: 6px 12px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.draft-status-indicator {
+    display: flex;
+    align-items: center;
+}
+
+.saved-success {
+    display: inline-flex;
+    align-items: center;
+    color: #1e293b;
+}
+
+.editor-stats {
+    display: flex;
+    align-items: center;
+}
+
+.stats-divider {
+    margin: 0 8px;
+    color: #cbd5e1;
+}
+
+/* 6. Alert thông báo bản nháp */
+.quill-draft-alert {
+    border-radius: 0 !important;
+    border-left: 4px solid #1677ff !important;
+    padding: 8px 16px !important;
+}
+
+.draft-alert-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.draft-alert-actions {
+    display: inline-flex;
+}
+
+/* 7. Popover chọn bảng */
+.table-builder-popover {
+    padding: 4px;
+}
+
+.table-builder-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+}
+
+/* Toolbar Contextual Table Actions */
+.table-context-group {
+    background-color: #fff2e8;
+    border: 1px solid #ffd591;
+    border-radius: 4px;
+    padding: 0 4px;
+}
+
+.table-action-btn {
+    height: 24px;
+    width: auto !important;
+    padding: 0 6px !important;
+    font-size: 11px;
+    color: #d46b08;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.table-action-btn:hover {
+    background-color: #ffe7ba;
+    color: #b3541e;
+}
+
+.table-btn-lbl {
+    font-size: 9px;
+    font-weight: 500;
+}
+
+.warning-action {
+    color: #cf1322;
+}
+
+.warning-action:hover {
+    background-color: #fff1f0;
+    color: #a8071a;
+}
+
+.danger-action {
+    background-color: #ff4d4f;
+    color: #ffffff;
+}
+
+.danger-action:hover {
+    background-color: #ff7875;
+    color: #ffffff;
+}
+
+/* Styling Dropdown options in Quill UI custom picker elements */
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="8px"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="8px"]::before { content: '8px'; }
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="10px"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="10px"]::before { content: '10px'; }
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="12px"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="12px"]::before { content: '12px'; }
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="14px"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="14px"]::before { content: '14px'; }
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="16px"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="16px"]::before { content: '16px'; }
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="18px"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="18px"]::before { content: '18px'; }
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="20px"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="20px"]::before { content: '20px'; }
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="24px"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="24px"]::before { content: '24px'; }
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="28px"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="28px"]::before { content: '28px'; }
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="32px"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="32px"]::before { content: '32px'; }
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="36px"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="36px"]::before { content: '36px'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="times-new-roman"]::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="times-new-roman"]::before { content: 'Times New Roman'; }
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="arial"]::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="arial"]::before { content: 'Arial'; }
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="sans-serif"]::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="sans-serif"]::before { content: 'Sans Serif'; }
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="serif"]::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="serif"]::before { content: 'Serif'; }
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="monospace"]::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="monospace"]::before { content: 'Monospace'; }
+
+/* Setup font families inside content editor area */
+.ql-font-times-new-roman { font-family: "Times New Roman", Times, serif !important; }
+.ql-font-arial { font-family: Arial, Helvetica, sans-serif !important; }
+.ql-font-sans-serif { font-family: sans-serif !important; }
+.ql-font-serif { font-family: serif !important; }
+.ql-font-monospace { font-family: monospace !important; }
+
+/* Custom size styling values */
+.ql-size-8px { font-size: 8px !important; }
+.ql-size-10px { font-size: 10px !important; }
+.ql-size-12px { font-size: 12px !important; }
+.ql-size-14px { font-size: 14px !important; }
+.ql-size-16px { font-size: 16px !important; }
+.ql-size-18px { font-size: 18px !important; }
+.ql-size-20px { font-size: 20px !important; }
+.ql-size-24px { font-size: 24px !important; }
+.ql-size-28px { font-size: 28px !important; }
+.ql-size-32px { font-size: 32px !important; }
+.ql-size-36px { font-size: 36px !important; }
+
+/* Table borders */
+.ql-editor table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+}
+
+.ql-editor td, .ql-editor th {
+    border: 1px solid #cbd5e1;
+    padding: 8px 10px;
+    min-width: 48px;
+}
+
+.ql-editor th {
+    background-color: #f8fafc;
+    font-weight: 600;
+}
+
+/* Spinner animation */
+.quill-loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    gap: 12px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.quill-spin-loader {
+    animation: spin 1s linear infinite;
+    color: #1677ff;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

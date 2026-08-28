@@ -1,0 +1,460 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+.customForm {
+    font-family: 'Inter', sans-serif !important;
+}
+
+.cardShadow {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    border: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+    margin-bottom: 24px;
+}
+
+.cardShadow:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.cardShadow :global(.ant-card-head) {
+    background-color: #fafafa;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 600;
+    min-height: 48px;
+}
+
+.cardShadow :global(.ant-card-head-title) {
+    padding: 12px 0;
+    font-size: 15px;
+    color: #1f1f1f;
+}
+
+.dividerSolid {
+    margin: 16px 0 !important;
+}
+
+.dividerSolid::before, 
+.dividerSolid::after {
+    border-top: 1px solid #1890ff !important;
+}
+
+.dividerSolid :global(.ant-divider-inner-text) {
+    color: #1890ff;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0 10px;
+}
+
+.customForm :global(.ant-form-item-label > label) {
+    font-weight: 500 !important;
+    color: #595959;
+    font-size: 13px;
+}
+
+.customForm :global(.ant-input),
+.customForm :global(.ant-input-password),
+.customForm :global(.ant-input-number),
+.customForm :global(.ant-select-selector) {
+    border-radius: 4px !important;
+}
+
+.khoContainer {
+    min-height: 100vh;
+    padding: 24px 32px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background-color: #edf3fb;
+}
+
+.pageBreadcrumb {
+    margin-bottom: 4px;
+    font-size: 13px;
+    color: #4b4344;
+}
+
+.khoHeader {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 24px 28px;
+    border-radius: 18px;
+    background: linear-gradient(140deg, #ffffff 65%, #d6e8fb 100%);
+    border: 1px solid #c1d9f3;
+    box-shadow: 0 18px 36px rgba(25, 125, 211, 0.12);
+}
+
+.khoTitle {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    z-index: 1;
+}
+
+.khoTitle svg {
+    color: #197dd3;
+}
+
+.khoTitleText {
+    margin: 0;
+    color: #4b4344 !important;
+    letter-spacing: 0.02em;
+}
+
+.khoActions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1;
+}
+
+.khoSearch {
+    min-width: 280px;
+}
+
+.khoSearch :global(.ant-input-affix-wrapper) {
+    height: 44px;
+    border-radius: 12px;
+    border: 1px solid #c1d9f3;
+    box-shadow: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.khoActions :global(.ant-btn) {
+    height: 44px;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 0 18px;
+}
+
+.khoActions :global(.ant-btn-primary) {
+    border: none;
+    background: linear-gradient(135deg, #197dd3, #77d4fb);
+    box-shadow: 0 14px 28px rgba(25, 125, 211, 0.2);
+}
+
+.batchActionBar {
+    background: #ffffff;
+    padding: 12px 24px;
+    border: 1px solid #c1d9f3;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0;
+    box-shadow: 0 4px 12px rgba(25, 125, 211, 0.05);
+}
+
+.batchActionBar :global(.ant-btn) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.batchActionBarDisabled {
+    background: #fafafa !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: none !important;
+    opacity: 0.65;
+    filter: grayscale(1);
+}
+
+.batchActionBarDisabled span,
+.batchActionBarDisabled b {
+    color: #8c8c8c !important;
+}
+
+.khoStatisticRow {
+    margin: 0 -8px;
+}
+
+.khoStatCard {
+    position: relative;
+    height: 100%;
+    border-radius: 16px;
+    border: 1px solid #c1d9f3;
+    background: linear-gradient(160deg, #ffffff 0%, #e2f0ff 100%);
+    box-shadow: 0 16px 30px rgba(25, 125, 211, 0.1);
+}
+
+.khoStatCard :global(.ant-statistic-title) {
+    color: #4b4344;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.khoStatCard :global(.ant-statistic-content-value) {
+    color: #197dd3;
+    font-weight: 700;
+}
+
+.mainCard {
+    border-radius: 18px;
+    border: 1px solid #c1d9f3;
+    background-color: #ffffff;
+    box-shadow: 0 18px 36px rgba(25, 125, 211, 0.12);
+}
+
+.mainCard :global(.ant-table-thead > tr > th) {
+    background: #e4f1ff !important;
+    color: #4b4344 !important;
+    font-weight: 600 !important;
+}
+
+.mainCard :global(.ant-table-tbody > tr:nth-child(odd) > td) {
+    background: #f4f9ff;
+}
+
+.mainCard :global(.ant-table-tbody > tr:hover > td) {
+    background: #e8f2ff !important;
+}
+
+.khoModal :global(.ant-modal-content) {
+    border-radius: 16px;
+    border: 1px solid #c1d9f3;
+    box-shadow: 0 20px 40px rgba(25, 125, 211, 0.16);
+    padding: 0;
+    overflow: hidden;
+}
+
+.khoModal :global(.ant-modal-header) {
+    border-bottom: 1px solid #c1d9f3;
+    background: #edf6ff;
+    padding: 16px 24px;
+    margin: 0;
+}
+
+.khoModal :global(.ant-modal-title) {
+    color: #4b4344;
+    font-weight: 700;
+}
+
+.khoModal :global(.ant-modal-footer) {
+    border-top: 1px solid #c1d9f3;
+    background: #f6f9fe;
+    padding: 12px 24px;
+    margin: 0;
+}
+
+.khoModal :global(.ant-btn-primary) {
+    border: none;
+    background: linear-gradient(135deg, #197dd3, #77d4fb);
+    box-shadow: 0 4px 12px rgba(25, 125, 211, 0.2);
+}
+
+.khoModal :global(.ant-form-item-label > label) {
+    color: #4b4344;
+    font-weight: 600;
+}
+
+.khoModal :global(.ant-input),
+.khoModal :global(.ant-input-number),
+.khoModal :global(.ant-select-selector),
+.khoModal :global(.ant-input-textarea) {
+    border-radius: 10px !important;
+    border: 1px solid #c1d9f3 !important;
+}
+
+.khoDrawer :global(.ant-drawer-content) {
+    font-family: 'Inter', sans-serif !important;
+}
+
+.khoDrawer :global(.ant-drawer-header) {
+    border-bottom: 1px solid #c1d9f3;
+    background: #edf6ff;
+    padding: 16px 24px;
+}
+
+.khoDrawer :global(.ant-drawer-title) {
+    color: #4b4344;
+    font-weight: 700;
+}
+
+.khoDrawer :global(.ant-drawer-body) {
+    padding: 24px;
+}
+
+.khoDrawer :global(.ant-drawer-footer) {
+    border-top: 1px solid #c1d9f3;
+    background: #f6f9fe;
+    padding: 16px 24px;
+}
+
+.khoDrawer :global(.ant-btn-primary) {
+    border: none;
+    background: linear-gradient(135deg, #197dd3, #77d4fb);
+    box-shadow: 0 4px 12px rgba(25, 125, 211, 0.2);
+}
+
+/* ERP_TABLE_STANDARD_SYNC_START */
+.khoContainer {
+    padding: 24px !important;
+    background: #edf3fb !important;
+    min-height: 100vh !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+.compactToolbar,
+.khoHeader,
+.batchActionBar {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 5px 12px !important;
+    background: #ffffff !important;
+    border: 1px solid #c1d9f3 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 8px rgba(25, 125, 211, 0.07) !important;
+    margin-bottom: 8px !important;
+    min-height: 40px !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+}
+
+.toolbarDivider {
+    width: 1px !important;
+    height: 18px !important;
+    background: #c1d9f3 !important;
+    flex-shrink: 0 !important;
+}
+
+.toolbarTitle,
+.khoHeader h1,
+.khoHeader :global(.ant-typography) {
+    display: flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    white-space: nowrap !important;
+    color: #197dd3 !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    line-height: 1.3 !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+}
+
+.toolbarSearch,
+.khoSearch {
+    width: 200px !important;
+    flex: 0 0 200px !important;
+}
+
+.khoActions,
+.actionGroup,
+.toolbarActions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-wrap: nowrap !important;
+}
+
+.mainCard,
+.tableCard {
+    border-radius: 18px !important;
+    border: 1px solid #c1d9f3 !important;
+    box-shadow: 0 12px 28px rgba(31, 108, 186, 0.08) !important;
+    overflow: hidden !important;
+}
+
+.mainCard :global(.ant-card-body),
+.tableCard :global(.ant-card-body) {
+    padding: 0 !important;
+}
+
+.mainCard :global(.ant-table),
+.tableCard :global(.ant-table),
+.mainTable :global(.ant-table),
+.customTable :global(.ant-table) {
+    font-size: 13px !important;
+}
+
+.mainCard :global(.ant-table-thead > tr > th),
+.tableCard :global(.ant-table-thead > tr > th),
+.mainTable :global(.ant-table-thead > tr > th),
+.customTable :global(.ant-table-thead > tr > th) {
+    background: #f3f8ff !important;
+    color: #315e8c !important;
+    font-weight: 700 !important;
+    padding: 6px 8px !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    border-bottom: 1px solid #c1d9f3 !important;
+}
+
+.mainCard :global(.ant-table-tbody > tr > td),
+.tableCard :global(.ant-table-tbody > tr > td),
+.mainTable :global(.ant-table-tbody > tr > td),
+.customTable :global(.ant-table-tbody > tr > td) {
+    padding: 5px 8px !important;
+    color: #243b53 !important;
+    line-height: 22px !important;
+    vertical-align: middle !important;
+}
+
+.mainCard :global(.ant-table-tbody > tr:nth-child(odd) > td),
+.tableCard :global(.ant-table-tbody > tr:nth-child(odd) > td),
+.mainTable :global(.ant-table-tbody > tr:nth-child(odd) > td),
+.customTable :global(.ant-table-tbody > tr:nth-child(odd) > td) {
+    background: #fbfdff !important;
+}
+
+.mainCard :global(.ant-table-row:hover > td),
+.tableCard :global(.ant-table-row:hover > td),
+.mainTable :global(.ant-table-row:hover > td),
+.customTable :global(.ant-table-row:hover > td) {
+    background: #eaf4ff !important;
+}
+
+.mainCard :global(.ant-table-cell),
+.tableCard :global(.ant-table-cell),
+.mainTable :global(.ant-table-cell),
+.customTable :global(.ant-table-cell) {
+    max-width: 280px;
+}
+
+.mainCard :global(.ant-table-cell:not(.ant-table-selection-column)),
+.tableCard :global(.ant-table-cell:not(.ant-table-selection-column)),
+.mainTable :global(.ant-table-cell:not(.ant-table-selection-column)),
+.customTable :global(.ant-table-cell:not(.ant-table-selection-column)) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mainCard :global(.ant-table-body),
+.tableCard :global(.ant-table-body),
+.mainTable :global(.ant-table-body),
+.customTable :global(.ant-table-body) {
+    min-height: calc(100vh - 350px) !important;
+}
+
+.mainCard :global(.ant-table-placeholder),
+.tableCard :global(.ant-table-placeholder),
+.mainTable :global(.ant-table-placeholder),
+.customTable :global(.ant-table-placeholder) {
+    min-height: calc(100vh - 350px) !important;
+}
+
+.mainCard :global(.ant-table-placeholder .ant-table-cell),
+.tableCard :global(.ant-table-placeholder .ant-table-cell),
+.mainTable :global(.ant-table-placeholder .ant-table-cell),
+.customTable :global(.ant-table-placeholder .ant-table-cell) {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.mainCard :global(.ant-pagination),
+.tableCard :global(.ant-pagination),
+.mainTable :global(.ant-pagination),
+.customTable :global(.ant-pagination) {
+    margin: 8px 12px !important;
+}
+/* ERP_TABLE_STANDARD_SYNC_END */

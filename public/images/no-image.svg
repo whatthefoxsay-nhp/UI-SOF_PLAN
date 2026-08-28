@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+  <defs>
+    <linearGradient id="noImgBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#bdbcc4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4b4344;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="300" fill="url(#noImgBg)"/>
+  
+  <!-- No image icon -->
+  <g transform="translate(150,150)">
+    <!-- Image frame -->
+    <rect x="-50" y="-35" width="100" height="70" rx="5" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-dasharray="5,5"/>
+    
+    <!-- X mark -->
+    <line x1="-30" y1="-15" x2="30" y2="15" stroke="rgba(255,255,255,0.8)" stroke-width="3" stroke-linecap="round"/>
+    <line x1="30" y1="-15" x2="-30" y2="15" stroke="rgba(255,255,255,0.8)" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="150" y="200" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-family="Arial, sans-serif" font-size="14" font-weight="400">
+    Không có hình ảnh
+  </text>
+</svg>

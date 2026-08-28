@@ -1,0 +1,498 @@
+/* ================================================================
+   CAFE THEME
+   Theme đặc biệt cho cafe với màu sắc ấm áp và thân thiện
+================================================================ */
+
+/* ============================================
+   CAFE THEME VARIABLES
+============================================ */
+
+.theme-cafe {
+  /* Cafe brand colors - màu sắc cafe ấm áp */
+  --color-primary: #8b4513;        /* Saddle Brown - màu nâu cafe đậm */
+  --color-primary-light: #d2b48c;  /* Tan - màu nâu cafe nhạt */
+  --color-primary-dark: #654321;   /* Dark Brown - màu nâu cafe rất đậm */
+  
+  --color-secondary: #daa520;      /* Goldenrod - màu vàng đồng */
+  --color-secondary-light: #f4e4a1; /* Light Goldenrod */
+  --color-secondary-dark: #b8860b;  /* Dark Goldenrod */
+  
+  --color-accent: #cd853f;         /* Peru - màu nâu cam */
+  --color-accent-light: #deb887;   /* Burlywood */
+  --color-accent-dark: #a0522d;    /* Sienna */
+  
+  /* Cafe background colors */
+  --color-background: #faf7f2;     /* Warm white - trắng ấm */
+  --color-surface: #ffffff;        /* Pure white */
+  --color-surface-hover: #f5f2ed;  /* Light warm gray */
+  
+  /* Cafe text colors */
+  --color-text: #3e2723;           /* Dark brown text */
+  --color-text-light: #5d4037;     /* Medium brown */
+  --color-text-lighter: #8d6e63;   /* Light brown */
+  --color-text-on-primary: #ffffff;
+  --color-text-on-secondary: #3e2723;
+  --color-text-on-surface: #3e2723;
+  
+  /* Cafe warm gray scale */
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f5f2ed;
+  --color-gray-200: #ede7db;
+  --color-gray-300: #d7cfc0;
+  --color-gray-400: #bcb0a1;
+  --color-gray-500: #8d6e63;
+  --color-gray-600: #5d4037;
+  --color-gray-700: #4e342e;
+  --color-gray-800: #3e2723;
+  --color-gray-900: #2e1e1a;
+  
+  /* Cafe border colors */
+  --color-border: #ede7db;
+  --color-border-light: #f5f2ed;
+  --color-border-medium: #d7cfc0;
+  --color-border-strong: #bcb0a1;
+  
+  /* Cafe status colors - adjusted for warm theme */
+  --color-success: #2e7d32;        /* Forest Green */
+  --color-success-light: #e8f5e8;  /* Light Green */
+  --color-success-dark: #1b5e20;   /* Dark Green */
+  
+  --color-warning: #f57c00;        /* Orange */
+  --color-warning-light: #fff3e0;  /* Light Orange */
+  --color-warning-dark: #e65100;   /* Dark Orange */
+  
+  --color-danger: #d32f2f;         /* Red */
+  --color-danger-light: #ffebee;   /* Light Red */
+  --color-danger-dark: #c62828;    /* Dark Red */
+  
+  --color-info: #1976d2;           /* Blue */
+  --color-info-light: #e3f2fd;     /* Light Blue */
+  --color-info-dark: #1565c0;      /* Dark Blue */
+  
+  /* Cafe warm shadows */
+  --shadow-color: rgba(139, 69, 19, 0.1);
+  --shadow-strong-color: rgba(139, 69, 19, 0.15);
+  
+  --shadow-sm: 0 1px 2px rgba(139, 69, 19, 0.1);
+  --shadow-base: 0 1px 3px rgba(139, 69, 19, 0.12), 0 1px 2px rgba(139, 69, 19, 0.08);
+  --shadow-lg: 0 10px 15px rgba(139, 69, 19, 0.12), 0 4px 6px rgba(139, 69, 19, 0.08);
+  --shadow-xl: 0 20px 25px rgba(139, 69, 19, 0.12), 0 10px 10px rgba(139, 69, 19, 0.08);
+  --shadow-2xl: 0 25px 50px rgba(139, 69, 19, 0.15);
+}
+
+/* ============================================
+   CAFE THEME GLOBAL STYLES
+============================================ */
+
+.theme-cafe body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ============================================
+   CAFE THEME COMPONENTS
+============================================ */
+
+/* Header in cafe theme */
+.theme-cafe .app-header {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: var(--color-white);
+  border-bottom: none;
+  box-shadow: 0 2px 8px rgba(139, 69, 19, 0.15);
+}
+
+/* Sidebar in cafe theme */
+.theme-cafe .app-sidebar {
+  background-color: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  box-shadow: 2px 0 8px rgba(139, 69, 19, 0.1);
+}
+
+/* Cards in cafe theme */
+.theme-cafe .card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-base);
+}
+
+.theme-cafe .card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  border-color: var(--color-primary-light);
+}
+
+/* Tables in cafe theme */
+.theme-cafe .table {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-base);
+}
+
+.theme-cafe .table th {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-secondary-light));
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.theme-cafe .table tbody tr:hover {
+  background-color: var(--color-surface-hover);
+}
+
+/* Forms in cafe theme */
+.theme-cafe .form-input {
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: all 0.3s ease;
+}
+
+.theme-cafe .form-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(139, 69, 19, 0.1);
+  transform: translateY(-1px);
+}
+
+.theme-cafe .form-label {
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Buttons in cafe theme */
+.theme-cafe .btn-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  border: none;
+  box-shadow: var(--shadow-base);
+}
+
+.theme-cafe .btn-primary:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.theme-cafe .btn-secondary {
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-secondary-dark));
+  border: none;
+}
+
+.theme-cafe .btn-ghost {
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary-light);
+}
+
+.theme-cafe .btn-ghost:hover {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+/* ============================================
+   CAFE SPECIFIC STYLES
+============================================ */
+
+/* Tables (bàn) in cafe theme */
+.theme-cafe .ban-item {
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-base);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-cafe .ban-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.theme-cafe .ban-item:hover::before {
+  transform: translateX(100%);
+}
+
+.theme-cafe .ban-item--trong {
+  background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+  border: 2px solid var(--color-success);
+  color: var(--color-success-dark);
+}
+
+.theme-cafe .ban-item--co-khach {
+  background: linear-gradient(135deg, #ffebee, #ffcdd2);
+  border: 2px solid var(--color-danger);
+  color: var(--color-danger-dark);
+}
+
+.theme-cafe .ban-item--dat-truoc {
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+  border: 2px solid var(--color-warning);
+  color: var(--color-warning-dark);
+}
+
+.theme-cafe .ban-item--don-dep {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  border: 2px solid var(--color-info);
+  color: var(--color-info-dark);
+}
+
+.theme-cafe .ban-so {
+  font-family: 'Georgia', serif;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Products in cafe theme */
+.theme-cafe .san-pham-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-base);
+  transition: all 0.3s ease;
+}
+
+.theme-cafe .san-pham-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--color-primary);
+}
+
+.theme-cafe .san-pham-hinh {
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  filter: brightness(1.05) contrast(1.1);
+}
+
+.theme-cafe .san-pham-ten {
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+.theme-cafe .san-pham-gia {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: var(--font-weight-bold);
+  font-family: 'Georgia', serif;
+}
+
+/* Cart in cafe theme */
+.theme-cafe .gio-hang-container {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.theme-cafe .gio-hang-header {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: var(--color-white);
+  position: relative;
+}
+
+.theme-cafe .gio-hang-header::after {
+  content: '☕';
+  position: absolute;
+  top: 50%;
+  right: var(--space-4);
+  transform: translateY(-50%);
+  font-size: var(--font-size-2xl);
+  opacity: 0.3;
+}
+
+.theme-cafe .gio-hang-item {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.theme-cafe .gio-hang-item:hover {
+  box-shadow: var(--shadow-base);
+  transform: translateX(4px);
+  border-color: var(--color-primary-light);
+}
+
+/* Payment in cafe theme */
+.theme-cafe .thanh-toan-container {
+  background: radial-gradient(ellipse at center, var(--color-surface) 0%, var(--color-background) 100%);
+}
+
+.theme-cafe .phuong-thuc-item {
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-cafe .phuong-thuc-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, transparent, rgba(139, 69, 19, 0.05), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.theme-cafe .phuong-thuc-item:hover::before {
+  opacity: 1;
+}
+
+.theme-cafe .phuong-thuc-item--active {
+  border-color: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary-light), rgba(139, 69, 19, 0.1));
+  color: var(--color-primary-dark);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Invoice in cafe theme */
+.theme-cafe .hoa-don-container {
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-primary-light);
+  box-shadow: var(--shadow-xl);
+  position: relative;
+}
+
+.theme-cafe .hoa-don-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+}
+
+.theme-cafe .hoa-don-logo {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.theme-cafe .hoa-don-table th {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-secondary-light));
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ============================================
+   CAFE AUTH THEME
+============================================ */
+
+.theme-cafe .auth-container {
+  background: linear-gradient(135deg, 
+    var(--color-primary-light) 0%, 
+    var(--color-background) 50%, 
+    var(--color-secondary-light) 100%);
+  position: relative;
+}
+
+.theme-cafe .auth-container::after {
+  content: '☕ ☕ ☕';
+  position: absolute;
+  bottom: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--font-size-lg);
+  opacity: 0.3;
+  color: var(--color-primary);
+}
+
+.theme-cafe .auth-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--color-primary-light);
+  box-shadow: var(--shadow-2xl);
+}
+
+.theme-cafe .auth-logo {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+}
+
+.theme-cafe .auth-title {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ============================================
+   CAFE ANIMATIONS
+============================================ */
+
+.theme-cafe .card,
+.theme-cafe .btn,
+.theme-cafe .ban-item,
+.theme-cafe .san-pham-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-cafe .san-pham-card:hover {
+  animation: coffee-steam 2s ease-in-out infinite;
+}
+
+@keyframes coffee-steam {
+  0%, 100% { transform: translateY(-4px) scale(1.02); }
+  50% { transform: translateY(-6px) scale(1.02); }
+}
+
+/* ============================================
+   CAFE SCROLLBAR
+============================================ */
+
+.theme-cafe ::-webkit-scrollbar-track {
+  background-color: var(--color-background);
+}
+
+.theme-cafe ::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  border-radius: var(--radius-full);
+}
+
+.theme-cafe ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+}
+
+/* ============================================
+   CAFE SELECTION
+============================================ */
+
+.theme-cafe ::selection {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-secondary-light));
+  color: var(--color-primary-dark);
+}
+
+/* ============================================
+   PRINT STYLES FOR CAFE THEME
+============================================ */
+@media print {
+  .theme-cafe {
+    --color-primary: #8b4513;
+    --color-text: #3e2723;
+    --color-background: #ffffff;
+    --color-surface: #ffffff;
+  }
+  
+  .theme-cafe .hoa-don-container {
+    background-color: white !important;
+    color: #3e2723 !important;
+    border: 1px solid #8b4513 !important;
+    box-shadow: none !important;
+  }
+  
+  .theme-cafe .hoa-don-table th {
+    background-color: #f5f2ed !important;
+    color: #3e2723 !important;
+  }
+}

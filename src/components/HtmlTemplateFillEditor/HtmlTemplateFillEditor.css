@@ -1,0 +1,107 @@
+.html-template-editor {
+  border: 1px solid #c1d9f3;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.html-template-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #f6f9ff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.html-template-toolbar .ant-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 6px;
+}
+
+.html-template-split {
+  display: grid;
+  grid-template-columns: minmax(320px, 42%) minmax(0, 1fr);
+  min-height: var(--html-template-min-height, 260px);
+}
+
+.html-template-source {
+  border-right: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.html-template-source .ant-input {
+  min-height: var(--html-template-min-height, 260px);
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  resize: vertical;
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #0f172a;
+  background: #f8fafc;
+}
+
+.html-template-source .ant-input:focus {
+  box-shadow: none;
+  background: #ffffff;
+}
+
+.html-template-preview,
+.html-template-fill {
+  padding: 14px 16px;
+  overflow: auto;
+  background: #ffffff;
+}
+
+.html-template-fill:focus-within {
+  outline: 2px solid rgba(25, 125, 211, 0.15);
+  outline-offset: -2px;
+}
+
+.html-template-token {
+  display: inline-block;
+  min-width: 44px;
+  padding: 0 4px;
+  border-radius: 3px;
+  outline: 1px dashed #197dd3;
+  background: #eef6ff;
+  color: inherit;
+  cursor: text;
+}
+
+.html-template-token:focus {
+  outline: 2px solid #197dd3;
+  background: #ffffff;
+}
+
+.html-template-token:empty::before {
+  content: attr(data-placeholder);
+  color: #94a3b8;
+}
+
+.html-template-empty {
+  margin: 0;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+@media (max-width: 900px) {
+  .html-template-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .html-template-split {
+    grid-template-columns: 1fr;
+  }
+
+  .html-template-source {
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+}

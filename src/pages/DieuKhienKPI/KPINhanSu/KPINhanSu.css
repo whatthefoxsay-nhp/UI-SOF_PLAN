@@ -1,0 +1,38 @@
+.kpi-nhan-su-wrapper {
+    padding-bottom: 24px;
+}
+
+.filter-container {
+    background-color: #f8fafc;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #e2e8f0;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.filter-item label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #475569;
+}
+
+.text-primary {
+    color: var(--primary-color, #1890ff);
+}
+
+.kpi-table .ant-table-thead>tr>th {
+    background-color: #f1f5f9;
+    font-weight: 600;
+    color: #334155;
+    white-space: nowrap;
+}
+
+.kpi-table .ant-table-tbody>tr:hover>td {
+    background-color: #f0fdf4 !important;
+}

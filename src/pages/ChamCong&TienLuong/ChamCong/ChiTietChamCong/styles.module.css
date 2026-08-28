@@ -1,0 +1,504 @@
+/* ==========================================================================
+   Premium Design System - QuanLyThoiGian
+   ========================================================================== */
+
+.container {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #4b4344;
+    background: #edf3fb; /* Match HDLDKeToan's premium light background */
+    padding: 24px;
+    min-height: 100vh;
+    border-radius: 16px;
+}
+
+.pageTitle {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    margin-bottom: 20px !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Filter Row Container */
+.filterRow {
+    background: linear-gradient(135deg, #f8fbff 0%, #ffffff 100%);
+    padding: 20px;
+    border-radius: 14px;
+    border: 1px solid #c1d9f3;
+    margin-bottom: 24px !important;
+    box-shadow: 0 4px 12px rgba(25, 125, 211, 0.03);
+}
+
+.filterSelect :global(.ant-select-selector) {
+    height: 42px !important;
+    border-radius: 8px !important;
+    border-color: #cbd5e1 !important;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.filterSelect :global(.ant-select-selector:hover) {
+    border-color: #197dd3 !important;
+}
+
+.filterSelect :global(.ant-select-focused .ant-select-selector) {
+    border-color: #197dd3 !important;
+    box-shadow: 0 0 0 2px rgba(25, 125, 211, 0.1) !important;
+}
+
+/* Action Toolbar Row */
+.toolbarRow {
+    margin-bottom: 20px !important;
+    padding: 14px 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.toolbarRow :global(.ant-btn) {
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.toolbarRow :global(.ant-btn-primary:not(:disabled):not(.ant-btn-disabled)) {
+    background: #197dd3;
+    border-color: #197dd3;
+    color: #fff !important;
+}
+
+.toolbarRow :global(.ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover) {
+    background: #1569b3 !important;
+    border-color: #1569b3 !important;
+    color: #fff !important;
+}
+
+/* Main Grid Customization */
+.mainTable :global(.ant-table) {
+    border-radius: 12px !important;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+.mainTable :global(.ant-table-thead > tr > th) {
+    background: #e4f1ff !important;
+    color: #1e293b !important;
+    font-weight: 700 !important;
+    font-size: 13px;
+    padding: 12px 10px !important;
+    text-align: center !important;
+    border-bottom: 1px solid #c1d9f3 !important;
+}
+
+.mainTable :global(.ant-table-tbody > tr > td) {
+    padding: 8px 10px !important;
+    font-size: 13px;
+    color: #334155;
+    border-bottom: 1px solid #f1f5f9 !important;
+    transition: background-color 0.2s ease;
+}
+
+/* Alternating Row Coloring */
+.mainTable :global(.ant-table-tbody > tr:not(.sundayRow):not(.saturdayRow):nth-child(odd) > td) {
+    background: #f8fbff;
+}
+
+/* Hover highlight on standard rows */
+.mainTable :global(.ant-table-row:not(.sundayRow):not(.saturdayRow):hover > td) {
+    background-color: #edf5ff !important;
+}
+
+/* Sunday Row Styling */
+.mainTable :global(.ant-table-tbody > tr.sundayRow > td) {
+    background-color: #fff1f0 !important;
+    color: #e21c5e;
+    font-weight: 550;
+}
+
+.mainTable :global(.ant-table-row.sundayRow:hover > td) {
+    background-color: #fff2f0 !important;
+    opacity: 0.95;
+}
+
+/* Saturday Row Styling */
+.mainTable :global(.ant-table-tbody > tr.saturdayRow > td) {
+    background-color: #fffbe6 !important;
+    color: #d46b08;
+    font-weight: 550;
+}
+
+.mainTable :global(.ant-table-row.saturdayRow:hover > td) {
+    background-color: #fffbe6 !important;
+    opacity: 0.95;
+}
+
+/* Inputs and Select Custom Overrides inside Table Cells */
+.mainTable :global(.ant-input),
+.mainTable :global(.ant-input-number),
+.mainTable :global(.ant-select-selector) {
+    border-radius: 6px !important;
+    border-color: #cbd5e1 !important;
+}
+
+.mainTable :global(.ant-input:focus),
+.mainTable :global(.ant-input-number-focused),
+.mainTable :global(.ant-select-focused .ant-select-selector) {
+    border-color: #197dd3 !important;
+    box-shadow: 0 0 0 2px rgba(25, 125, 211, 0.1) !important;
+}
+
+/* Summary Footer Cards */
+.summaryCard {
+    border-radius: 12px !important;
+    border: 1px solid #c1d9f3 !important;
+    box-shadow: 0 8px 24px rgba(25, 125, 211, 0.05) !important;
+    overflow: hidden;
+}
+
+.summaryCard :global(.ant-card-head) {
+    background: #e4f1ff !important;
+    border-bottom: 1px solid #c1d9f3 !important;
+    padding: 0 20px !important;
+    min-height: 46px;
+}
+
+.summaryCard :global(.ant-card-head-title) {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #197dd3 !important;
+}
+
+.summaryCard :global(.ant-table-thead > tr > th) {
+    background: #f8fbff !important;
+    color: #1e293b !important;
+    font-weight: 700 !important;
+    font-size: 13px;
+    padding: 10px 16px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.summaryCard :global(.ant-table-tbody > tr > td) {
+    padding: 10px 16px !important;
+    font-size: 13px;
+}
+
+/* ==========================================================================
+   Premium Drawer, Form, and Tabs for ChiTietChamCong
+   ========================================================================== */
+
+.khoDrawer :global(.ant-drawer-content) {
+    border-radius: 16px 0 0 16px !important;
+    border: 1px solid #c1d9f3 !important;
+    box-shadow: -10px 0 30px rgba(25, 125, 211, 0.1) !important;
+    background: #edf3fb !important;
+}
+
+.khoDrawer :global(.ant-drawer-header) {
+    padding: 16px 24px !important;
+    background: #edf6ff !important;
+    border-bottom: 1px solid #c1d9f3 !important;
+}
+
+.khoDrawer :global(.ant-drawer-title) {
+    color: #4b4344 !important;
+    font-weight: 700 !important;
+}
+
+.khoDrawer :global(.ant-drawer-body) {
+    padding: 24px !important;
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    margin: 16px !important;
+    box-shadow: 0 4px 12px rgba(25, 125, 211, 0.05);
+}
+
+.khoDrawer :global(.ant-drawer-footer) {
+    padding: 12px 24px !important;
+    background: #f6f9fe !important;
+    border-top: 1px solid #c1d9f3 !important;
+}
+
+/* Form inputs & dropdowns inside Drawer */
+.customForm :global(.ant-input),
+.customForm :global(.ant-input-number),
+.customForm :global(.ant-select-selector),
+.customForm :global(.ant-picker) {
+    border-radius: 10px !important;
+    border: 1px solid #c1d9f3 !important;
+    height: 40px !important;
+    display: flex;
+    align-items: center;
+}
+
+.customForm :global(.ant-input-number) {
+    padding: 0 !important;
+}
+
+.customForm :global(.ant-input-number-input) {
+    height: 38px !important;
+}
+
+.customForm :global(.ant-form-item-label > label) {
+    font-weight: 600 !important;
+    color: #4b4344 !important;
+    font-size: 13px;
+}
+
+/* Tabs inside Drawer */
+.customTabs :global(.ant-tabs-nav) {
+    margin-bottom: 24px !important;
+}
+
+.customTabs :global(.ant-tabs-tab) {
+    padding: 10px 16px !important;
+    font-weight: 600 !important;
+    font-size: 14px;
+    color: #64748b !important;
+    transition: all 0.2s ease;
+}
+
+.customTabs :global(.ant-tabs-tab-active) {
+    color: #197dd3 !important;
+    background: #edf6ff !important;
+    border-radius: 8px !important;
+}
+
+.customTabs :global(.ant-tabs-ink-bar) {
+    background: #197dd3 !important;
+    height: 3px !important;
+}
+
+/* Batch Action Bar */
+.batchActionBar {
+    background: #ffffff;
+    padding: 14px 24px;
+    border: 1px solid #c1d9f3;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0;
+    box-shadow: 0 8px 24px rgba(25, 125, 211, 0.08);
+    animation: slideDown 0.3s ease-out;
+}
+
+.batchActionBar :global(.ant-btn) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.batchActionBar :global(.ant-btn:not([disabled]):hover) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(25, 125, 211, 0.15);
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.batchActionBarDisabled {
+    background: #fafafa !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: none !important;
+    opacity: 0.65;
+    filter: grayscale(1);
+}
+
+.batchActionBarDisabled span,
+.batchActionBarDisabled b {
+    color: #8c8c8c !important;
+}
+
+.pageWrapper {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    margin-top: 16px;
+}
+
+.dividerSolid {
+    margin: 20px 0 !important;
+}
+.dividerSolid :global(.ant-divider-inner-text) {
+    color: #197dd3 !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+}
+
+/* ERP_TABLE_STANDARD_SYNC_START */
+.khoContainer {
+    padding: 24px !important;
+    background: #edf3fb !important;
+    min-height: 100vh !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+.compactToolbar,
+.khoHeader,
+.batchActionBar {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 5px 12px !important;
+    background: #ffffff !important;
+    border: 1px solid #c1d9f3 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 8px rgba(25, 125, 211, 0.07) !important;
+    margin-bottom: 8px !important;
+    min-height: 40px !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+}
+
+.toolbarDivider {
+    width: 1px !important;
+    height: 18px !important;
+    background: #c1d9f3 !important;
+    flex-shrink: 0 !important;
+}
+
+.toolbarTitle,
+.khoHeader h1,
+.khoHeader :global(.ant-typography) {
+    display: flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    white-space: nowrap !important;
+    color: #197dd3 !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    line-height: 1.3 !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+}
+
+.toolbarSearch,
+.khoSearch {
+    width: 200px !important;
+    flex: 0 0 200px !important;
+}
+
+.khoActions,
+.actionGroup,
+.toolbarActions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-wrap: nowrap !important;
+}
+
+.mainCard,
+.tableCard {
+    border-radius: 18px !important;
+    border: 1px solid #c1d9f3 !important;
+    box-shadow: 0 12px 28px rgba(31, 108, 186, 0.08) !important;
+    overflow: hidden !important;
+}
+
+.mainCard :global(.ant-card-body),
+.tableCard :global(.ant-card-body) {
+    padding: 0 !important;
+}
+
+.mainCard :global(.ant-table),
+.tableCard :global(.ant-table),
+.mainTable :global(.ant-table),
+.customTable :global(.ant-table) {
+    font-size: 13px !important;
+}
+
+.mainCard :global(.ant-table-thead > tr > th),
+.tableCard :global(.ant-table-thead > tr > th),
+.mainTable :global(.ant-table-thead > tr > th),
+.customTable :global(.ant-table-thead > tr > th) {
+    background: #f3f8ff !important;
+    color: #315e8c !important;
+    font-weight: 700 !important;
+    padding: 6px 8px !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    border-bottom: 1px solid #c1d9f3 !important;
+}
+
+.mainCard :global(.ant-table-tbody > tr > td),
+.tableCard :global(.ant-table-tbody > tr > td),
+.mainTable :global(.ant-table-tbody > tr > td),
+.customTable :global(.ant-table-tbody > tr > td) {
+    padding: 5px 8px !important;
+    color: #243b53 !important;
+    line-height: 22px !important;
+    vertical-align: middle !important;
+}
+
+.mainCard :global(.ant-table-tbody > tr:nth-child(odd) > td),
+.tableCard :global(.ant-table-tbody > tr:nth-child(odd) > td),
+.mainTable :global(.ant-table-tbody > tr:nth-child(odd) > td),
+.customTable :global(.ant-table-tbody > tr:nth-child(odd) > td) {
+    background: #fbfdff !important;
+}
+
+.mainCard :global(.ant-table-row:hover > td),
+.tableCard :global(.ant-table-row:hover > td),
+.mainTable :global(.ant-table-row:hover > td),
+.customTable :global(.ant-table-row:hover > td) {
+    background: #eaf4ff !important;
+}
+
+.mainCard :global(.ant-table-cell),
+.tableCard :global(.ant-table-cell),
+.mainTable :global(.ant-table-cell),
+.customTable :global(.ant-table-cell) {
+    max-width: 280px;
+}
+
+.mainCard :global(.ant-table-cell:not(.ant-table-selection-column)),
+.tableCard :global(.ant-table-cell:not(.ant-table-selection-column)),
+.mainTable :global(.ant-table-cell:not(.ant-table-selection-column)),
+.customTable :global(.ant-table-cell:not(.ant-table-selection-column)) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mainCard :global(.ant-table-body),
+.tableCard :global(.ant-table-body),
+.mainTable :global(.ant-table-body),
+.customTable :global(.ant-table-body) {
+    min-height: calc(100vh - 350px) !important;
+}
+
+.mainCard :global(.ant-table-placeholder),
+.tableCard :global(.ant-table-placeholder),
+.mainTable :global(.ant-table-placeholder),
+.customTable :global(.ant-table-placeholder) {
+    min-height: calc(100vh - 350px) !important;
+}
+
+.mainCard :global(.ant-table-placeholder .ant-table-cell),
+.tableCard :global(.ant-table-placeholder .ant-table-cell),
+.mainTable :global(.ant-table-placeholder .ant-table-cell),
+.customTable :global(.ant-table-placeholder .ant-table-cell) {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.mainCard :global(.ant-pagination),
+.tableCard :global(.ant-pagination),
+.mainTable :global(.ant-pagination),
+.customTable :global(.ant-pagination) {
+    margin: 8px 12px !important;
+}
+/* ERP_TABLE_STANDARD_SYNC_END */

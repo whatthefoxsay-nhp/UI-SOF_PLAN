@@ -1,0 +1,269 @@
+/* ==========================================================================
+   Premium Design System - CongViecHoanThanh
+   ========================================================================== */
+
+/* Main Container */
+.khoContainer {
+    padding: 24px;
+    background: #edf3fb;
+    min-height: 100vh;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Breadcrumb Styling */
+.pageBreadcrumb {
+    margin-bottom: 20px;
+    font-size: 13px;
+    padding: 8px 0;
+    color: #4b4344;
+}
+
+.pageBreadcrumb :global(.ant-breadcrumb-link) {
+    color: #4b4344;
+    transition: color 0.2s;
+}
+
+.pageBreadcrumb :global(.ant-breadcrumb-link:hover) {
+    color: #197dd3;
+}
+
+/* Premium Header with Blue Gradient */
+.khoHeader {
+    background: linear-gradient(140deg, #ffffff 65%, #d6e8fb 100%);
+    padding: 24px 28px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #c1d9f3;
+    box-shadow: 0 18px 36px rgba(25, 125, 211, 0.12);
+    color: #4b4344;
+}
+
+.khoTitle {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.khoTitle svg {
+    color: #197dd3;
+}
+
+.khoTitleText {
+    margin: 0 !important;
+    color: #4b4344 !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em;
+}
+
+.khoActions {
+    display: flex;
+    gap: 12px;
+}
+
+.khoSearch {
+    width: 280px;
+}
+
+.khoSearch :global(.ant-input-affix-wrapper) {
+    height: 44px;
+    border-radius: 12px;
+    border: 1px solid #c1d9f3;
+    box-shadow: none;
+}
+
+.khoActions :global(.ant-btn) {
+    height: 44px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.khoActions :global(.ant-btn-primary) {
+    border: none;
+    background: linear-gradient(135deg, #197dd3, #77d4fb);
+    box-shadow: 0 14px 28px rgba(25, 125, 211, 0.2);
+}
+
+/* Tab Section */
+.tabSection {
+    margin: 20px 0 12px 0;
+}
+
+.premiumTabs :global(.ant-tabs-nav) {
+    margin-bottom: 0 !important;
+}
+
+.premiumTabs :global(.ant-tabs-tab) {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #7f8c8d !important;
+    padding: 12px 20px !important;
+    transition: color 0.3s;
+}
+
+.premiumTabs :global(.ant-tabs-tab-active) {
+    color: #197dd3 !important;
+}
+
+.premiumTabs :global(.ant-tabs-ink-bar) {
+    background: #197dd3 !important;
+    height: 3px !important;
+    border-radius: 3px 3px 0 0;
+}
+
+/* Batch Action Bar */
+.batchActionBar {
+    background: #ffffff;
+    padding: 14px 24px;
+    border: 1px solid #c1d9f3;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0;
+    box-shadow: 0 8px 24px rgba(25, 125, 211, 0.08);
+    animation: slideDown 0.3s ease-out;
+}
+
+.batchActionBar :global(.ant-btn) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.batchActionBar :global(.ant-btn:not([disabled]):hover) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(25, 125, 211, 0.15);
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Main Content Card */
+.mainCard {
+    border-radius: 18px !important;
+    border: 1px solid #c1d9f3 !important;
+    background-color: #ffffff;
+    box-shadow: 0 18px 36px rgba(25, 125, 211, 0.12) !important;
+    overflow: visible !important;
+}
+
+/* Filter Section Styling */
+.filterSection {
+    padding: 20px 24px;
+    background: #fcfdfe;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.filterBar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px !important;
+    align-items: flex-end;
+}
+
+.filterBar :global(.ant-form-item) {
+    margin-right: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.filterBar :global(.ant-form-item-label) {
+    padding-bottom: 4px !important;
+}
+
+.filterBar :global(.ant-input),
+.filterBar :global(.ant-select-selector),
+.filterBar :global(.ant-picker) {
+    border-radius: 8px !important;
+    border-color: #d1e3f8 !important;
+}
+
+.mainCard :global(.ant-card-body) {
+    padding: 0 !important;
+}
+
+/* Table Customization */
+.mainCard :global(.ant-table-thead > tr > th) {
+    background: #e4f1ff !important;
+    color: #4b4344 !important;
+    font-weight: 600 !important;
+    text-transform: none;
+    font-size: 14px;
+    padding: 16px !important;
+}
+
+.mainCard :global(.ant-table-tbody > tr > td) {
+    padding: 12px 16px !important;
+    color: #1e293b;
+    font-size: 14px;
+}
+
+.mainCard :global(.ant-table-tbody > tr:nth-child(odd) > td) {
+    background: #f4f9ff;
+}
+
+.mainCard :global(.ant-table-row:hover > td) {
+    background-color: #e8f2ff !important;
+}
+
+/* Input Styling */
+.customForm :global(.ant-input),
+.customForm :global(.ant-input-number),
+.customForm :global(.ant-select-selector),
+.customForm :global(.ant-input-textarea) {
+    border-radius: 10px !important;
+    border: 1px solid #c1d9f3 !important;
+}
+
+.customForm :global(.ant-form-item-label > label) {
+    font-weight: 600 !important;
+    color: #4b4344 !important;
+    font-size: 13px;
+}
+
+/* Drawer Sidebar Styling */
+.khoDrawer :global(.ant-drawer-header) {
+    background: linear-gradient(135deg, #edf6ff 0%, #dbeeff 100%) !important;
+    border-bottom: 1px solid #c1d9f3 !important;
+    padding: 16px 24px !important;
+}
+
+.khoDrawer :global(.ant-drawer-title) {
+    color: #4b4344 !important;
+    font-weight: 700 !important;
+}
+
+.khoDrawer :global(.ant-drawer-body) {
+    padding: 24px !important;
+    background: #f7faff;
+}
+
+.khoDrawer :global(.ant-drawer-footer) {
+    padding: 12px 24px !important;
+    background: #f6f9fe !important;
+    border-top: 1px solid #c1d9f3 !important;
+}
+
+.khoDrawer :global(.ant-btn-primary) {
+    background: linear-gradient(135deg, #197dd3, #77d4fb) !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(25, 125, 211, 0.2) !important;
+}
+
+/* Divider Solid */
+.dividerSolid {
+    border-color: #c1d9f3 !important;
+    margin: 8px 0 16px 0 !important;
+}
+
+.dividerSolid :global(.ant-divider-inner-text) {
+    font-weight: 600 !important;
+    color: #197dd3 !important;
+    font-size: 13px !important;
+}

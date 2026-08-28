@@ -1,0 +1,219 @@
+/* Table Operations Styles */
+.table-select-card {
+  transition: all 0.2s ease;
+  min-height: 80px;
+}
+
+.table-select-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(25, 125, 211, 0.15);
+}
+
+.table-select-card.selected {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(25, 125, 211, 0.3);
+}
+
+/* Animation Styles */
+.table-merge-animation-overlay {
+  transition: opacity 0.3s ease;
+}
+
+/* Table Grid Animation for Merge Success */
+.table-grid-item.merge-source {
+  animation: tableMoveToTarget 2s ease-in-out forwards;
+}
+
+.table-grid-item.merge-target {
+  animation: tableGrowOnMerge 2s ease-in-out forwards;
+  animation-delay: 1s;
+}
+
+@keyframes tableMoveToTarget {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(var(--move-x, 0), var(--move-y, 0)) scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(var(--move-x, 0), var(--move-y, 0)) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes tableGrowOnMerge {
+  0% {
+    transform: scale(1);
+    background-color: #197dd3;
+  }
+  50% {
+    transform: scale(1.1);
+    background-color: #77d4fb;
+  }
+  100% {
+    transform: scale(1.2);
+    background-color: #28a745;
+    border-radius: 12px;
+  }
+}
+
+/* Table Transfer Animation */
+.table-grid-item.transfer-source {
+  animation: tableTransferMove 1.5s ease-in-out forwards;
+}
+
+.table-grid-item.transfer-target {
+  animation: tableReceiveTransfer 1.5s ease-in-out forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes tableTransferMove {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--transfer-x, 0), var(--transfer-y, 0)) scale(0.8);
+    opacity: 0.3;
+  }
+}
+
+@keyframes tableReceiveTransfer {
+  0% {
+    transform: scale(1);
+    background-color: #28a745;
+  }
+  50% {
+    transform: scale(1.1);
+    background-color: #77d4fb;
+  }
+  100% {
+    transform: scale(1);
+    background-color: #197dd3;
+  }
+}
+
+/* Enhanced Table Card Styles */
+.enhanced-table-card {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.enhanced-table-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(25, 125, 211, 0.2);
+}
+
+.enhanced-table-card.table-occupied {
+  border-left: 4px solid #ff4d4f;
+}
+
+.enhanced-table-card.table-available {
+  border-left: 4px solid #52c41a;
+}
+
+.enhanced-table-card.table-reserved {
+  border-left: 4px solid #faad14;
+}
+
+/* Table operation buttons */
+.table-operation-buttons {
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.table-operation-buttons .ant-btn {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.table-operation-buttons .ant-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Modal enhancements */
+.table-operation-modal .ant-modal-title {
+  color: #197dd3;
+  font-weight: 600;
+}
+
+.table-operation-modal .ant-modal-body {
+  padding: 24px;
+}
+
+/* Success animation after operations */
+.operation-success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(40, 167, 69, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: successOverlayFade 2s ease-in-out forwards;
+}
+
+.success-message {
+  background: white;
+  padding: 24px 32px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  animation: successMessageBounce 0.6s ease-out;
+}
+
+@keyframes successOverlayFade {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes successMessageBounce {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .table-select-card {
+    min-height: 60px;
+  }
+  
+  .table-operation-buttons .ant-btn {
+    height: 28px;
+    padding: 0 8px;
+    font-size: 11px;
+  }
+}

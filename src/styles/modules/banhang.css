@@ -1,0 +1,943 @@
+/* ================================================================
+   BÁN HÀNG MODULE STYLES
+   CSS cho toàn bộ module bán hàng - POS system
+================================================================ */
+
+/* ============================================
+   LAYOUT TỔNG QUAN - POS Interface
+============================================ */
+.banhang-container {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--space-4);
+  height: 100vh;
+  background: linear-gradient(135deg, #197dd3 0%, #77d4fb 50%, #bdbcc4 100%);
+  padding: var(--space-4);
+  position: relative;
+}
+
+.banhang-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../../assets/Img/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 0.2;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.banhang-header {
+  grid-column: 1 / -1;
+  background-color: var(--color-white);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-base);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.banhang-main {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-base);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.banhang-sidebar {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-base);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.banhang-footer {
+  grid-column: 1 / -1;
+  background-color: var(--color-white);
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-base);
+}
+
+/* ============================================
+   QUẢN LÝ BÀN - Tables Management
+============================================ */
+.ban-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--space-4);
+  padding: var(--space-4);
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.ban-item {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: var(--transition-base);
+  position: relative;
+  min-height: 100px;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-base);
+}
+
+.ban-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.ban-item--trong {
+  background-color: var(--color-success-light);
+  border-color: var(--color-success);
+  color: var(--color-success-dark);
+}
+
+.ban-item--co-khach {
+  background-color: var(--color-danger-light);
+  border-color: var(--color-danger);
+  color: var(--color-danger-dark);
+}
+
+.ban-item--dat-truoc {
+  background-color: var(--color-warning-light);
+  border-color: var(--color-warning);
+  color: var(--color-warning-dark);
+}
+
+.ban-item--don-dep {
+  background-color: var(--color-info-light);
+  border-color: var(--color-info);
+  color: var(--color-info-dark);
+}
+
+.ban-item--selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+  transform: scale(1.05);
+}
+
+.ban-so {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-1);
+}
+
+.ban-trang-thai {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.ban-thoi-gian {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  font-size: var(--font-size-xs);
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-full);
+  font-family: var(--font-family-mono);
+}
+
+.ban-so-khach {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  font-size: var(--font-size-xs);
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Khu vực bàn */
+.khu-vuc-tabs {
+  display: flex;
+  background-color: var(--color-gray-100);
+  border-radius: var(--radius-lg);
+  padding: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+.khu-vuc-tab {
+  flex: 1;
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: var(--transition-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-light);
+}
+
+.khu-vuc-tab--active {
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.khu-vuc-tab:hover:not(.khu-vuc-tab--active) {
+  background-color: var(--color-gray-200);
+  color: var(--color-text);
+}
+
+/* ============================================
+   GỎI MÓN - Order Taking
+============================================ */
+.goi-mon-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.goi-mon-header {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-gray-50);
+}
+
+.goi-mon-search {
+  position: relative;
+  margin-bottom: var(--space-4);
+}
+
+.goi-mon-search input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4) var(--space-3) var(--space-10);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-base);
+}
+
+.goi-mon-search::before {
+  content: '🔍';
+  position: absolute;
+  left: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--font-size-lg);
+  z-index: 1;
+}
+
+.danh-muc-tabs {
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+  padding-bottom: var(--space-2);
+}
+
+.danh-muc-tab {
+  flex-shrink: 0;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background-color: var(--color-white);
+  cursor: pointer;
+  transition: var(--transition-base);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.danh-muc-tab--active {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.danh-muc-tab:hover:not(.danh-muc-tab--active) {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.san-pham-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-4);
+  padding: var(--space-4);
+  overflow-y: auto;
+  flex: 1;
+}
+
+.san-pham-card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition-base);
+  position: relative;
+}
+
+.san-pham-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--color-primary);
+}
+
+.san-pham-card--het-hang {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.san-pham-card--het-hang::after {
+  content: 'HẾT HÀNG';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--color-danger);
+  color: var(--color-white);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xs);
+  z-index: 2;
+}
+
+.san-pham-hinh {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  background-color: var(--color-gray-100);
+}
+
+.san-pham-thong-tin {
+  padding: var(--space-3);
+}
+
+.san-pham-ten {
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-2);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.san-pham-gia {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  font-family: var(--font-family-mono);
+}
+
+.san-pham-mo-ta {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+  margin-top: var(--space-1);
+  line-height: 1.4;
+}
+
+/* ============================================
+   GIỎ HÀNG - Shopping Cart
+============================================ */
+.gio-hang-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.gio-hang-header {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.gio-hang-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gio-hang-ban-info {
+  font-size: var(--font-size-sm);
+  margin-top: var(--space-2);
+  opacity: 0.9;
+}
+
+.gio-hang-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-4);
+}
+
+.gio-hang-trong {
+  text-align: center;
+  padding: var(--space-8) var(--space-4);
+  color: var(--color-text-light);
+}
+
+.gio-hang-trong-icon {
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--space-4);
+  opacity: 0.5;
+}
+
+.gio-hang-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-3);
+  background-color: var(--color-white);
+  transition: var(--transition-base);
+}
+
+.gio-hang-item:hover {
+  box-shadow: var(--shadow-base);
+}
+
+.gio-hang-item-hinh {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: var(--radius-base);
+  background-color: var(--color-gray-100);
+  flex-shrink: 0;
+}
+
+.gio-hang-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.gio-hang-item-ten {
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-1);
+  line-height: 1.4;
+}
+
+.gio-hang-item-gia {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family-mono);
+}
+
+.gio-hang-item-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.gio-hang-item-so-luong {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  overflow: hidden;
+}
+
+.gio-hang-item-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background-color: var(--color-gray-100);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-base);
+  font-weight: var(--font-weight-bold);
+}
+
+.gio-hang-item-btn:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.gio-hang-item-input {
+  width: 50px;
+  text-align: center;
+  border: none;
+  background-color: var(--color-white);
+  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family-mono);
+}
+
+.gio-hang-item-xoa {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background-color: var(--color-danger);
+  color: var(--color-white);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: var(--transition-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gio-hang-item-xoa:hover {
+  background-color: var(--color-danger-dark);
+  transform: scale(1.1);
+}
+
+/* Tổng tiền */
+.gio-hang-footer {
+  padding: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-gray-50);
+}
+
+.gio-hang-tong-tien {
+  margin-bottom: var(--space-4);
+}
+
+.gio-hang-tong-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-sm);
+}
+
+.gio-hang-tong-item--total {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  padding-top: var(--space-2);
+  border-top: 2px solid var(--color-border);
+  margin-top: var(--space-2);
+}
+
+.gio-hang-tong-gia {
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-semibold);
+}
+
+.gio-hang-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* ============================================
+   THANH TOÁN - Payment
+============================================ */
+.thanh-toan-container {
+  padding: var(--space-6);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.thanh-toan-header {
+  text-align: center;
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.thanh-toan-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+
+.thanh-toan-subtitle {
+  color: var(--color-text-light);
+  font-size: var(--font-size-base);
+}
+
+.thanh-toan-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.thanh-toan-section {
+  background-color: var(--color-white);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+.thanh-toan-section-title {
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-3);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.phuong-thuc-thanh-toan {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.phuong-thuc-item {
+  padding: var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition-base);
+  background-color: var(--color-white);
+}
+
+.phuong-thuc-item:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.phuong-thuc-item--active {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.phuong-thuc-icon {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--space-2);
+}
+
+.phuong-thuc-ten {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+}
+
+.phuong-thuc-mo-ta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  margin-top: var(--space-1);
+}
+
+.thanh-toan-chi-tiet {
+  background-color: var(--color-gray-50);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-6);
+}
+
+.thanh-toan-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-base);
+}
+
+.thanh-toan-row--total {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  padding-top: var(--space-3);
+  border-top: 2px solid var(--color-border);
+  margin-top: var(--space-3);
+}
+
+.thanh-toan-gia {
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-semibold);
+}
+
+.thanh-toan-actions {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+}
+
+/* ============================================
+   HÓA ĐƠN - Invoices
+============================================ */
+.hoa-don-container {
+  background-color: var(--color-white);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-base);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hoa-don-header {
+  text-align: center;
+  padding-bottom: var(--space-4);
+  border-bottom: 2px solid var(--color-border);
+  margin-bottom: var(--space-6);
+}
+
+.hoa-don-logo {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+
+.hoa-don-cafe-info {
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+
+.hoa-don-thong-tin {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.hoa-don-section h3 {
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-3);
+  color: var(--color-text);
+}
+
+.hoa-don-field {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-sm);
+}
+
+.hoa-don-label {
+  color: var(--color-text-light);
+}
+
+.hoa-don-value {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  font-family: var(--font-family-mono);
+}
+
+.hoa-don-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--space-6);
+  font-size: var(--font-size-sm);
+}
+
+.hoa-don-table th {
+  background-color: var(--color-gray-100);
+  padding: var(--space-3);
+  text-align: left;
+  font-weight: var(--font-weight-semibold);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.hoa-don-table td {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hoa-don-table .text-right {
+  text-align: right;
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+}
+
+.hoa-don-table .text-center {
+  text-align: center;
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+}
+
+.hoa-don-summary {
+  background-color: var(--color-gray-50);
+  padding: var(--space-4);
+  border-radius: var(--radius-base);
+  margin-bottom: var(--space-6);
+}
+
+.hoa-don-summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.hoa-don-summary-row--total {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  padding-top: var(--space-3);
+  border-top: 2px solid var(--color-border);
+  margin-top: var(--space-3);
+}
+
+.hoa-don-footer {
+  text-align: center;
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
+.hoa-don-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+============================================ */
+@media (max-width: 1200px) {
+  .banhang-container {
+    grid-template-columns: 1fr 350px;
+  }
+  
+  .san-pham-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 992px) {
+  .banhang-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    gap: var(--space-3);
+  }
+  
+  .banhang-sidebar {
+    order: 3;
+    max-height: 400px;
+  }
+  
+  .ban-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: var(--space-3);
+  }
+  
+  .san-pham-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--space-3);
+  }
+  
+  .thanh-toan-info {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  .phuong-thuc-thanh-toan {
+    grid-template-columns: 1fr;
+  }
+  
+  .hoa-don-thong-tin {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+@media (max-width: 768px) {
+  .banhang-container {
+    padding: var(--space-2);
+    gap: var(--space-2);
+  }
+  
+  .ban-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: var(--space-2);
+  }
+  
+  .ban-item {
+    min-height: 80px;
+    font-size: var(--font-size-sm);
+  }
+  
+  .ban-so {
+    font-size: var(--font-size-lg);
+  }
+  
+  .san-pham-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--space-2);
+  }
+  
+  .san-pham-hinh {
+    height: 100px;
+  }
+  
+  .gio-hang-item {
+    padding: var(--space-2);
+    gap: var(--space-2);
+  }
+  
+  .gio-hang-item-hinh {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .thanh-toan-container {
+    padding: var(--space-4);
+  }
+  
+  .hoa-don-container {
+    padding: var(--space-4);
+  }
+  
+  .hoa-don-table {
+    font-size: var(--font-size-xs);
+  }
+  
+  .hoa-don-table th,
+  .hoa-don-table td {
+    padding: var(--space-2);
+  }
+}
+
+@media (max-width: 480px) {
+  .khu-vuc-tabs {
+    flex-direction: column;
+  }
+  
+  .danh-muc-tabs {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  
+  .gio-hang-item-controls {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  
+  .gio-hang-actions {
+    gap: var(--space-2);
+  }
+  
+  .thanh-toan-actions {
+    flex-direction: column;
+  }
+  
+  .hoa-don-actions {
+    flex-direction: column;
+  }
+}

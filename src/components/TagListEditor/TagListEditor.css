@@ -1,0 +1,162 @@
+/* ==========================================================================
+   TagListEditor — Tag/chip input styles
+   ========================================================================== */
+
+.tle-wrapper {
+  border: 1px solid #c1d9f3;
+  border-radius: 10px;
+  background: #fff;
+  cursor: text;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+}
+
+.tle-wrapper:focus-within {
+  border-color: #197dd3;
+  box-shadow: 0 0 0 2px rgba(25, 125, 211, 0.12);
+}
+
+/* Chips area — wraps tags + inline input */
+.tle-chips-area {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 12px;
+  min-height: 48px;
+  align-items: flex-start;
+}
+
+/* Individual tag chip */
+.tle-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  max-width: 200px;
+  transition: opacity 0.15s, transform 0.15s;
+  animation: chipIn 0.18s ease;
+}
+
+@keyframes chipIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.tle-chip-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 160px;
+}
+
+.tle-chip-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0.6;
+  flex-shrink: 0;
+  transition: opacity 0.15s, background 0.15s;
+}
+
+.tle-chip-remove:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* Inline input wrapper */
+.tle-input-wrapper {
+  display: inline-flex;
+  align-items: center;
+  flex: 1;
+  min-width: 140px;
+}
+
+.tle-input {
+  width: 100%;
+  min-width: 120px;
+  padding: 0 !important;
+  font-size: 13px !important;
+  background: transparent !important;
+}
+
+.tle-input:focus {
+  box-shadow: none !important;
+}
+
+/* Footer hint */
+.tle-footer {
+  padding: 5px 12px 7px;
+  font-size: 11px;
+  color: #94a3b8;
+  border-top: 1px solid #f0f5fc;
+  background: #fafcff;
+}
+
+/* Keyboard hint badges */
+.tle-kbd {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: #e8f0fd;
+  border: 1px solid #c1d9f3;
+  color: #475569;
+  font-family: monospace;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+/* Preview section */
+.tle-preview {
+  border-top: 1px dashed #dde8f7;
+  padding: 8px 12px 10px;
+  background: #f6f9ff;
+}
+
+.tle-preview-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #94a3b8;
+  margin-bottom: 7px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tle-preview-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.tle-preview-chip {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 9px;
+  border-radius: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+.tle-preview-more {
+  font-size: 11px;
+  color: #94a3b8;
+  font-style: italic;
+  align-self: center;
+}

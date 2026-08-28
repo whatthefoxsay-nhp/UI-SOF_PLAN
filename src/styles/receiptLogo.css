@@ -1,0 +1,13 @@
+/* Receipt Logo Styles - for reference only */
+/* These styles are dynamically injected by receiptLogoManager */
+
+.receipt-logo {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.receipt-logo img {
+  max-width: 80px;
+  max-height: 80px;
+  object-fit: contain;
+}

@@ -1,0 +1,187 @@
+/**
+ * THEME SELECTOR COMPONENT
+ * Styles cho component chọn theme
+ */
+
+.theme-selector {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-light, #e2e8f0);
+  border-radius: var(--radius-lg, 8px);
+  padding: var(--space-6, 24px);
+  box-shadow: var(--shadow-md, 0 10px 15px rgba(0, 0, 0, 0.1));
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.theme-selector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6, 24px);
+  padding-bottom: var(--space-4, 16px);
+  border-bottom: 1px solid var(--border-light, #e2e8f0);
+}
+
+.theme-selector-header h3 {
+  margin: 0;
+  color: var(--color-text-primary, #1e293b);
+  font-size: var(--font-size-lg, 18px);
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+.theme-selector-shortcut {
+  font-size: var(--font-size-sm, 12px);
+  color: var(--color-text-muted, #94a3b8);
+  background: var(--bg-secondary, #f8fafc);
+  padding: var(--space-1, 4px) var(--space-2, 8px);
+  border-radius: var(--radius-sm, 2px);
+  border: 1px solid var(--border-light, #e2e8f0);
+}
+
+.theme-selector-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4, 16px);
+  padding: var(--space-4, 16px);
+  border: 2px solid var(--border-light, #e2e8f0);
+  border-radius: var(--radius-md, 6px);
+  cursor: pointer;
+  transition: all var(--transition-fast, 0.15s ease-in-out);
+  background: var(--bg-surface, #ffffff);
+}
+
+.theme-option:hover {
+  border-color: var(--color-primary, #8B4513);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.1));
+}
+
+.theme-option.active {
+  border-color: var(--color-primary, #8B4513);
+  background: var(--bg-surface-hover, #f0f8ff);
+  box-shadow: var(--shadow-primary, 0 4px 14px rgba(139, 69, 19, 0.15));
+}
+
+.theme-preview {
+  display: flex;
+  gap: var(--space-1, 4px);
+  flex-shrink: 0;
+}
+
+.color-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full, 9999px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.theme-info {
+  flex: 1;
+}
+
+.theme-info h4 {
+  margin: 0 0 var(--space-1, 4px) 0;
+  color: var(--color-text-primary, #1e293b);
+  font-size: var(--font-size-base, 14px);
+  font-weight: var(--font-weight-medium, 500);
+}
+
+.theme-info p {
+  margin: 0;
+  color: var(--color-text-secondary, #64748b);
+  font-size: var(--font-size-sm, 12px);
+  line-height: var(--line-height-normal, 1.4);
+}
+
+/* Theme 1 specific styles */
+.theme-1 .theme-option:hover {
+  border-color: var(--color-primary);
+}
+
+.theme-1 .theme-option.active {
+  border-color: var(--color-primary);
+  background: var(--bg-surface-hover);
+  box-shadow: var(--shadow-primary);
+}
+
+/* Modal version của theme selector */
+.theme-selector-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-overlay, rgba(0, 0, 0, 0.45));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal, 1050);
+  padding: var(--space-6, 24px);
+}
+
+.theme-selector-modal .theme-selector {
+  max-width: 500px;
+  width: 100%;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Theme selector button */
+.theme-selector-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-medium, #cbd5e1);
+  border-radius: var(--radius-base, 4px);
+  color: var(--color-text-secondary, #64748b);
+  font-size: var(--font-size-sm, 12px);
+  cursor: pointer;
+  transition: all var(--transition-fast, 0.15s ease-in-out);
+}
+
+.theme-selector-trigger:hover {
+  background: var(--bg-surface-hover, #f0f8ff);
+  border-color: var(--color-primary, #8B4513);
+  color: var(--color-primary, #8B4513);
+}
+
+.theme-selector-trigger .icon {
+  width: 14px;
+  height: 14px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .theme-selector {
+    padding: var(--space-4, 16px);
+  }
+  
+  .theme-option {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-2, 8px);
+  }
+  
+  .theme-preview {
+    justify-content: center;
+  }
+}

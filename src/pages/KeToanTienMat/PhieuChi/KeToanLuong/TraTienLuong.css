@@ -1,0 +1,352 @@
+/* Nhập Phiếu Thu Nhanh Container */
+.nhap-phieu-thu-nhanh-container {
+    /* padding: 24px; */
+    background-color: #f5f5f5;
+    min-height: fit-content;
+    border-radius: 8px;
+}
+
+.nhap-phieu-thu-nhanh-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.nhap-phieu-thu-nhanh-card .ant-card-head {
+    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+    color: white;
+    border-radius: 8px 8px 0 0;
+}
+
+.nhap-phieu-thu-nhanh-card .ant-card-head-title {
+    color: black;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.nhap-phieu-thu-nhanh-card .ant-card-extra button {
+    border-color: white;
+}
+
+.nhap-phieu-thu-nhanh-card .ant-card-extra button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Form Styling */
+.nhap-phieu-thu-form {
+    margin-top: 0;
+}
+
+.nhap-phieu-thu-form .ant-form-item-label>label {
+    font-weight: 500;
+    color: #333;
+}
+
+.nhap-phieu-thu-form .ant-form-item-required::before {
+    color: #ff4d4f;
+}
+
+/* Input Styling */
+.nhap-phieu-thu-form .ant-input,
+.nhap-phieu-thu-form .ant-input-number,
+.nhap-phieu-thu-form .ant-picker,
+.nhap-phieu-thu-form .ant-select-selector {
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.nhap-phieu-thu-form .ant-input:hover,
+.nhap-phieu-thu-form .ant-input-number:hover,
+.nhap-phieu-thu-form .ant-picker:hover,
+.nhap-phieu-thu-form .ant-select-selector:hover {
+    border-color: var(--primary-color);
+}
+
+.nhap-phieu-thu-form .ant-input:focus,
+.nhap-phieu-thu-form .ant-input-number:focus,
+.nhap-phieu-thu-form .ant-picker:focus,
+.nhap-phieu-thu-form .ant-select-focused .ant-select-selector {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+/* TextArea Styling */
+.nhap-phieu-thu-form .ant-input-textarea textarea {
+    border-radius: 6px;
+}
+
+/* Checkbox Styling */
+.nhap-phieu-thu-form .ant-checkbox-wrapper {
+    font-weight: 500;
+    color: #333;
+}
+
+.nhap-phieu-thu-form .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Button Styling */
+.nhap-phieu-thu-form button[type="submit"] {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border: none;
+    border-radius: 6px;
+    height: 40px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nhap-phieu-thu-form button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nhap-phieu-thu-nhanh-container {
+        padding: 16px;
+    }
+
+    .nhap-phieu-thu-nhanh-card .ant-card-head-title {
+        font-size: 16px;
+    }
+
+    .nhap-phieu-thu-nhanh-card .ant-card-extra {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .nhap-phieu-thu-nhanh-card .ant-card-extra button {
+        width: 100%;
+    }
+}
+
+/* Loading State */
+.nhap-phieu-thu-form .ant-btn-loading {
+    opacity: 0.7;
+}
+
+/* Error State */
+.nhap-phieu-thu-form .ant-form-item-has-error .ant-input,
+.nhap-phieu-thu-form .ant-form-item-has-error .ant-input-number,
+.nhap-phieu-thu-form .ant-form-item-has-error .ant-picker,
+.nhap-phieu-thu-form .ant-form-item-has-error .ant-select-selector {
+    border-color: #ff4d4f;
+}
+
+.nhap-phieu-thu-form .ant-form-item-has-error .ant-input:focus,
+.nhap-phieu-thu-form .ant-form-item-has-error .ant-input-number:focus,
+.nhap-phieu-thu-form .ant-form-item-has-error .ant-picker:focus,
+.nhap-phieu-thu-form .ant-form-item-has-error .ant-select-focused .ant-select-selector {
+    box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
+}
+
+/* Custom Tab Styles for NhapPhieuThuNhanh */
+.phieu-thu-tabs-container {
+    padding: 16px;
+    background-color: #f0f2f5;
+}
+
+.phieu-thu-tabs-container .ant-tabs-nav {
+    margin-bottom: 0;
+    margin-left: 8px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #f0f2f5;
+    padding-top: 8px;
+}
+
+.phieu-thu-tabs-container .ant-tabs-tab {
+    border-radius: 8px 8px 0 0 !important;
+    border: 1px solid #e8e8e8;
+    border-bottom: none;
+    background: #fafafa;
+    transition: all 0.3s ease;
+    padding: 10px 24px !important;
+    font-weight: 500;
+    color: #666;
+}
+
+.phieu-thu-tabs-container .ant-tabs-tab:hover {
+    color: var(--primary-color);
+    background: #fff;
+}
+
+.phieu-thu-tabs-container .ant-tabs-tab-active {
+    background: #fff !important;
+    color: var(--primary-color) !important;
+    border-color: #e8e8e8 !important;
+    border-bottom-color: #fff !important;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+    /* Ensure cover the bottom border */
+}
+
+.phieu-thu-tabs-container .ant-tabs-tab-active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border-radius: 8px 8px 0 0;
+}
+
+.phieu-thu-tabs-container .ant-tabs-content-holder {
+    background: #fff;
+    /* border: 1px solid #e8e8e8; */
+    border-top: none;
+    border-radius: 0 8px 8px 8px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Overrides for inner content to blend with Tabs */
+.phieu-thu-tabs-container .nhap-phieu-thu-nhanh-container {
+    padding: 0;
+    background: transparent;
+    min-height: auto;
+}
+
+.phieu-thu-tabs-container .nhap-phieu-thu-nhanh-card {
+    box-shadow: none;
+    border: none;
+    border-radius: 8px;
+}
+
+.phieu-thu-tabs-container .nhap-phieu-thu-nhanh-card .ant-card-head {
+    /* Optional: Hide or style the inner card header if redundant */
+    border-bottom: 1px solid #f0f0f0;
+    background: transparent;
+    color: #333;
+    padding: 0;
+    min-height: 48px;
+}
+
+.phieu-thu-tabs-container .nhap-phieu-thu-nhanh-card .ant-card-head-title {
+    color: var(--primary-color);
+    padding: 16px 0;
+}
+
+.phieu-thu-tabs-container .nhap-phieu-thu-nhanh-card .ant-card-extra button {
+    border-color: #d9d9d9;
+    color: #333;
+}
+
+.phieu-thu-tabs-container .nhap-phieu-thu-nhanh-card .ant-card-extra button:nth-child(2) {
+    border-color: #d9d9d9;
+    color: #fff;
+}
+
+.phieu-thu-tabs-container .nhap-phieu-thu-nhanh-card .ant-card-extra button:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: transparent;
+}
+
+/* Summary Total Row Styling - like table header */
+.summary-total-row {
+    background-color: #fafafa !important;
+    font-weight: bold !important;
+}
+
+.summary-total-cell {
+    border-top: 1px solid #333 !important;
+    color: var(--primary-color) !important;
+}
+
+/* =============================================================================
+   DETAIL TABS - Tabs for chi tiết chi tiền và biểu diễn khoản lương
+   ============================================================================= */
+
+.detail-tabs {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 10px 15px -3px rgba(0, 0, 0, 0.08);
+    position: relative;
+}
+
+.detail-tabs::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #197dd3 0%, #77d4fb 100%);
+    border-radius: 12px 12px 0 0;
+    z-index: 10;
+}
+
+.detail-tabs .ant-tabs-nav {
+    margin-bottom: 16px;
+}
+
+.detail-tabs .ant-tabs-tab {
+    border-radius: 8px 8px 0 0 !important;
+    border: 1px solid #e2e8f0;
+    border-bottom: none;
+    background: #f8fafc;
+    transition: all 0.3s ease;
+    padding: 10px 20px !important;
+    font-weight: 500;
+    color: #64748b;
+}
+
+.detail-tabs .ant-tabs-tab:hover {
+    color: var(--primary-color, #197dd3);
+    background: #fff;
+}
+
+.detail-tabs .ant-tabs-tab-active {
+    background: #fff !important;
+    color: var(--primary-color, #197dd3) !important;
+    border-color: #e2e8f0 !important;
+    border-bottom-color: #fff !important;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+}
+
+.detail-tabs .ant-tabs-tab-active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(135deg, var(--primary-color, #197dd3) 0%, var(--secondary-color, #77d4fb) 100%);
+    border-radius: 8px 8px 0 0;
+}
+
+.detail-tabs .ant-tabs-ink-bar {
+    display: none;
+}
+
+.detail-tabs .ant-tabs-content-holder {
+    background: #fff;
+    border-radius: 0 8px 8px 8px;
+    padding: 0;
+}
+
+/* Theme-1 (Cafe) overrides for detail-tabs */
+.theme-1 .detail-tabs::before {
+    background: linear-gradient(90deg, #8B4513 0%, #D2B48C 100%);
+}
+
+.theme-1 .detail-tabs .ant-tabs-tab:hover {
+    color: #8B4513;
+}
+
+.theme-1 .detail-tabs .ant-tabs-tab-active {
+    color: #8B4513 !important;
+}
+
+.theme-1 .detail-tabs .ant-tabs-tab-active::after {
+    background: linear-gradient(135deg, #8B4513 0%, #D2B48C 100%);
+}

@@ -1,0 +1,98 @@
+/**
+ * BACKGROUND UTILITIES
+ * Utility classes cho background với theme colors: #197dd3, #77d4fb, #bdbcc4, #4b4344
+ */
+
+/* ==================== THEME BACKGROUND UTILITIES ==================== */
+
+/* Background chính với theme colors */
+.bg-theme-primary {
+  background: linear-gradient(135deg, #197dd3 0%, #77d4fb 100%);
+}
+
+.bg-theme-secondary {
+  background: linear-gradient(135deg, #bdbcc4 0%, #4b4344 100%);
+}
+
+.bg-theme-light {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+}
+
+/* Background với opacity cho overlay */
+.bg-theme-overlay-20 {
+  position: relative;
+}
+
+.bg-theme-overlay-20::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(25, 125, 211, 0.1) 0%, rgba(119, 212, 251, 0.1) 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.bg-theme-overlay-10 {
+  position: relative;
+}
+
+.bg-theme-overlay-10::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(25, 125, 211, 0.05) 0%, rgba(119, 212, 251, 0.05) 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ==================== CONTAINER BACKGROUND APPLICATIONS ==================== */
+
+/* Áp dụng cho các container chính */
+.page-wrapper,
+.module-container,
+.content-wrapper {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  position: relative;
+}
+
+/* ==================== RESPONSIVE BACKGROUNDS ==================== */
+
+@media (max-width: 768px) {
+  .bg-cafe-20::before,
+  .bg-cafe-10::before,
+  .bg-cafe-30::before,
+  .page-wrapper::before,
+  .module-container::before,
+  .content-wrapper::before {
+    background-size: cover;
+    background-position: center top;
+  }
+}
+
+@media (max-width: 480px) {
+  .bg-cafe-20::before,
+  .bg-cafe-10::before,
+  .bg-cafe-30::before,
+  .page-wrapper::before,
+  .module-container::before,
+  .content-wrapper::before {
+    opacity: 0.15; /* Giảm opacity trên mobile để dễ đọc */
+  }
+}
+
+/* ==================== DARK MODE COMPATIBILITY ==================== */
+
+[data-theme="dark"] .bg-cafe-20::before,
+[data-theme="dark"] .bg-cafe-10::before,
+[data-theme="dark"] .bg-cafe-30::before,
+[data-theme="dark"] .page-wrapper::before,
+[data-theme="dark"] .module-container::before,
+[data-theme="dark"] .content-wrapper::before {
+  filter: brightness(0.7) contrast(1.2);
+}

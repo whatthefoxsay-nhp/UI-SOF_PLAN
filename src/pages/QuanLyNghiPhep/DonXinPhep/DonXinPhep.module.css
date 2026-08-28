@@ -1,0 +1,288 @@
+/* ==========================================================================
+   Premium Design System - DonXinPhep
+   ========================================================================== */
+
+.container {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #4b4344;
+    background: #edf3fb; /* Match HDLDKeToan's premium light background */
+    padding: 24px;
+    min-height: 100vh;
+    border-radius: 16px;
+}
+
+.pageTitle {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    margin-bottom: 20px !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Action Toolbar Row */
+.toolbarRow {
+    margin-bottom: 20px !important;
+    padding: 14px 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.toolbarRow :global(.ant-btn) {
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.toolbarRow :global(.ant-btn-primary) {
+    background: #197dd3;
+    border-color: #197dd3;
+}
+
+.toolbarRow :global(.ant-btn-primary:hover) {
+    background: #1569b3 !important;
+    border-color: #1569b3 !important;
+}
+
+/* Main Grid Customization */
+.mainTable :global(.ant-table) {
+    border-radius: 12px !important;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+.mainTable :global(.ant-table-thead > tr > th) {
+    background: #e4f1ff !important;
+    color: #1e293b !important;
+    font-weight: 700 !important;
+    font-size: 13px;
+    padding: 12px 10px !important;
+    text-align: center !important;
+    border-bottom: 1px solid #c1d9f3 !important;
+}
+
+.mainTable :global(.ant-table-tbody > tr > td) {
+    padding: 8px 10px !important;
+    font-size: 13px;
+    color: #334155;
+    border-bottom: 1px solid #f1f5f9 !important;
+    transition: background-color 0.2s ease;
+}
+
+/* Alternating Row Coloring */
+.mainTable :global(.ant-table-tbody > tr > td) {
+    background: #f8fbff;
+}
+
+/* Hover highlight on standard rows */
+.mainTable :global(.ant-table-row:hover > td) {
+    background-color: #edf5ff !important;
+}
+
+/* Inputs and Select Custom Overrides inside Table Cells */
+.mainTable :global(.ant-input),
+.mainTable :global(.ant-input-number),
+.mainTable :global(.ant-select-selector),
+.mainTable :global(.ant-picker) {
+    border-radius: 6px !important;
+    border-color: #cbd5e1 !important;
+}
+
+.mainTable :global(.ant-input:focus),
+.mainTable :global(.ant-input-number-focused),
+.mainTable :global(.ant-select-focused .ant-select-selector) {
+    border-color: #197dd3 !important;
+    box-shadow: 0 0 0 2px rgba(25, 125, 211, 0.1) !important;
+}
+
+/* Drawer, Form inside Drawer */
+.khoDrawer :global(.ant-drawer-content) {
+    border-radius: 16px 0 0 16px !important;
+    border: 1px solid #c1d9f3 !important;
+    box-shadow: -10px 0 30px rgba(25, 125, 211, 0.1) !important;
+    background: #edf3fb !important;
+}
+
+.khoDrawer :global(.ant-drawer-header) {
+    padding: 16px 24px !important;
+    background: #edf6ff !important;
+    border-bottom: 1px solid #c1d9f3 !important;
+}
+
+.khoDrawer :global(.ant-drawer-title) {
+    color: #4b4344 !important;
+    font-weight: 700 !important;
+}
+
+.khoDrawer :global(.ant-drawer-body) {
+    padding: 24px !important;
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    margin: 16px !important;
+    box-shadow: 0 4px 12px rgba(25, 125, 211, 0.05);
+}
+
+.khoDrawer :global(.ant-drawer-footer) {
+    padding: 12px 24px !important;
+    background: #f6f9fe !important;
+    border-top: 1px solid #c1d9f3 !important;
+}
+
+/* Form inputs & dropdowns inside Drawer */
+.customForm :global(.ant-input),
+.customForm :global(.ant-input-number),
+.customForm :global(.ant-select-selector),
+.customForm :global(.ant-picker) {
+    border-radius: 10px !important;
+    border: 1px solid #c1d9f3 !important;
+    height: 40px !important;
+    display: flex;
+    align-items: center;
+}
+
+.customForm :global(.ant-input-number) {
+    padding: 0 !important;
+}
+
+.customForm :global(.ant-input-number-input) {
+    height: 38px !important;
+}
+
+.customForm :global(.ant-form-item-label > label) {
+    font-weight: 600 !important;
+    color: #4b4344 !important;
+    font-size: 13px;
+}
+
+.customForm :global(textarea.ant-input) {
+    height: auto !important;
+    min-height: 96px !important;
+    align-items: flex-start;
+}
+
+.dividerSolid {
+    margin: 16px 0 !important;
+}
+
+.dividerSolid::before,
+.dividerSolid::after {
+    border-top: 1px solid #1890ff !important;
+}
+
+.dividerSolid :global(.ant-divider-inner-text) {
+    color: #1890ff;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0 10px;
+}
+
+/* Batch Action Bar */
+.batchActionBar {
+    background: #ffffff;
+    padding: 14px 24px;
+    border: 1px solid #c1d9f3;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0;
+    box-shadow: 0 8px 24px rgba(25, 125, 211, 0.08);
+    animation: slideDown 0.3s ease-out;
+}
+
+.batchActionBar :global(.ant-btn) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.batchActionBar :global(.ant-btn:not([disabled]):hover) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(25, 125, 211, 0.15);
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.batchActionBarDisabled {
+    background: #fafafa !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: none !important;
+    opacity: 0.65;
+    filter: grayscale(1);
+}
+
+.batchActionBarDisabled span,
+.batchActionBarDisabled b {
+    color: #8c8c8c !important;
+}
+
+.pageWrapper {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    margin-top: 16px;
+}
+
+/* Quick insert row styles */
+.quickRow {
+    background-color: #fffbe6 !important;
+}
+
+.quickRow:hover > td {
+    background-color: #fff1b8 !important;
+}
+
+/* Status Badges */
+.statusCanceled {
+    color: #8c8c8c;
+    background: #f0f0f0;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.statusPending {
+    color: #faad14;
+    background: rgba(250, 173, 20, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.statusApprovedQl {
+    color: #52c41a;
+    background: rgba(82, 196, 26, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.statusApprovedBgd {
+    color: #1890ff;
+    background: rgba(24, 144, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.statusUnknown {
+    color: #999;
+    background: #f5f5f5;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}

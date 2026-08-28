@@ -1,0 +1,112 @@
+/* Container chính: Flex dọc, chiếm 100% chiều cao */
+.quill-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%; /* Ăn theo chiều cao của Form cha */
+    border: 1px solid #d9d9d9;
+    background: #fff;
+    border-radius: 4px;
+}
+
+/* 1. Phần Toolbar: Không co giãn, nằm cố định ở trên */
+.quill-toolbar-container {
+    flex: 0 0 auto; /* Không co, không giãn, chiều cao tự động theo nội dung */
+    border-bottom: 1px solid #d9d9d9;
+    background-color: #f5f5f5;
+    padding: 4px;
+    z-index: 10; /* Đảm bảo nằm trên Editor */
+}
+
+/* Style cho các nút trong toolbar */
+#custom-toolbar {
+    font-family: Arial, sans-serif;
+}
+
+.toolbar-group {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 8px;
+    padding-right: 8px;
+    border-right: 1px solid #ccc;
+    flex-wrap: wrap;
+    gap: 2px;
+}
+
+.toolbar-group:last-child {
+    border-right: none;
+}
+
+#custom-toolbar button {
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    color: #333;
+    border-radius: 3px;
+    transition: all 0.2s;
+}
+
+#custom-toolbar button:hover {
+    background-color: #e6f7ff;
+    border-color: #1890ff;
+    color: #1890ff;
+}
+
+/* Nút đang được chọn (Active) */
+#custom-toolbar button.ql-active {
+    background-color: #e6f7ff;
+    color: #1890ff;
+    font-weight: bold;
+}
+
+/* Select box (Font, Size) */
+#custom-toolbar .ql-picker {
+    height: 24px;
+    margin-right: 2px;
+}
+
+/* 2. Phần Editor: Chiếm toàn bộ không gian còn lại */
+.quill-editor-container {
+    flex: 1 1 auto; /* Tự động giãn nở */
+    position: relative;
+    overflow: hidden; /* Ẩn thanh cuộn của container này */
+    min-height: 0; /* Quan trọng cho Firefox/Flexbox */
+}
+
+/* Container của thư viện Quill */
+.ql-container.ql-snow {
+    border: none !important;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Vùng soạn thảo thực tế */
+.ql-editor {
+    height: 100%;
+    overflow-y: auto !important; /* Luôn hiện scroll dọc */
+    overflow-x: auto;            /* Scroll ngang nếu cần */
+    padding: 15px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+/* Style cho bảng */
+.ql-editor table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ql-editor td, .ql-editor th {
+    border: 1px solid #000;
+    padding: 6px;
+    min-width: 50px;
+}
