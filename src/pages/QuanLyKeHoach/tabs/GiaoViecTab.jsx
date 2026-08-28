@@ -239,7 +239,14 @@ const GiaoViecTab = ({ detailData, onRefresh }) => {
 
             if (parsedRes && parsedRes.success) {
                 let rows = [];
-                const tasksData = parsedRes?.tabs?.tasks;
+                // Use cr_lv0025_xemtongcv's own 'load' response as the tasks source:
+                // it returns the full cr_lv0005 row set for this plan (no row cap,
+                // no current-user filter) plus the joined display fields
+                // (ten_nguoi_thuc_hien, ten_loai_cong_viec, wf_task_code, ...) that
+                // this component's columns rely on. parsedRes.tabs.tasks is a
+                // narrower, unrelated "task entry" widget query and does not carry
+                // these fields.
+                const tasksData = legacyRes?.rows;
                 if (Array.isArray(tasksData)) {
                     rows = tasksData;
                 } else if (tasksData && typeof tasksData === 'object') {
@@ -437,7 +444,8 @@ const GiaoViecTab = ({ detailData, onRefresh }) => {
                     lv008: values.lv008,
                     lv013: values.lv013,
                     lv014: values.lv014,
-                    lv111: values.lv111
+                    lv111: values.lv111,
+                    wf_task_id: editingRecord?.wf_task_id ?? null
                 }
             };
 
