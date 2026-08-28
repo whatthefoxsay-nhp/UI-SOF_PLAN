@@ -54,6 +54,8 @@ export const getMyTasks = () => callWorkflowApi("task.myTasks");
 export const getTask = (id) => callWorkflowApi("task.get", { id });
 export const saveTask = (data) => callWorkflowApi("task.save", data);
 export const updateTaskStatus = (id, status) => callWorkflowApi("task.updateStatus", { id, status });
+export const updateTaskStatusFromPlan = (taskId, planStatus) =>
+  callWorkflowApi("task.updateStatusFromPlan", { task_id: taskId, plan_status: planStatus });
 export const confirmTask = (taskId, departmentCode, note = "") =>
   callWorkflowApi("task.confirm", { task_id: taskId, department_code: departmentCode, note });
 export const saveTaskItem = (data) => callWorkflowApi("task.item.save", data);
