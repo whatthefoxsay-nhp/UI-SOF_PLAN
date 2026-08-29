@@ -44,6 +44,7 @@ function hashCode(str) {
 
 function TaskCard({ task, onClick, showStage }) {
   const isDone = task.status === "DONE";
+  const isBlocked = task.execution_state === "BLOCKED";
   const overdue = task.deadline && !isDone && new Date(task.deadline) < new Date();
   const avatarSeed = task.assignee_code || task.department_code || task.code || "?";
   const initials = avatarSeed.slice(0, 2).toUpperCase();
@@ -65,6 +66,11 @@ function TaskCard({ task, onClick, showStage }) {
             {showStage && task.stage_code && (
               <Tag color="cyan" style={{ fontSize: 10, margin: 0, padding: "0 4px", lineHeight: "16px" }}>
                 {task.stage_code}
+              </Tag>
+            )}
+            {isBlocked && (
+              <Tag color="red" style={{ fontSize: 10, margin: 0, padding: "0 4px", lineHeight: "16px" }} title="Đang chờ công việc phụ thuộc hoàn thành">
+                <Lock size={10} style={{ marginRight: 2 }} /> Chờ
               </Tag>
             )}
           </Space>
@@ -137,19 +143,20 @@ function StageExtraPanel({ stage, profile, onSaved }) {
   const [reasonOpen, setReasonOpen] = useState(false);
   const [reason, setReason] = useState("");
   const [pendingRequests, setPendingRequests] = useState([]);
+  const [calcValues, setCalcValues] = useState({});
 
   useEffect(() => {
-    form.setFieldsValue(stage.extra_data || {});
+    const data = stage.extra_data || {};
+    form.setFieldsValue(data);
+    setCalcValues(data);
     workflowApi.listLockRequests(stage.id).then((rows) => setPendingRequests((rows || []).filter((r) => r.status === "PENDING")));
   }, [stage, form]);
-
-  if (!["CONTRACT", "EXECUTION", "PAYMENT"].includes(stage.stage_type)) return null;
 
   const save = async (lockNow = false) => {
     const values = form.getFieldsValue();
     try {
       const data = await workflowApi.saveStageExtra(stage.id, values, lockNow);
-      message.success(lockNow ? "Đã chốt và LOCK dữ liệu" : "Đã lưu");
+      message.success(lockNow ? "Đã chốt và LOCK dữ liệu thành công" : "Đã lưu thông tin giai đoạn");
       onSaved(data);
     } catch (e) {
       message.error(e.message);
@@ -159,7 +166,7 @@ function StageExtraPanel({ stage, profile, onSaved }) {
   const submitUnlockRequest = async () => {
     try {
       await workflowApi.requestUnlock(stage.id, reason);
-      message.success("Đã gửi yêu cầu mở khóa");
+      message.success("Đã gửi yêu cầu mở khóa đến Quản trị viên");
       setReasonOpen(false);
       setReason("");
       const rows = await workflowApi.listLockRequests(stage.id);
@@ -172,7 +179,7 @@ function StageExtraPanel({ stage, profile, onSaved }) {
   const decide = async (id, approve) => {
     try {
       await workflowApi.decideLockRequest(id, approve);
-      message.success(approve ? "Đã duyệt mở khóa" : "Đã từ chối");
+      message.success(approve ? "Đã duyệt mở khóa thành công" : "Đã từ chối mở khóa");
       const rows = await workflowApi.listLockRequests(stage.id);
       setPendingRequests(rows.filter((r) => r.status === "PENDING"));
       const fresh = await workflowApi.getProject(stage.project_id);
@@ -183,19 +190,52 @@ function StageExtraPanel({ stage, profile, onSaved }) {
     }
   };
 
+  const handleValuesChange = (_, allValues) => {
+    setCalcValues(allValues);
+  };
+
   const locked = !!stage.is_locked;
   const isContract = stage.stage_type === "CONTRACT";
   const isPayment = stage.stage_type === "PAYMENT";
   const isExecution = stage.stage_type === "EXECUTION";
+  const isTester = stage.stage_type === "TESTER";
+  const isHandover = stage.stage_type === "HANDOVER";
+  const isMaintenance = stage.stage_type === "MAINTENANCE";
+
   const canEdit = !!profile && (profile.is_admin || (stage.departments || []).includes(profile.department_code));
   const canApprove = !!profile && profile.is_admin;
+
+  // Real-time financial & metric calculations
+  const giaBan = Number(calcValues.gia_ban) || 0;
+  const chiPhiDuKien = Number(calcValues.chi_phi_du_kien) || 0;
+  const chiPhiNhanSu = Number(calcValues.chi_phi_nhan_su) || 0;
+  const chiPhiKhac = Number(calcValues.chi_phi_khac) || 0;
+  const loiNhuan = giaBan - (chiPhiDuKien + chiPhiNhanSu + chiPhiKhac);
+  const tySuatLoiNhuan = giaBan > 0 ? ((loiNhuan / giaBan) * 100).toFixed(1) : 0;
+
+  const plannedDays = Number(calcValues.tong_ngay_cong_ke_hoach) || 0;
+  const usedDays = Number(calcValues.tong_ngay_cong_da_dung) || 0;
+  const remainingDays = Math.max(0, plannedDays - usedDays);
+  const executionPercent = plannedDays > 0 ? Math.min(100, Math.round((usedDays / plannedDays) * 100)) : 0;
+
+  const giaTriHopDong = Number(calcValues.gia_tri_hop_dong) || 0;
+  const daThu = Number(calcValues.da_thu) || 0;
+  const conPhaiThu = Math.max(0, giaTriHopDong - daThu);
+  const paymentPercent = giaTriHopDong > 0 ? Math.min(100, Math.round((daThu / giaTriHopDong) * 100)) : 0;
+
+  const titleMap = {
+    CONTRACT: "Hợp đồng & Lợi nhuận (GD03)",
+    EXECUTION: "Thực thi lập trình (GD04)",
+    TESTER: "Kiểm thử & QA (GD05)",
+    HANDOVER: "Bàn giao & Nghiệm thu (GD06)",
+    PAYMENT: "Theo dõi Thu tiền (GD07)",
+    MAINTENANCE: "Quản lý Bảo trì (GD08)",
+  };
 
   return (
     <Card
       size="small"
-      title={
-        isContract ? "Hợp đồng & lợi nhuận" : isPayment ? "Theo dõi thu tiền" : "Phân bổ ngày công"
-      }
+      title={titleMap[stage.stage_type] || `Chi tiết ${stage.name}`}
       extra={
         stage.lock_enabled ? (
           locked ? (
@@ -209,37 +249,97 @@ function StageExtraPanel({ stage, profile, onSaved }) {
           )
         ) : null
       }
-      style={{ marginBottom: 12 }}
+      style={{ marginBottom: 12, borderRadius: 12 }}
     >
-      <Form form={form} layout="vertical" disabled={locked || !canEdit}>
+      <Form form={form} layout="vertical" disabled={locked || !canEdit} onValuesChange={handleValuesChange}>
         {isContract && (
           <>
-            <Form.Item name="gia_ban" label="Giá bán (VNĐ)"><Input type="number" /></Form.Item>
-            <Form.Item name="chi_phi_du_kien" label="Chi phí dự kiến (VNĐ)"><Input type="number" /></Form.Item>
-            <Form.Item name="chi_phi_nhan_su" label="Chi phí nhân sự (VNĐ)"><Input type="number" /></Form.Item>
-            <Form.Item name="so_ngay_cong" label="Số ngày công"><Input type="number" /></Form.Item>
-            <Form.Item name="chi_phi_khac" label="Chi phí khác (VNĐ)"><Input type="number" /></Form.Item>
-            <Form.Item name="hop_dong" label="Số hợp đồng"><Input /></Form.Item>
+            <Form.Item name="gia_ban" label="Giá bán (VNĐ)"><Input type="number" placeholder="Ví dụ: 100000000" /></Form.Item>
+            <Form.Item name="chi_phi_du_kien" label="Chi phí dự kiến (VNĐ)"><Input type="number" placeholder="Ví dụ: 30000000" /></Form.Item>
+            <Form.Item name="chi_phi_nhan_su" label="Chi phí nhân sự (VNĐ)"><Input type="number" placeholder="Ví dụ: 40000000" /></Form.Item>
+            <Form.Item name="so_ngay_cong" label="Tổng số ngày công"><Input type="number" placeholder="Ví dụ: 100" /></Form.Item>
+            <Form.Item name="chi_phi_khac" label="Chi phí khác (VNĐ)"><Input type="number" placeholder="0" /></Form.Item>
+            <Form.Item name="hop_dong" label="Số / Mã Hợp đồng"><Input placeholder="HD-2026-001" /></Form.Item>
+
+            {giaBan > 0 && (
+              <Card size="small" type="inner" style={{ background: loiNhuan >= 0 ? "#f6ffed" : "#fff2f0", borderColor: loiNhuan >= 0 ? "#b7eb8f" : "#ffccc7", marginBottom: 12 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, fontWeight: 700 }}>
+                  <span>Lợi nhuận dự kiến:</span>
+                  <span style={{ color: loiNhuan >= 0 ? "#52c41a" : "#ff4d4f" }}>
+                    {loiNhuan.toLocaleString("vi-VN")} VNĐ ({tySuatLoiNhuan}%)
+                  </span>
+                </div>
+              </Card>
+            )}
           </>
         )}
+
         {isExecution && (
           <>
-            <Form.Item name="tong_ngay_cong_ke_hoach" label="Kế hoạch (ngày công)"><Input type="number" /></Form.Item>
-            <Form.Item name="tong_ngay_cong_da_dung" label="Đã sử dụng (ngày công)"><Input type="number" /></Form.Item>
+            <Form.Item name="tong_ngay_cong_ke_hoach" label="Kế hoạch (số ngày công)"><Input type="number" placeholder="100" /></Form.Item>
+            <Form.Item name="tong_ngay_cong_da_dung" label="Đã sử dụng (số ngày công)"><Input type="number" placeholder="60" /></Form.Item>
+            
+            {plannedDays > 0 && (
+              <Card size="small" type="inner" style={{ background: "#e6f4ff", borderColor: "#91caff", marginBottom: 12 }}>
+                <div style={{ fontSize: 12, fontWeight: 600, color: "#1677ff", marginBottom: 4 }}>
+                  Tiến độ ngày công: {usedDays}/{plannedDays} ngày (Còn lại: {remainingDays} ngày)
+                </div>
+                <div style={{ height: 8, background: "#d9d9d9", borderRadius: 4, overflow: "hidden" }}>
+                  <div style={{ height: "100%", width: `${executionPercent}%`, background: executionPercent > 90 ? "#ff4d4f" : "#1677ff" }} />
+                </div>
+              </Card>
+            )}
           </>
         )}
+
         {isPayment && (
           <>
-            <Form.Item name="gia_tri_hop_dong" label="Giá trị hợp đồng (VNĐ)"><Input type="number" /></Form.Item>
-            <Form.Item name="da_thu" label="Đã thu (VNĐ)"><Input type="number" /></Form.Item>
-            <Form.Item name="con_phai_thu" label="Còn phải thu (VNĐ)"><Input type="number" /></Form.Item>
+            <Form.Item name="gia_tri_hop_dong" label="Giá trị hợp đồng (VNĐ)"><Input type="number" placeholder="100000000" /></Form.Item>
+            <Form.Item name="da_thu" label="Đã thu (VNĐ)"><Input type="number" placeholder="70000000" /></Form.Item>
+            <Form.Item name="con_phai_thu" label="Còn phải thu (VNĐ)"><Input type="number" value={conPhaiThu} readOnly style={{ background: "#fafafa" }} /></Form.Item>
+            
+            {giaTriHopDong > 0 && (
+              <Card size="small" type="inner" style={{ background: "#f6ffed", borderColor: "#b7eb8f", marginBottom: 12 }}>
+                <div style={{ fontSize: 12, fontWeight: 600, color: "#52c41a", marginBottom: 4 }}>
+                  Tỷ lệ thu tiền: {paymentPercent}% ({daThu.toLocaleString("vi-VN")} / {giaTriHopDong.toLocaleString("vi-VN")} VNĐ)
+                </div>
+                <div style={{ height: 8, background: "#d9d9d9", borderRadius: 4, overflow: "hidden" }}>
+                  <div style={{ height: "100%", width: `${paymentPercent}%`, background: "#52c41a" }} />
+                </div>
+              </Card>
+            )}
           </>
         )}
+
+        {isTester && (
+          <>
+            <Form.Item name="tong_test_case" label="Tổng số Test Cases"><Input type="number" placeholder="50" /></Form.Item>
+            <Form.Item name="test_case_passed" label="Số Test Cases PASSED"><Input type="number" placeholder="45" /></Form.Item>
+            <Form.Item name="ghi_chu_kierm_thu" label="Ghi chú kết quả kiểm thử"><Input.TextArea rows={2} placeholder="Nội dung test..." /></Form.Item>
+          </>
+        )}
+
+        {isHandover && (
+          <>
+            <Form.Item name="ngay_ban_giao" label="Ngày bàn giao chính thức"><Input type="date" /></Form.Item>
+            <Form.Item name="bien_ban_ban_giao" label="Số biên bản bàn giao / Link tài liệu"><Input placeholder="BBBG-2026-001" /></Form.Item>
+            <Form.Item name="nguoi_xac_nhan_khach_hang" label="Người đại diện KH xác nhận"><Input placeholder="Nguyễn Văn A" /></Form.Item>
+          </>
+        )}
+
+        {isMaintenance && (
+          <>
+            <Form.Item name="thoi_han_bao_tri" label="Thời hạn bảo trì (tháng)"><Input type="number" placeholder="12" /></Form.Item>
+            <Form.Item name="ngay_het_han_bao_tri" label="Ngày hết hạn bảo trì"><Input type="date" /></Form.Item>
+            <Form.Item name="dau_moi_ho_tro" label="Đầu mối hỗ trợ kỹ thuật"><Input placeholder="Dev Lead / Hotline" /></Form.Item>
+          </>
+        )}
+
         {!locked ? (
           canEdit && (
-            <Space>
+            <Space style={{ marginTop: 8 }}>
               <Button size="small" onClick={() => save(false)}>
-                Lưu
+                Lưu thay đổi
               </Button>
               {stage.lock_enabled && (
                 <Button size="small" type="primary" icon={<Lock size={13} />} onClick={() => save(true)}>
@@ -249,7 +349,7 @@ function StageExtraPanel({ stage, profile, onSaved }) {
             </Space>
           )
         ) : (
-          <Space direction="vertical" style={{ width: "100%" }}>
+          <Space direction="vertical" style={{ width: "100%", marginTop: 8 }}>
             {pendingRequests.length === 0 ? (
               canEdit && (
                 <Button size="small" onClick={() => setReasonOpen(true)}>
@@ -259,8 +359,8 @@ function StageExtraPanel({ stage, profile, onSaved }) {
             ) : (
               pendingRequests.map((r) =>
                 canApprove && r.requested_by !== profile?.code ? (
-                  <Card key={r.id} size="small" type="inner" title={`Yêu cầu #${r.id} bởi ${r.requested_by}`}>
-                    <div style={{ marginBottom: 8 }}>{r.reason}</div>
+                  <Card key={r.id} size="small" type="inner" title={`Yêu cầu mở khóa #${r.id} bởi ${r.requested_by}`}>
+                    <div style={{ marginBottom: 8, fontSize: 12 }}>{r.reason}</div>
                     <Space>
                       <Button size="small" type="primary" onClick={() => decide(r.id, true)}>
                         Duyệt mở khóa
@@ -272,7 +372,7 @@ function StageExtraPanel({ stage, profile, onSaved }) {
                   </Card>
                 ) : (
                   <Tag key={r.id} color="gold">
-                    Yêu cầu #{r.id} bởi {r.requested_by} đang chờ quản trị viên khác duyệt
+                    Yêu cầu mở khóa #{r.id} (bởi {r.requested_by}) đang chờ Quản trị viên duyệt
                   </Tag>
                 ),
               )
@@ -281,8 +381,8 @@ function StageExtraPanel({ stage, profile, onSaved }) {
         )}
       </Form>
 
-      <Modal title="Yêu cầu mở khóa" open={reasonOpen} onCancel={() => setReasonOpen(false)} onOk={submitUnlockRequest}>
-        <Input.TextArea rows={3} placeholder="Lý do cần mở khóa" value={reason} onChange={(e) => setReason(e.target.value)} />
+      <Modal title="Lý do gửi Yêu cầu Mở khóa" open={reasonOpen} onCancel={() => setReasonOpen(false)} onOk={submitUnlockRequest}>
+        <Input.TextArea rows={3} placeholder="Ghi rõ lý do tại sao cần điều chỉnh dữ liệu đã LOCK..." value={reason} onChange={(e) => setReason(e.target.value)} />
       </Modal>
     </Card>
   );
