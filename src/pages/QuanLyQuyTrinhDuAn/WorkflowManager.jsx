@@ -40,6 +40,8 @@ export default function WorkflowManager() {
   const [selected, setSelected] = useState(null); // full workflow detail
   const [departments, setDepartments] = useState([]);
   const [profile, setProfile] = useState(null);
+  const [projectTypes, setProjectTypes] = useState([]);
+  const [projectTypeSearch, setProjectTypeSearch] = useState("");
   const isAdmin = !!profile?.is_admin;
 
   const [wfModalOpen, setWfModalOpen] = useState(false);
@@ -90,6 +92,7 @@ export default function WorkflowManager() {
     loadList();
     workflowApi.getDepartments().then(setDepartments).catch(() => {});
     workflowApi.getMyProfile().then(setProfile).catch(() => {});
+    workflowApi.listProjectTypes().then(setProjectTypes).catch(() => {});
   }, [loadList]);
 
   const openCreateWorkflow = () => {
@@ -525,8 +528,32 @@ export default function WorkflowManager() {
           <Form.Item name="name" label="Tên workflow" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
-          <Form.Item name="project_type" label="Loại dự án">
-            <Input placeholder="VD: Phần mềm, Kho vận..." />
+          <Form.Item name="project_type_id" label="Loại dự án">
+            <Select
+              showSearch
+              placeholder="Chọn hoặc gõ loại dự án mới..."
+              filterOption={(input, option) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase())}
+              onSearch={setProjectTypeSearch}
+              options={[
+                ...projectTypes.map((t) => ({ value: t.id, label: t.name })),
+                ...(projectTypeSearch.trim() && !projectTypes.some((t) => t.name.toLowerCase() === projectTypeSearch.trim().toLowerCase())
+                  ? [{ value: `__new__:${projectTypeSearch.trim()}`, label: `+ Tạo mới "${projectTypeSearch.trim()}"` }]
+                  : []),
+              ]}
+              onChange={async (value) => {
+                if (typeof value === "string" && value.startsWith("__new__:")) {
+                  const name = value.slice("__new__:".length);
+                  try {
+                    const created = await workflowApi.saveProjectType(name);
+                    setProjectTypes((prev) => [...prev, created]);
+                    wfForm.setFieldsValue({ project_type_id: created.id });
+                  } catch (e) {
+                    wfForm.setFieldsValue({ project_type_id: undefined });
+                    message.error(e.message);
+                  }
+                }
+              }}
+            />
           </Form.Item>
           <Form.Item name="description" label="Mô tả">
             <Input.TextArea rows={3} />
