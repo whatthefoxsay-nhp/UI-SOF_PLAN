@@ -15,6 +15,7 @@ export default function MyTasksTab() {
   const [activeTaskId, setActiveTaskId] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [priorityFilter, setPriorityFilter] = useState("ALL");
+  const [blockedFilter, setBlockedFilter] = useState("ALL");
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -53,7 +54,11 @@ export default function MyTasksTab() {
       (t.project_name && t.project_name.toLowerCase().includes(searchQuery.toLowerCase()));
 
     const matchesPriority = priorityFilter === "ALL" || t.priority === priorityFilter;
-    return matchesSearch && matchesPriority;
+    const matchesBlocked =
+      blockedFilter === "ALL" ||
+      (blockedFilter === "BLOCKED_ONLY" && t.execution_state === "BLOCKED") ||
+      (blockedFilter === "HIDE_BLOCKED" && t.execution_state !== "BLOCKED");
+    return matchesSearch && matchesPriority && matchesBlocked;
   });
 
   const columns = [
@@ -94,14 +99,17 @@ export default function MyTasksTab() {
       dataIndex: "status",
       width: 150,
       render: (v, r) => (
-        <Select
-          size="small"
-          value={v}
-          style={{ width: 130 }}
-          options={(r.columns || []).map((c) => ({ value: c.code, label: c.label }))}
-          onClick={(e) => e.stopPropagation()}
-          onChange={(val) => changeStatus(r.id, val)}
-        />
+        <Space direction="vertical" size={2}>
+          <Select
+            size="small"
+            value={v}
+            style={{ width: 130 }}
+            options={(r.columns || []).map((c) => ({ value: c.code, label: c.label }))}
+            onClick={(e) => e.stopPropagation()}
+            onChange={(val) => changeStatus(r.id, val)}
+          />
+          {r.execution_state === "BLOCKED" && <Tag color="red" style={{ margin: 0 }}>Bị chặn</Tag>}
+        </Space>
       ),
     },
   ];
@@ -128,6 +136,16 @@ export default function MyTasksTab() {
               { value: "NORMAL", label: "Bình thường" },
               { value: "HIGH", label: "Cao" },
               { value: "URGENT", label: "Khẩn cấp" },
+            ]}
+          />
+          <Select
+            value={blockedFilter}
+            onChange={setBlockedFilter}
+            style={{ width: 170 }}
+            options={[
+              { value: "ALL", label: "Tất cả (kể cả bị block)" },
+              { value: "BLOCKED_ONLY", label: "Chỉ công việc bị block" },
+              { value: "HIDE_BLOCKED", label: "Ẩn công việc bị block" },
             ]}
           />
           <span style={{ color: "#64748b", fontSize: 13 }}>{filteredTasks.length} / {tasks.length} công việc</span>
