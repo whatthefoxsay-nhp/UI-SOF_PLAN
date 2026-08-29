@@ -152,6 +152,8 @@ export default function WorkflowManager() {
       lock_enabled: false,
       stage_type: "GENERIC",
       departments: [],
+      depends_on_stage_ids: [],
+      dependency_join_type: "ALL",
     });
     setStageModalOpen(true);
   };
@@ -167,6 +169,8 @@ export default function WorkflowManager() {
       lock_enabled: !!stage.lock_enabled,
       stage_type: stage.stage_type,
       departments: stage.departments,
+      depends_on_stage_ids: stage.depends_on_stage_ids || [],
+      dependency_join_type: stage.dependency_join_type || "ALL",
     });
     setStageModalOpen(true);
   };
@@ -217,7 +221,12 @@ export default function WorkflowManager() {
     setEditingTask(null);
     setTaskStageId(stageId);
     taskForm.resetFields();
-    taskForm.setFieldsValue({ default_priority: "NORMAL", confirm_departments: [] });
+    taskForm.setFieldsValue({
+      default_priority: "NORMAL",
+      confirm_departments: [],
+      depends_on_task_template_ids: [],
+      dependency_join_type: "ALL",
+    });
     setTaskModalOpen(true);
   };
 
@@ -230,6 +239,8 @@ export default function WorkflowManager() {
       default_priority: task.default_priority,
       deadline_offset_days: task.deadline_offset_days,
       confirm_departments: task.confirm_departments,
+      depends_on_task_template_ids: task.depends_on_task_template_ids || [],
+      dependency_join_type: task.dependency_join_type || "ALL",
     });
     setTaskModalOpen(true);
   };
@@ -437,6 +448,9 @@ export default function WorkflowManager() {
                     {stage.departments.map((d) => (
                       <Tag key={d}>{departmentName(d)}</Tag>
                     ))}
+                    {stage.depends_on_stage_ids?.length > 0 && (
+                      <Tag color="purple">Phụ thuộc {stage.depends_on_stage_ids.length} giai đoạn ({stage.dependency_join_type})</Tag>
+                    )}
                   </div>
                 ),
                 extra: isAdmin && (
@@ -470,6 +484,12 @@ export default function WorkflowManager() {
                           title: "Cần xác nhận",
                           dataIndex: "confirm_departments",
                           render: (arr) => arr.map((d) => <Tag key={d}>{departmentName(d)}</Tag>),
+                        },
+                        {
+                          title: "Phụ thuộc",
+                          dataIndex: "depends_on_task_template_ids",
+                          width: 130,
+                          render: (arr, task) => (arr?.length > 0 ? <Tag color="purple">{arr.length} công việc ({task.dependency_join_type})</Tag> : "—"),
                         },
                         ...(isAdmin
                           ? [
@@ -547,6 +567,22 @@ export default function WorkflowManager() {
           <Form.Item name="completion_condition" label="Điều kiện hoàn thành">
             <Select options={COMPLETION_CONDITIONS} />
           </Form.Item>
+          <Form.Item name="depends_on_stage_ids" label="Phụ thuộc vào giai đoạn nào (để trống nếu không phụ thuộc)">
+            <Select
+              mode="multiple"
+              options={(selected?.stages || [])
+                .filter((s) => s.id !== editingStage?.id)
+                .map((s) => ({ value: s.id, label: `${s.code} — ${s.name}` }))}
+            />
+          </Form.Item>
+          <Form.Item name="dependency_join_type" label="Điều kiện phụ thuộc (nếu chọn từ 2 giai đoạn trở lên)">
+            <Select
+              options={[
+                { value: "ALL", label: "Cần TẤT CẢ giai đoạn phụ thuộc hoàn thành (ALL)" },
+                { value: "ANY", label: "Chỉ cần MỘT giai đoạn phụ thuộc hoàn thành (ANY)" },
+              ]}
+            />
+          </Form.Item>
           <Space>
             <Form.Item name="is_required" label="Bắt buộc" valuePropName="checked">
               <Switch />
@@ -590,6 +626,23 @@ export default function WorkflowManager() {
           </Form.Item>
           <Form.Item name="confirm_departments" label="Phòng ban cần xác nhận (để trống nếu không cần)">
             <Select mode="multiple" options={departments.map((d) => ({ value: d.code, label: d.name }))} />
+          </Form.Item>
+          <Form.Item name="depends_on_task_template_ids" label="Phụ thuộc vào công việc nào (trong cùng workflow, để trống nếu không phụ thuộc)">
+            <Select
+              mode="multiple"
+              options={(selected?.stages || [])
+                .flatMap((s) => s.tasks.map((t) => ({ ...t, stageLabel: s.code })))
+                .filter((t) => t.id !== editingTask?.id)
+                .map((t) => ({ value: t.id, label: `[${t.stageLabel}] ${t.name}` }))}
+            />
+          </Form.Item>
+          <Form.Item name="dependency_join_type" label="Điều kiện phụ thuộc (nếu chọn từ 2 công việc trở lên)">
+            <Select
+              options={[
+                { value: "ALL", label: "Cần TẤT CẢ công việc phụ thuộc hoàn thành (ALL)" },
+                { value: "ANY", label: "Chỉ cần MỘT công việc phụ thuộc hoàn thành (ANY)" },
+              ]}
+            />
           </Form.Item>
         </Form>
       </Modal>
