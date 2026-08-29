@@ -17,6 +17,10 @@ async function callWorkflowApi(action, data = {}) {
 
 // ---- Meta ----
 export const getDepartments = () => callWorkflowApi("meta.departments");
+export const listCustomers = () => callWorkflowApi("customer.list");
+export const saveCustomer = (name) => callWorkflowApi("customer.save", { name });
+export const listProjectTypes = () => callWorkflowApi("project_type.list");
+export const saveProjectType = (name) => callWorkflowApi("project_type.save", { name });
 export const getEmployees = () => callWorkflowApi("meta.employees");
 export const getMyProfile = () => callWorkflowApi("meta.myProfile");
 
