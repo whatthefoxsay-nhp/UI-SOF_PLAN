@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Button, Modal, Form, Input, Select, Tag, message, Spin, Empty } from "antd";
-import { Plus, Building2 } from "lucide-react";
+import { Button, Modal, Form, Input, Select, Tag, message, Spin, Empty, Space } from "antd";
+import { Plus, Building2, Search } from "lucide-react";
 import * as workflowApi from "../../services/workflowApi";
 
 const STATUS_COLOR = { IN_PROGRESS: "processing", DONE: "success", CANCELLED: "default" };
@@ -11,14 +11,19 @@ export default function ProjectList({ onOpenProject }) {
   const [workflows, setWorkflows] = useState([]);
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("ALL");
+  const [customers, setCustomers] = useState([]);
+  const [customerSearch, setCustomerSearch] = useState("");
   const [form] = Form.useForm();
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const [p, w] = await Promise.all([workflowApi.listProjects(), workflowApi.listWorkflows()]);
+      const [p, w, c] = await Promise.all([workflowApi.listProjects(), workflowApi.listWorkflows(), workflowApi.listCustomers()]);
       setProjects(p || []);
       setWorkflows((w || []).filter((x) => x.is_active));
+      setCustomers(c || []);
     } catch (e) {
       message.error(e.message);
     } finally {
@@ -48,12 +53,44 @@ export default function ProjectList({ onOpenProject }) {
     }
   };
 
+  const filteredProjects = projects.filter((p) => {
+    const matchesSearch =
+      !searchQuery.trim() ||
+      (p.name && p.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (p.code && p.code.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (p.customer_name && p.customer_name.toLowerCase().includes(searchQuery.toLowerCase()));
+
+    const matchesStatus = statusFilter === "ALL" || p.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
   return (
     <div>
       <div className="wf-project-toolbar">
-        <span className="wf-project-count">{projects.length} dự án</span>
+        <Space wrap>
+          <Input
+            placeholder="Tìm kiếm dự án, mã, khách hàng..."
+            prefix={<Search size={14} style={{ color: "#94a3b8" }} />}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{ width: 260 }}
+            allowClear
+          />
+          <Select
+            value={statusFilter}
+            onChange={setStatusFilter}
+            style={{ width: 160 }}
+            options={[
+              { value: "ALL", label: "Tất cả trạng thái" },
+              { value: "IN_PROGRESS", label: "Đang thực hiện" },
+              { value: "DONE", label: "Hoàn thành" },
+              { value: "CANCELLED", label: "Đã hủy" },
+            ]}
+          />
+          <span className="wf-project-count">{filteredProjects.length} / {projects.length} dự án</span>
+        </Space>
         <Button type="primary" icon={<Plus size={14} />} onClick={openCreate}>
-          Tạo dự án
+          Tạo dự án mới
         </Button>
       </div>
 
@@ -61,13 +98,13 @@ export default function ProjectList({ onOpenProject }) {
         <div style={{ textAlign: "center", padding: 60 }}>
           <Spin size="large" />
         </div>
-      ) : projects.length === 0 ? (
+      ) : filteredProjects.length === 0 ? (
         <div className="wf-empty-state">
-          <Empty description="Chưa có dự án nào" />
+          <Empty description="Không tìm thấy dự án phù hợp" />
         </div>
       ) : (
         <div className="wf-project-grid">
-          {projects.map((row) => (
+          {filteredProjects.map((row) => (
             <div key={row.id} className="wf-project-card" onClick={() => onOpenProject(row.id)}>
               <div className="wf-project-card-top">
                 <span className="wf-project-code">{row.code}</span>
@@ -101,15 +138,38 @@ export default function ProjectList({ onOpenProject }) {
 
       <Modal title="Tạo dự án mới" open={modalOpen} onCancel={() => setModalOpen(false)} onOk={submit} destroyOnClose>
         <Form form={form} layout="vertical">
-          <Form.Item name="name" label="Tên dự án" rules={[{ required: true }]}>
-            <Input />
+          <Form.Item name="name" label="Tên dự án" rules={[{ required: true, message: "Vui lòng nhập tên dự án" }]}>
+            <Input placeholder="Ví dụ: Xây dựng Website Bán Hàng Online" />
           </Form.Item>
-          <Form.Item name="customer_name" label="Khách hàng">
-            <Input />
-          </Form.Item>
-          <Form.Item name="workflow_id" label="Workflow (loại dự án)" rules={[{ required: true }]}>
+          <Form.Item name="customer_id" label="Khách hàng / CTY">
             <Select
-              placeholder="Chọn workflow đang kích hoạt"
+              showSearch
+              placeholder="Chọn hoặc gõ tên khách hàng mới..."
+              filterOption={(input, option) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase())}
+              onSearch={setCustomerSearch}
+              options={[
+                ...customers.map((c) => ({ value: c.id, label: c.name })),
+                ...(customerSearch.trim() && !customers.some((c) => c.name.toLowerCase() === customerSearch.trim().toLowerCase())
+                  ? [{ value: `__new__:${customerSearch.trim()}`, label: `+ Tạo mới "${customerSearch.trim()}"` }]
+                  : []),
+              ]}
+              onChange={async (value) => {
+                if (typeof value === "string" && value.startsWith("__new__:")) {
+                  const name = value.slice("__new__:".length);
+                  try {
+                    const created = await workflowApi.saveCustomer(name);
+                    setCustomers((prev) => [...prev, created]);
+                    form.setFieldsValue({ customer_id: created.id });
+                  } catch (e) {
+                    message.error(e.message);
+                  }
+                }
+              }}
+            />
+          </Form.Item>
+          <Form.Item name="workflow_id" label="Workflow Template (loại quy trình dự án)" rules={[{ required: true, message: "Vui lòng chọn workflow" }]}>
+            <Select
+              placeholder="Chọn workflow quy trình mẫu đang kích hoạt"
               options={workflows.map((w) => ({ value: w.id, label: `${w.code} — ${w.name}` }))}
             />
           </Form.Item>
