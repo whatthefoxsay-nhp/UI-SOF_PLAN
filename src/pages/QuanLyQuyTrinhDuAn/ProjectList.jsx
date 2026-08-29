@@ -15,6 +15,7 @@ export default function ProjectList({ onOpenProject }) {
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [customers, setCustomers] = useState([]);
   const [customerSearch, setCustomerSearch] = useState("");
+  const [savingCustomer, setSavingCustomer] = useState(false);
   const [form] = Form.useForm();
 
   const load = useCallback(async () => {
@@ -37,6 +38,10 @@ export default function ProjectList({ onOpenProject }) {
 
   const openCreate = () => {
     form.resetFields();
+    // Xoa text tim kiem con sot lai tu lan mo truoc: rc-select khong goi
+    // onSearch khi chon xong hay khi blur, nen neu khong reset o day thi lan
+    // mo sau dropdown se hien 1 option "+ Tao moi ..." cho text khong ai vua go.
+    setCustomerSearch("");
     setModalOpen(true);
   };
 
@@ -136,7 +141,17 @@ export default function ProjectList({ onOpenProject }) {
         </div>
       )}
 
-      <Modal title="Tạo dự án mới" open={modalOpen} onCancel={() => setModalOpen(false)} onOk={submit} destroyOnClose>
+      {/* Khoa nut OK trong luc dang tao khach hang moi: neu khong, nguoi dung
+          bam OK truoc khi saveCustomer tra ve se gui di gia tri sentinel
+          "__new__:<ten>" (server ep ve 0) => du an khong gan duoc khach hang nao. */}
+      <Modal
+        title="Tạo dự án mới"
+        open={modalOpen}
+        onCancel={() => setModalOpen(false)}
+        onOk={submit}
+        okButtonProps={{ disabled: savingCustomer }}
+        destroyOnClose
+      >
         <Form form={form} layout="vertical">
           <Form.Item name="name" label="Tên dự án" rules={[{ required: true, message: "Vui lòng nhập tên dự án" }]}>
             <Input placeholder="Ví dụ: Xây dựng Website Bán Hàng Online" />
@@ -145,7 +160,11 @@ export default function ProjectList({ onOpenProject }) {
             <Select
               showSearch
               placeholder="Chọn hoặc gõ tên khách hàng mới..."
-              filterOption={(input, option) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase())}
+              // Phai trim input truoc khi so khop: label cua option tong hop
+              // "+ Tao moi ..." duoc dung tu text DA TRIM, nen neu nguoi dung go
+              // co khoang trang o cuoi thi input tho se khong nam trong label va
+              // chinh option "+ Tao moi" vua them lai bi loc mat khoi dropdown.
+              filterOption={(input, option) => (option?.label ?? "").toLowerCase().includes(input.trim().toLowerCase())}
               onSearch={setCustomerSearch}
               options={[
                 ...customers.map((c) => ({ value: c.id, label: c.name })),
@@ -156,14 +175,31 @@ export default function ProjectList({ onOpenProject }) {
               onChange={async (value) => {
                 if (typeof value === "string" && value.startsWith("__new__:")) {
                   const name = value.slice("__new__:".length);
+                  setSavingCustomer(true);
                   try {
                     const created = await workflowApi.saveCustomer(name);
-                    setCustomers((prev) => [...prev, created]);
+                    // created.name la ten CHUAN dang luu trong DB, co the khac
+                    // ten vua go (unique key khong phan biet dau/hoa thuong) va
+                    // co the la 1 khach hang DA co trong danh sach. Vi vay ghi
+                    // de theo id thay vi luon them moi, neu khong danh sach se
+                    // co 2 dong cung id.
+                    setCustomers((prev) =>
+                      prev.some((c) => c.id === created.id)
+                        ? prev.map((c) => (c.id === created.id ? created : c))
+                        : [...prev, created]
+                    );
                     form.setFieldsValue({ customer_id: created.id });
                   } catch (e) {
                     form.setFieldsValue({ customer_id: undefined });
                     message.error(e.message);
+                  } finally {
+                    setSavingCustomer(false);
+                    setCustomerSearch("");
                   }
+                } else {
+                  // Chon 1 khach hang DA co (hoac xoa lua chon): cung phai xoa
+                  // text tim kiem, neu khong no se con lai lam option "+ Tao moi" ma.
+                  setCustomerSearch("");
                 }
               }}
             />

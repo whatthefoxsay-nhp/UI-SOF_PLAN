@@ -42,6 +42,7 @@ export default function WorkflowManager() {
   const [profile, setProfile] = useState(null);
   const [projectTypes, setProjectTypes] = useState([]);
   const [projectTypeSearch, setProjectTypeSearch] = useState("");
+  const [savingProjectType, setSavingProjectType] = useState(false);
   const isAdmin = !!profile?.is_admin;
 
   const [wfModalOpen, setWfModalOpen] = useState(false);
@@ -97,6 +98,10 @@ export default function WorkflowManager() {
 
   const openCreateWorkflow = () => {
     wfForm.resetFields();
+    // Xoa text tim kiem con sot lai tu lan mo truoc: rc-select khong goi
+    // onSearch khi chon xong hay khi blur, nen neu khong reset o day thi lan
+    // mo sau dropdown se hien 1 option "+ Tao moi ..." cho text khong ai vua go.
+    setProjectTypeSearch("");
     setWfModalOpen(true);
   };
 
@@ -520,7 +525,17 @@ export default function WorkflowManager() {
         </div>
       )}
 
-      <Modal title="Workflow" open={wfModalOpen} onCancel={() => setWfModalOpen(false)} onOk={submitWorkflow} destroyOnClose>
+      {/* Khoa nut OK trong luc dang tao loai du an moi: neu khong, nguoi dung
+          bam OK truoc khi saveProjectType tra ve se gui di gia tri sentinel
+          "__new__:<ten>" (server ep ve 0) => workflow khong gan duoc loai du an. */}
+      <Modal
+        title="Workflow"
+        open={wfModalOpen}
+        onCancel={() => setWfModalOpen(false)}
+        onOk={submitWorkflow}
+        okButtonProps={{ disabled: savingProjectType }}
+        destroyOnClose
+      >
         <Form form={wfForm} layout="vertical">
           <Form.Item name="code" label="Mã workflow" rules={[{ required: true }]}>
             <Input placeholder="VD: WF-SW-002" />
@@ -532,7 +547,11 @@ export default function WorkflowManager() {
             <Select
               showSearch
               placeholder="Chọn hoặc gõ loại dự án mới..."
-              filterOption={(input, option) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase())}
+              // Phai trim input truoc khi so khop: label cua option tong hop
+              // "+ Tao moi ..." duoc dung tu text DA TRIM, nen neu nguoi dung go
+              // co khoang trang o cuoi thi input tho se khong nam trong label va
+              // chinh option "+ Tao moi" vua them lai bi loc mat khoi dropdown.
+              filterOption={(input, option) => (option?.label ?? "").toLowerCase().includes(input.trim().toLowerCase())}
               onSearch={setProjectTypeSearch}
               options={[
                 ...projectTypes.map((t) => ({ value: t.id, label: t.name })),
@@ -543,14 +562,31 @@ export default function WorkflowManager() {
               onChange={async (value) => {
                 if (typeof value === "string" && value.startsWith("__new__:")) {
                   const name = value.slice("__new__:".length);
+                  setSavingProjectType(true);
                   try {
                     const created = await workflowApi.saveProjectType(name);
-                    setProjectTypes((prev) => [...prev, created]);
+                    // created.name la ten CHUAN dang luu trong DB, co the khac
+                    // ten vua go (unique key khong phan biet dau/hoa thuong) va
+                    // co the la 1 loai du an DA co trong danh sach. Vi vay ghi
+                    // de theo id thay vi luon them moi, neu khong danh sach se
+                    // co 2 dong cung id.
+                    setProjectTypes((prev) =>
+                      prev.some((t) => t.id === created.id)
+                        ? prev.map((t) => (t.id === created.id ? created : t))
+                        : [...prev, created]
+                    );
                     wfForm.setFieldsValue({ project_type_id: created.id });
                   } catch (e) {
                     wfForm.setFieldsValue({ project_type_id: undefined });
                     message.error(e.message);
+                  } finally {
+                    setSavingProjectType(false);
+                    setProjectTypeSearch("");
                   }
+                } else {
+                  // Chon 1 loai du an DA co (hoac xoa lua chon): cung phai xoa
+                  // text tim kiem, neu khong no se con lai lam option "+ Tao moi" ma.
+                  setProjectTypeSearch("");
                 }
               }}
             />
