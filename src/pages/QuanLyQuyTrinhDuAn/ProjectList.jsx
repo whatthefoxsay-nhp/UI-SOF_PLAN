@@ -161,6 +161,7 @@ export default function ProjectList({ onOpenProject }) {
                     setCustomers((prev) => [...prev, created]);
                     form.setFieldsValue({ customer_id: created.id });
                   } catch (e) {
+                    form.setFieldsValue({ customer_id: undefined });
                     message.error(e.message);
                   }
                 }
