@@ -78,6 +78,14 @@ export const listLockRequests = (projectStageId = null) =>
 export const listHistory = (projectId = null, limit = 100) =>
   callWorkflowApi("history.list", { project_id: projectId, limit });
 
+// ---- Notification ----
+export const getNotifications = () => callWorkflowApi("notification.list");
+export const markNotificationRead = (id) => callWorkflowApi("notification.markRead", { id });
+export const markAllNotificationsRead = () => callWorkflowApi("notification.markAllRead");
+
+// ---- Dashboard ----
+export const getDashboardSummary = () => callWorkflowApi("dashboard.summary");
+
 export const TASK_PRIORITY_LABELS = {
   LOW: "Thấp",
   NORMAL: "Bình thường",
