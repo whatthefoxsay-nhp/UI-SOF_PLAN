@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Dropdown, Avatar, Space, Typography, Button, Modal } from "antd";
+import { Layout, Dropdown, Avatar, Space, Typography, Button, Modal, Badge, List, Empty } from "antd";
 import {
   Minus,
   Square,
@@ -12,6 +12,7 @@ import {
 import { useAuth } from "../../../contexts/AuthContext";
 import { useTabs } from "../../../contexts/TabContext";
 import { getElectronAPI } from "../../../utils/environment";
+import * as workflowApi from "../../../services/workflowApi";
 import { useNavigate } from "react-router-dom";
 import {
   getCurrentUserInfo,
@@ -35,6 +36,77 @@ const HeaderBar = ({ isCollapsed }) => {
   const [employeeInfo, setEmployeeInfo] = React.useState(null);
   const [avatarUrl, setAvatarUrl] = React.useState(null);
   const [now, setNow] = React.useState(() => new Date());
+
+  const [notifications, setNotifications] = React.useState([]);
+  const [unreadCount, setUnreadCount] = React.useState(0);
+  const [alertCount, setAlertCount] = React.useState(0);
+
+  const loadNotifications = React.useCallback(() => {
+    workflowApi
+      .getNotifications()
+      .then((data) => {
+        setNotifications(data.items || []);
+        setUnreadCount(data.unread_count || 0);
+        setAlertCount(data.alert_count || 0);
+      })
+      .catch(() => {});
+  }, []);
+
+  React.useEffect(() => {
+    loadNotifications();
+    const timer = setInterval(loadNotifications, 60000);
+    return () => clearInterval(timer);
+  }, [loadNotifications]);
+
+  const openNotification = (n) => {
+    workflowApi.markNotificationRead(n.id).catch(() => {});
+    if (n.project_id) {
+      navigate(`/quan-ly-quy-trinh-du-an?tab=projects&projectId=${n.project_id}`);
+    }
+    loadNotifications();
+  };
+
+  const markAllRead = () => {
+    workflowApi.markAllNotificationsRead().then(loadNotifications).catch(() => {});
+  };
+
+  const notificationDropdownContent = (
+    <div style={{ width: 340, maxHeight: 420, overflowY: "auto", background: "#fff", borderRadius: 8, boxShadow: "0 4px 16px rgba(0,0,0,0.12)" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 14px", borderBottom: "1px solid #f0f0f0" }}>
+        <Text strong>Thông báo</Text>
+        <Button type="link" size="small" onClick={markAllRead}>
+          Đánh dấu đã đọc tất cả
+        </Button>
+      </div>
+      {alertCount > 0 && (
+        <div style={{ padding: "8px 14px", background: "#fff2f0", color: "#cf1322", fontSize: 12.5 }}>
+          {alertCount} công việc quá hạn của bạn
+        </div>
+      )}
+      {notifications.length === 0 ? (
+        <Empty description="Không có thông báo" style={{ padding: 20 }} />
+      ) : (
+        <List
+          size="small"
+          dataSource={notifications}
+          renderItem={(n) => (
+            <List.Item
+              onClick={() => openNotification(n)}
+              style={{ cursor: "pointer", padding: "8px 14px", background: n.is_read ? "#fff" : "#f0f7ff" }}
+            >
+              <div>
+                <div style={{ fontSize: 13 }}>{n.message}</div>
+                <div style={{ fontSize: 11, color: "#94a3b8" }}>
+                  {n.project_name ? `${n.project_code} — ${n.project_name} · ` : ""}
+                  {n.created_at}
+                </div>
+              </div>
+            </List.Item>
+          )}
+        />
+      )}
+    </div>
+  );
 
   React.useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 1000 * 30);
@@ -180,11 +252,16 @@ const HeaderBar = ({ isCollapsed }) => {
             <span className="header-clock-date">{dateLabel}</span>
           </div>
 
-          <Button
-            type="text"
-            icon={<Bell size={16} />}
-            className="notification-btn"
-          />
+          <Dropdown
+            popupRender={() => notificationDropdownContent}
+            placement="bottomRight"
+            trigger={["click"]}
+            onOpenChange={(open) => { if (open) loadNotifications(); }}
+          >
+            <Badge count={unreadCount} size="small" offset={[-2, 2]}>
+              <Button type="text" icon={<Bell size={16} />} className="notification-btn" />
+            </Badge>
+          </Dropdown>
 
           <Dropdown
             menu={{ items: userMenuItems }}
