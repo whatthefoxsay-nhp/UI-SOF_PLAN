@@ -576,7 +576,7 @@ export default function ProjectDetail({ projectId, onBack }) {
             </Card>
           </div>
 
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
             <Space style={{ marginBottom: 8 }}>
               <Button size="small" icon={<Plus size={13} />} onClick={openAddTask}>
                 Thêm công việc phát sinh
