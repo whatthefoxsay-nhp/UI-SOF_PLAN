@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import {
   Card,
   Button,
@@ -16,7 +16,7 @@ import {
   Tooltip,
   Progress,
 } from "antd";
-import { ArrowLeft, Lock, Unlock, Plus, History, CheckCircle2, LayoutGrid, Columns3, GripVertical, Calendar } from "lucide-react";
+import { ArrowLeft, Lock, Unlock, Plus, History, CheckCircle2, LayoutGrid, Columns3, GripVertical, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import * as workflowApi from "../../services/workflowApi";
 import TaskDrawer from "./TaskDrawer";
 import khStyles from "../QuanLyKeHoach/QuanLyKeHoach.module.css";
@@ -41,6 +41,70 @@ function hashCode(str) {
   let h = 0;
   for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
   return h;
+}
+
+// Bao ngoai kanbanBoardContainer bang 2 nut mui ten luon hien ro khi con noi
+// dung de cuon - khong phu thuoc trinh duyet co quyet dinh ve thanh cuon hay
+// khong (thanh cuon tuy bien co the an/hien khac nhau theo zoom/OS, day la
+// dieu khien chac chan thay the, khong phai thay the co che cuon chuot/kep).
+function ScrollableKanbanRow({ children }) {
+  const scrollRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const updateScrollState = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 4);
+  }, []);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    updateScrollState();
+    el.addEventListener("scroll", updateScrollState, { passive: true });
+    const resizeObserver = new ResizeObserver(updateScrollState);
+    resizeObserver.observe(el);
+    window.addEventListener("resize", updateScrollState);
+    return () => {
+      el.removeEventListener("scroll", updateScrollState);
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", updateScrollState);
+    };
+  }, [updateScrollState, children]);
+
+  const scrollByColumn = (direction) => {
+    scrollRef.current?.scrollBy({ left: direction * 340, behavior: "smooth" });
+  };
+
+  return (
+    <div className={khStyles.kanbanScrollWrap}>
+      {canScrollLeft && (
+        <button
+          type="button"
+          className={`${khStyles.kanbanScrollBtn} ${khStyles.kanbanScrollBtnLeft}`}
+          onClick={() => scrollByColumn(-1)}
+          aria-label="Cuộn sang trái"
+        >
+          <ChevronLeft size={18} />
+        </button>
+      )}
+      <div className={khStyles.kanbanBoardContainer} ref={scrollRef}>
+        <div className={khStyles.kanbanBoard}>{children}</div>
+      </div>
+      {canScrollRight && (
+        <button
+          type="button"
+          className={`${khStyles.kanbanScrollBtn} ${khStyles.kanbanScrollBtnRight}`}
+          onClick={() => scrollByColumn(1)}
+          aria-label="Cuộn sang phải"
+        >
+          <ChevronRight size={18} />
+        </button>
+      )}
+    </div>
+  );
 }
 
 function TaskCard({ task, onClick, showStage }) {
@@ -583,45 +647,43 @@ export default function ProjectDetail({ projectId, onBack }) {
               </Button>
             </Space>
             {board ? (
-              <div className={khStyles.kanbanBoardContainer}>
-                <div className={khStyles.kanbanBoard}>
-                  {(project.columns || []).map((col, colIdx) => {
-                    const theme = COLUMN_THEMES[colIdx % COLUMN_THEMES.length];
-                    const colTasks = board.tasks.filter((t) => t.status === col.code);
-                    return (
-                      <div
-                        key={col.code}
-                        className={khStyles.kanbanColumn}
-                        style={{ backgroundColor: theme.bg, borderColor: theme.border, borderTopColor: theme.accent }}
-                        onDragOver={(e) => e.preventDefault()}
-                        onDrop={(e) => {
-                          const id = e.dataTransfer.getData("text/plain");
-                          onDropColumn(id, col.code);
-                        }}
-                      >
-                        <div className={khStyles.kanbanColumnHeader} style={{ borderBottomColor: theme.border }}>
-                          <Space size={6}>
-                            <div className={khStyles.columnDragHandle} style={{ color: theme.accent, cursor: "default" }}>
-                              <GripVertical size={16} />
-                            </div>
-                            <span style={{ fontWeight: 700, fontSize: 13, color: theme.text, textTransform: "uppercase" }}>{col.label}</span>
-                          </Space>
-                          <Tag style={{ borderRadius: 10, fontWeight: 700, border: "none", backgroundColor: theme.badgeBg, color: theme.badgeText }}>
-                            {colTasks.length}
-                          </Tag>
-                        </div>
-                        <div className={khStyles.columnDropZone}>
-                          <div className={khStyles.tasksContainer}>
-                            {colTasks.map((t) => (
-                              <TaskCard key={t.id} task={t} onClick={() => setActiveTaskId(t.id)} />
-                            ))}
+              <ScrollableKanbanRow>
+                {(project.columns || []).map((col, colIdx) => {
+                  const theme = COLUMN_THEMES[colIdx % COLUMN_THEMES.length];
+                  const colTasks = board.tasks.filter((t) => t.status === col.code);
+                  return (
+                    <div
+                      key={col.code}
+                      className={khStyles.kanbanColumn}
+                      style={{ backgroundColor: theme.bg, borderColor: theme.border, borderTopColor: theme.accent }}
+                      onDragOver={(e) => e.preventDefault()}
+                      onDrop={(e) => {
+                        const id = e.dataTransfer.getData("text/plain");
+                        onDropColumn(id, col.code);
+                      }}
+                    >
+                      <div className={khStyles.kanbanColumnHeader} style={{ borderBottomColor: theme.border }}>
+                        <Space size={6}>
+                          <div className={khStyles.columnDragHandle} style={{ color: theme.accent, cursor: "default" }}>
+                            <GripVertical size={16} />
                           </div>
+                          <span style={{ fontWeight: 700, fontSize: 13, color: theme.text, textTransform: "uppercase" }}>{col.label}</span>
+                        </Space>
+                        <Tag style={{ borderRadius: 10, fontWeight: 700, border: "none", backgroundColor: theme.badgeBg, color: theme.badgeText }}>
+                          {colTasks.length}
+                        </Tag>
+                      </div>
+                      <div className={khStyles.columnDropZone}>
+                        <div className={khStyles.tasksContainer}>
+                          {colTasks.map((t) => (
+                            <TaskCard key={t.id} task={t} onClick={() => setActiveTaskId(t.id)} />
+                          ))}
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
-              </div>
+                    </div>
+                  );
+                })}
+              </ScrollableKanbanRow>
             ) : (
               <Empty />
             )}
@@ -630,21 +692,19 @@ export default function ProjectDetail({ projectId, onBack }) {
       )}
 
       {viewMode === "overview" && (
-        <div className={khStyles.kanbanBoardContainer}>
-          <div className={khStyles.kanbanBoard}>
-            {project.stages.map((stage, idx) => (
-              <StageOverviewCard
-                key={stage.id}
-                stage={stage}
-                theme={COLUMN_THEMES[idx % COLUMN_THEMES.length]}
-                onOpen={() => {
-                  setActiveStageId(stage.id);
-                  setViewMode("stage");
-                }}
-              />
-            ))}
-          </div>
-        </div>
+        <ScrollableKanbanRow>
+          {project.stages.map((stage, idx) => (
+            <StageOverviewCard
+              key={stage.id}
+              stage={stage}
+              theme={COLUMN_THEMES[idx % COLUMN_THEMES.length]}
+              onOpen={() => {
+                setActiveStageId(stage.id);
+                setViewMode("stage");
+              }}
+            />
+          ))}
+        </ScrollableKanbanRow>
       )}
 
       <TaskDrawer

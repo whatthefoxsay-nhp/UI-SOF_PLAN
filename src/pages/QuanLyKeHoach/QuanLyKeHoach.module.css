@@ -535,6 +535,45 @@
     min-width: max-content;
 }
 
+/* Nut mui ten cuon ngang - hien ro thay cho phu thuoc vao thanh cuon tuy
+   bien (co the an/hien khac nhau theo zoom trinh duyet / he dieu hanh). */
+.kanbanScrollWrap {
+    position: relative;
+}
+
+.kanbanScrollBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    background: rgba(255, 255, 255, 0.95);
+    color: #4f46e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(30, 41, 59, 0.14);
+    transition: background 0.2s ease, transform 0.2s ease;
+    padding: 0;
+}
+
+.kanbanScrollBtn:hover {
+    background: rgba(99, 102, 241, 0.12);
+    transform: translateY(-50%) scale(1.06);
+}
+
+.kanbanScrollBtnLeft {
+    left: -6px;
+}
+
+.kanbanScrollBtnRight {
+    right: -6px;
+}
+
 .kanbanColumn {
     width: 320px;
     min-width: 320px;
