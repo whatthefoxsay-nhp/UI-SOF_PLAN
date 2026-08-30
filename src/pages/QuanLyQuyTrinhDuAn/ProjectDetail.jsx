@@ -14,6 +14,7 @@ import {
   Modal,
   Timeline,
   Tooltip,
+  Progress,
 } from "antd";
 import { ArrowLeft, Lock, Unlock, Plus, History, CheckCircle2, LayoutGrid, Columns3, GripVertical, Calendar } from "lucide-react";
 import * as workflowApi from "../../services/workflowApi";
@@ -134,6 +135,50 @@ function StagePipeline({ stages, activeStageId, viewMode, onSelect }) {
           </div>
         );
       })}
+    </div>
+  );
+}
+
+// Kanban tong: 1 cot = 1 giai doan, tra loi "Project dang o dau?" (muc 7 audit).
+// Khac voi Kanban chi tiet (1 cot = 1 trang thai task trong 1 giai doan),
+// noi day khong co task card / drag-drop - chi click de vao xem chi tiet.
+function StageOverviewCard({ stage, theme, onOpen }) {
+  const totalTasks = Object.values(stage.task_counts).reduce((a, b) => a + b, 0);
+  const doneCount = stage.task_counts.DONE || 0;
+  const percent = totalTasks > 0 ? Math.round((doneCount / totalTasks) * 100) : stage.status === "DONE" ? 100 : 0;
+  const isBlocked = stage.execution_state === "BLOCKED";
+  const statusColor = stage.status === "DONE" ? "green" : stage.status === "OPEN" ? "blue" : "default";
+
+  return (
+    <div
+      className={khStyles.kanbanColumn}
+      style={{ backgroundColor: theme.bg, borderColor: theme.border, borderTopColor: theme.accent, cursor: "pointer" }}
+      onClick={onOpen}
+    >
+      <div className={khStyles.kanbanColumnHeader} style={{ borderBottomColor: theme.border, alignItems: "flex-start" }}>
+        <div>
+          <div style={{ fontWeight: 700, fontSize: 13, color: theme.text, textTransform: "uppercase" }}>{stage.name}</div>
+          <span style={{ fontSize: 10.5, color: theme.text, opacity: 0.7 }}>{stage.code}</span>
+        </div>
+        <Space size={4}>
+          {isBlocked && (
+            <Tag color="red" style={{ fontSize: 10, margin: 0 }} title="Đang chờ giai đoạn phụ thuộc hoàn thành">
+              <Lock size={10} style={{ marginRight: 2 }} /> Chờ
+            </Tag>
+          )}
+          <Tag color={statusColor} style={{ fontSize: 10, margin: 0 }}>
+            {workflowApi.STAGE_STATUS_LABELS[stage.status] || stage.status}
+          </Tag>
+        </Space>
+      </div>
+      <div style={{ padding: "12px 14px" }}>
+        <div style={{ fontSize: 22, fontWeight: 700, color: theme.text }}>{totalTasks}</div>
+        <div style={{ fontSize: 11, color: theme.text, opacity: 0.7, marginBottom: 8 }}>công việc</div>
+        <Progress percent={percent} size="small" strokeColor={theme.accent} />
+        <div style={{ fontSize: 10.5, color: theme.text, opacity: 0.7, marginTop: 6 }}>
+          {doneCount}/{totalTasks} hoàn thành
+        </div>
+      </div>
     </div>
   );
 }
@@ -393,7 +438,6 @@ export default function ProjectDetail({ projectId, onBack }) {
   const [activeStageId, setActiveStageId] = useState(null);
   const [board, setBoard] = useState(null);
   const [viewMode, setViewMode] = useState("stage"); // "stage" | "overview"
-  const [overviewTasks, setOverviewTasks] = useState(null);
   const [employees, setEmployees] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [activeTaskId, setActiveTaskId] = useState(null);
@@ -415,11 +459,6 @@ export default function ProjectDetail({ projectId, onBack }) {
     setBoard(data);
   }, [activeStageId]);
 
-  const loadOverview = useCallback(async () => {
-    const data = await workflowApi.getKanbanProjectBoard(projectId);
-    setOverviewTasks(data.tasks);
-  }, [projectId]);
-
   useEffect(() => {
     loadProject();
     workflowApi.getEmployees().then(setEmployees).catch(() => {});
@@ -431,14 +470,9 @@ export default function ProjectDetail({ projectId, onBack }) {
     if (viewMode === "stage") loadBoard();
   }, [loadBoard, viewMode]);
 
-  useEffect(() => {
-    if (viewMode === "overview") loadOverview();
-  }, [loadOverview, viewMode]);
-
   const refreshAll = async () => {
     await loadProject();
-    if (viewMode === "overview") await loadOverview();
-    else await loadBoard();
+    if (viewMode === "stage") await loadBoard();
   };
 
   const onDropColumn = async (taskId, status) => {
@@ -596,50 +630,20 @@ export default function ProjectDetail({ projectId, onBack }) {
       )}
 
       {viewMode === "overview" && (
-        <div>
-          {overviewTasks ? (
-            <div className={khStyles.kanbanBoardContainer}>
-              <div className={khStyles.kanbanBoard}>
-                {(project.columns || []).map((col, colIdx) => {
-                  const theme = COLUMN_THEMES[colIdx % COLUMN_THEMES.length];
-                  const colTasks = overviewTasks.filter((t) => t.status === col.code);
-                  return (
-                    <div
-                      key={col.code}
-                      className={khStyles.kanbanColumn}
-                      style={{ backgroundColor: theme.bg, borderColor: theme.border, borderTopColor: theme.accent }}
-                      onDragOver={(e) => e.preventDefault()}
-                      onDrop={(e) => {
-                        const id = e.dataTransfer.getData("text/plain");
-                        onDropColumn(id, col.code);
-                      }}
-                    >
-                      <div className={khStyles.kanbanColumnHeader} style={{ borderBottomColor: theme.border }}>
-                        <Space size={6}>
-                          <div className={khStyles.columnDragHandle} style={{ color: theme.accent, cursor: "default" }}>
-                            <GripVertical size={16} />
-                          </div>
-                          <span style={{ fontWeight: 700, fontSize: 13, color: theme.text, textTransform: "uppercase" }}>{col.label}</span>
-                        </Space>
-                        <Tag style={{ borderRadius: 10, fontWeight: 700, border: "none", backgroundColor: theme.badgeBg, color: theme.badgeText }}>
-                          {colTasks.length}
-                        </Tag>
-                      </div>
-                      <div className={khStyles.columnDropZone}>
-                        <div className={khStyles.tasksContainer}>
-                          {colTasks.map((t) => (
-                            <TaskCard key={t.id} task={t} showStage onClick={() => setActiveTaskId(t.id)} />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ) : (
-            <Empty />
-          )}
+        <div className={khStyles.kanbanBoardContainer}>
+          <div className={khStyles.kanbanBoard}>
+            {project.stages.map((stage, idx) => (
+              <StageOverviewCard
+                key={stage.id}
+                stage={stage}
+                theme={COLUMN_THEMES[idx % COLUMN_THEMES.length]}
+                onOpen={() => {
+                  setActiveStageId(stage.id);
+                  setViewMode("stage");
+                }}
+              />
+            ))}
+          </div>
         </div>
       )}
 

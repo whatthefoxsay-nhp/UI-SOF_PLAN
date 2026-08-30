@@ -6,6 +6,19 @@ import TaskDrawer from "./TaskDrawer";
 
 const PRIORITY_COLOR = { LOW: "default", NORMAL: "blue", HIGH: "orange", URGENT: "red" };
 
+// "Hoan thanh" theo dung cot Kanban cua workflow (is_done_status), khong doan
+// theo ma trang thai co dinh vi moi workflow tu dinh nghia bo cot rieng.
+function isTaskDone(t) {
+  const col = (t.columns || []).find((c) => c.code === t.status);
+  return col ? col.is_done_status === 1 : t.status === "DONE";
+}
+
+function startOfDay(d) {
+  const x = new Date(d);
+  x.setHours(0, 0, 0, 0);
+  return x;
+}
+
 export default function MyTasksTab() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -16,6 +29,7 @@ export default function MyTasksTab() {
   const [searchQuery, setSearchQuery] = useState("");
   const [priorityFilter, setPriorityFilter] = useState("ALL");
   const [blockedFilter, setBlockedFilter] = useState("ALL");
+  const [dueFilter, setDueFilter] = useState("ALL");
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -58,7 +72,24 @@ export default function MyTasksTab() {
       blockedFilter === "ALL" ||
       (blockedFilter === "BLOCKED_ONLY" && t.execution_state === "BLOCKED") ||
       (blockedFilter === "HIDE_BLOCKED" && t.execution_state !== "BLOCKED");
-    return matchesSearch && matchesPriority && matchesBlocked;
+
+    let matchesDue = true;
+    if (dueFilter !== "ALL") {
+      const done = isTaskDone(t);
+      const today = startOfDay(new Date());
+      const deadline = t.deadline ? startOfDay(new Date(t.deadline)) : null;
+      if (dueFilter === "OVERDUE") matchesDue = !done && deadline && deadline < today;
+      else if (dueFilter === "TODAY") matchesDue = !done && deadline && deadline.getTime() === today.getTime();
+      else if (dueFilter === "UPCOMING") {
+        const in7Days = new Date(today);
+        in7Days.setDate(in7Days.getDate() + 7);
+        matchesDue = !done && deadline && deadline >= today && deadline <= in7Days;
+      } else if (dueFilter === "IN_PROGRESS") matchesDue = !done && t.execution_state !== "BLOCKED";
+      else if (dueFilter === "WAITING_CONFIRM") matchesDue = t.confirm_total > 0 && t.confirm_done < t.confirm_total;
+      else if (dueFilter === "DONE") matchesDue = done;
+    }
+
+    return matchesSearch && matchesPriority && matchesBlocked && matchesDue;
   });
 
   const columns = [
@@ -75,7 +106,16 @@ export default function MyTasksTab() {
     },
     { title: "Dự án", render: (_, r) => `${r.project_code} — ${r.project_name}` },
     { title: "Giai đoạn", render: (_, r) => <Tag color="cyan">{r.stage_code} — {r.stage_name}</Tag> },
-    { title: "Deadline", dataIndex: "deadline", width: 110, render: (v) => v || "—" },
+    {
+      title: "Deadline",
+      dataIndex: "deadline",
+      width: 110,
+      render: (v, r) => {
+        if (!v) return "—";
+        const overdue = !isTaskDone(r) && startOfDay(new Date(v)) < startOfDay(new Date());
+        return <span style={overdue ? { color: "#ff4d4f", fontWeight: 600 } : undefined}>{v}</span>;
+      },
+    },
     {
       title: "Ưu tiên",
       dataIndex: "priority",
@@ -146,6 +186,20 @@ export default function MyTasksTab() {
               { value: "ALL", label: "Tất cả (kể cả bị block)" },
               { value: "BLOCKED_ONLY", label: "Chỉ công việc bị block" },
               { value: "HIDE_BLOCKED", label: "Ẩn công việc bị block" },
+            ]}
+          />
+          <Select
+            value={dueFilter}
+            onChange={setDueFilter}
+            style={{ width: 170 }}
+            options={[
+              { value: "ALL", label: "Tất cả thời hạn" },
+              { value: "OVERDUE", label: "Quá hạn" },
+              { value: "TODAY", label: "Hôm nay" },
+              { value: "UPCOMING", label: "Sắp đến hạn (7 ngày)" },
+              { value: "IN_PROGRESS", label: "Đang làm" },
+              { value: "WAITING_CONFIRM", label: "Chờ xác nhận" },
+              { value: "DONE", label: "Hoàn thành" },
             ]}
           />
           <span style={{ color: "#64748b", fontSize: 13 }}>{filteredTasks.length} / {tasks.length} công việc</span>
