@@ -250,6 +250,10 @@ const SidebarMenu = ({ isCollapsed = false, onCollapseChange }) => {
           label: "Quản lý quy trình dự án",
           children: [
             {
+              key: "/quan-ly-quy-trinh-du-an?tab=dashboard",
+              label: "Tổng quan",
+            },
+            {
               key: "/quan-ly-quy-trinh-du-an?tab=my-tasks",
               label: "Công việc của tôi",
             },
@@ -493,7 +497,7 @@ const SidebarMenu = ({ isCollapsed = false, onCollapseChange }) => {
       <Menu
         mode="inline"
         inlineIndent={8}
-        selectedKeys={[location.pathname]}
+        selectedKeys={[location.pathname + location.search, location.pathname]}
         openKeys={renderedOpenKeys}
         onClick={handleMenuClick}
         onOpenChange={handleOpenChange}

@@ -1,18 +1,40 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { Tabs } from "antd";
 import WorkflowManager from "./WorkflowManager";
 import ProjectList from "./ProjectList";
 import ProjectDetail from "./ProjectDetail";
 import MyTasksTab from "./MyTasksTab";
+import Dashboard from "./Dashboard";
 import "./styles.css";
+
+function resolveTab(tabParam) {
+  if (tabParam === "workflow") return "workflow";
+  if (tabParam === "my-tasks") return "my-tasks";
+  if (tabParam === "dashboard") return "dashboard";
+  return "projects";
+}
 
 export default function QuanLyQuyTrinhDuAn() {
   const location = useLocation();
-  const tabParam = new URLSearchParams(location.search).get("tab");
-  const initialTab = tabParam === "workflow" ? "workflow" : tabParam === "my-tasks" ? "my-tasks" : "projects";
-  const [activeTab, setActiveTab] = useState(initialTab);
-  const [openProjectId, setOpenProjectId] = useState(null);
+  const params = useParams();
+  const searchParams = new URLSearchParams(location.search);
+  const tabParam = searchParams.get("tab");
+  const projectIdParam = searchParams.get("projectId") || params.projectId;
+
+  const [activeTab, setActiveTab] = useState(resolveTab(tabParam));
+  const [openProjectId, setOpenProjectId] = useState(projectIdParam ? Number(projectIdParam) : null);
+
+  useEffect(() => {
+    if (projectIdParam) {
+      setOpenProjectId(Number(projectIdParam));
+      setActiveTab("projects");
+    } else if (tabParam) {
+      const target = resolveTab(tabParam);
+      setActiveTab(target);
+      if (target !== "projects") setOpenProjectId(null);
+    }
+  }, [tabParam, projectIdParam]);
 
   return (
     <div style={{ padding: 16 }}>
@@ -23,6 +45,11 @@ export default function QuanLyQuyTrinhDuAn() {
           if (key !== "projects") setOpenProjectId(null);
         }}
         items={[
+          {
+            key: "dashboard",
+            label: "Tổng quan",
+            children: <Dashboard />,
+          },
           {
             key: "my-tasks",
             label: "Công việc của tôi",
