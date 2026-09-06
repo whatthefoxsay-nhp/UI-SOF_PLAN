@@ -1,18 +1,59 @@
 # Tiến độ roadmap — module Quản lý Quy trình Dự án
 
-Cập nhật lần cuối: 2026-09-06 (Phase 0 verify + commit xong, giao Phase 5).
+Cập nhật lần cuối: 2026-09-06 (Phase 5 verify xong qua Playwright, giao Phase 6).
 
 Nguồn kế hoạch gốc: `docs/superpowers/specs/2026-09-05-workflow-completion-roadmap-design.md`.
 
 | Phase | Nội dung | Trạng thái | Ghi chú |
 |---|---|---|---|
 | 0 | Dọn tồn đọng (QA checklist, commit fix cũ, di trú route, fix bug bell-notification, verify UI dependency task-template) | **Đã commit xong (2026-09-06)** | Verify bằng Playwright (cài riêng, không dùng Electron). Xem mục "Chi tiết Phase 0" bên dưới, gồm 1 vấn đề follow-up mới phát hiện. |
-| 5 | Completion Engine — Reject → Rework (TC06) | **Sẵn sàng giao cho Codex** | Phụ thuộc Phase 0 đã commit xong — điều kiện đã đủ, prompt đã đưa cho người dùng 2026-09-06 |
-| 6 | Task Handoff tuần tự đa phòng ban | Chưa giao | Phụ thuộc Phase 5 |
+| 5 | Completion Engine — Reject → Rework (TC06) | **Đã verify + xong (2026-09-06)** | Codex tự implement + tự commit (3 commit) rồi báo xong. Claude verify độc lập qua Playwright — xem "Chi tiết Phase 5" bên dưới. |
+| 6 | Task Handoff tuần tự đa phòng ban | **Sẵn sàng giao cho Codex** | Phụ thuộc Phase 5 đã verify xong — điều kiện đã đủ, prompt đưa cho người dùng 2026-09-06 |
 | 7 | Timeline/Gantt + Workload-aware Assignment | Chưa giao | Độc lập, có thể làm sau Phase 5/6 |
 | 8 | Escalation quá hạn | Chưa giao | Cần hỏi người dùng "escalate cho ai" trước khi Codex code (xem prompt) |
 | 9 | Business Modules M10 (Contract/Profit/Development/Testing/Handover/Payment/Maintenance) | Chưa giao | Phase lớn/rủi ro nhất — bắt buộc Codex đọc toàn bộ `ChiTietDuAnWorkflow.jsx` cũ trước khi code, có thể cần hỏi công thức Profit |
 | 10 | Regression toàn diện + dọn code cũ + chốt tài liệu | Chưa giao | Cuối roadmap |
+
+## Chi tiết Phase 5 — ĐÃ XONG (2026-09-06)
+
+**Lệch quy trình cần lưu ý:** khác với Phase 0 (Codex chủ động không commit khi
+chưa verify được qua trình duyệt), lần này Codex tự implement, tự test qua
+CLI/backend (`_wf_invoke.php`), rồi **tự commit luôn** (3 commit:
+`c8b1f7c` spec/plan/SQL, `69c3392` code frontend, `2b97173` cập nhật
+`TRANG_THAI_DU_AN.md`) trước khi có browser verification. Code đúng và migration
+đã áp dụng vào DB thật nên không cần sửa gì, nhưng ghi lại đây để phiên sau biết
+là không thể mặc định tin "chưa commit nghĩa là chưa xong" — luôn phải tự
+`git status`/`git log` kiểm tra thực tế thay vì chỉ đọc báo cáo.
+
+**Đã verify độc lập qua Playwright (browser thật, không phải chỉ đọc code/CLI
+report của Codex):**
+- Migration `reject_reason VARCHAR(500)` đã có thật trong bảng `wf_task_confirm`
+  của DB `hao_erp_sofv5_0` (kiểm tra bằng `DESCRIBE` trực tiếp).
+- Route `task.confirmReject` → `wf_h_task_confirm_reject` đã đăng ký đúng trong
+  `workflow-api/index.php`.
+- **TC06 (Reject → Rework) — PASS qua trình duyệt thật:** dùng task KD177 (đã có
+  2 phòng ban PB001/PB002 cần xác nhận). Xác nhận PB002 trước, sau đó PB001 bấm
+  "Từ chối" kèm lý do qua Modal trong `TaskDrawer.jsx`. Kết quả kiểm tra thẳng
+  trong DB sau thao tác: dòng PB001 → `REJECTED` + đúng `reject_reason`; dòng
+  PB002 (đã CONFIRMED trước đó) bị reset về `PENDING` đúng như spec; task status
+  quay về cột `TODO` (cột Kanban đầu tiên chưa-done); `wf_history` có
+  `TASK_REJECTED` với actor + lý do; `wf_notification` có bản ghi
+  `TASK_REJECTED` gửi đúng `assignee_code` (NV003) của task.
+- **TC05 hồi quy (auto-DONE khi đủ xác nhận, không ai từ chối) — PASS qua trình
+  duyệt thật:** dùng task KD062 (1 phòng ban, không bị chặn bởi dependency) —
+  xác nhận xong, DB xác nhận `status` chuyển thẳng `DONE` + `completed_at` được
+  ghi, `wf_history` có `STATUS_DONE`. (Thử với KD019 — 2 phòng ban — trước đó
+  cho kết quả `AUTO_DONE_SKIPPED_BLOCKED`, nhưng đây là do STAGE của task đó
+  đang `BLOCKED` bởi Dependency Engine — đúng hành vi pre-existing từ Phase 1,
+  không phải lỗi của Phase 5, nên đổi sang task khác không bị chặn để có phép
+  thử auto-DONE sạch.)
+- Spec (`docs/superpowers/specs/2026-09-05-completion-engine-reject-rework-design.md`)
+  đã đọc lại, xác nhận mục "Out of scope" ghi rõ **không** làm gate Subtask —
+  đúng yêu cầu của roadmap, không có scope creep. Grep code cũng không thấy dấu
+  hiệu tự ý thêm gate Subtask.
+
+**Không cần commit thêm gì cho code Phase 5** (Codex đã commit sẵn, verify xong
+khớp đúng). Chỉ cập nhật tài liệu tiến độ trong phiên này.
 
 ## Chi tiết Phase 0 — ĐÃ XONG (2026-09-06)
 

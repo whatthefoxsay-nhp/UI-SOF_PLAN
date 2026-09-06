@@ -80,10 +80,10 @@ cách ly nào).
    `docs/codex-supervision/PROGRESS.md`. Đã commit (4 commit):
    `9f93df7`, `070ce59`, `537b0b4`, `794dbda`.
 
-9. **Phase 5 — Completion Engine: Reject → Rework (2026-09-06)** — thêm luồng từ chối xác nhận có lý do: reset các xác nhận cùng task, đưa task về cột Kanban chưa DONE đầu tiên, ghi `TASK_REJECTED`, thông báo cho assignee, và UI modal "Từ chối" trong TaskDrawer. Spec/plan/SQL đã commit trong `c8b1f7c`; code frontend commit riêng sau khi chốt QA.
-   - **TC06 — Pass (backend/CLI):** PB001 từ chối task KD177 với lý do; task về TODO, PB002 CONFIRMED trước đó reset về PENDING, history và notification được ghi đúng.
-   - **TC05 hồi quy — Pass (backend/CLI):** task KD176 ở stage đang mở chỉ tự động DONE sau khi PB002 và PB001 cùng CONFIRMED.
-   - **Browser acceptance:** chưa xác nhận trong session này vì in-app browser runtime không có browser (`browsers.list() = []`); cần chạy lại thao tác end-to-end qua trình duyệt khi runtime khả dụng.
+9. **Phase 5 — Completion Engine: Reject → Rework (2026-09-06)** — thêm luồng từ chối xác nhận có lý do: reset các xác nhận cùng task, đưa task về cột Kanban chưa DONE đầu tiên, ghi `TASK_REJECTED`, thông báo cho assignee, và UI modal "Từ chối" trong TaskDrawer. Codex tự commit 3 commit (`c8b1f7c` spec/plan/SQL, `69c3392` code, `2b97173` doc) rồi báo xong.
+   - **TC06 — Pass, verify lại qua Playwright (trình duyệt thật, 2026-09-06):** task KD177, xác nhận PB002 rồi PB001 bấm "Từ chối" kèm lý do qua UI thật — đối chiếu DB xác nhận đúng: PB001 REJECTED + reject_reason, PB002 reset PENDING, task về cột TODO, có `TASK_REJECTED` trong history và notification tới assignee.
+   - **TC05 hồi quy — Pass, verify lại qua Playwright:** task KD062 (không bị chặn dependency) xác nhận xong tự động chuyển DONE đúng như trước Phase 5. (Task KD019 có 2 phòng ban nhưng stage đang bị Dependency Engine chặn nên đúng ra phải `AUTO_DONE_SKIPPED_BLOCKED` — hành vi pre-existing từ Phase 1, không phải lỗi Phase 5.)
+   - **Browser acceptance:** đã xác nhận bằng Playwright (cài riêng vào scratchpad, tài khoản đăng nhập thật) — xem chi tiết trong `docs/codex-supervision/PROGRESS.md` mục "Chi tiết Phase 5".
 
 ## 3. Đang làm dở — QA thủ công theo checklist
 
@@ -205,3 +205,23 @@ TEC002→NV001, ACC001→NV009, KD014→NV003, TST001→NV012 (đã bị ngườ
   có kênh trực tiếp gọi Codex trong phiên này. Việc tiếp theo của phiên
   supervisor kế: đọc report Codex, tự `git status`/`git diff` verify (đừng
   tin lời báo "xong"), test qua Playwright, rồi mới commit và giao Phase 6.
+
+## 9. Bàn giao cuối phiên 2026-09-06 (verify Phase 5)
+
+- Codex báo Phase 5 xong. Verify độc lập: `git log`/`git diff` xác nhận 3
+  commit Codex tự tạo (`c8b1f7c`, `69c3392`, `2b97173`) đúng như báo cáo;
+  backend PHP (không có git) đọc trực tiếp xác nhận `wf_h_task_confirm_reject`
+  đã nối đúng route, migration `reject_reason` đã áp dụng thật vào DB.
+- Test qua Playwright (trình duyệt thật, tài khoản đăng nhập thật): TC06
+  (reject → rework) và TC05 hồi quy (auto-DONE) đều Pass — chi tiết đầy đủ
+  trong `docs/codex-supervision/PROGRESS.md` mục "Chi tiết Phase 5".
+- Phát hiện phụ (không phải lỗi): 1 task có 2 phòng ban xác nhận nhưng stage
+  đang bị Dependency Engine (Phase 1) chặn nên auto-DONE bị skip đúng thiết
+  kế (`AUTO_DONE_SKIPPED_BLOCKED`) — chọn task khác không bị chặn để có phép
+  thử TC05 sạch.
+- Ghi nhận lệch quy trình: Codex tự commit trước khi có browser verification
+  (khác Phase 0). Không chặn gì vì code verify đúng, nhưng phiên sau không
+  nên mặc định suy luận trạng thái commit từ báo cáo — luôn tự kiểm tra
+  `git log`.
+- Đã đưa prompt `prompts/phase-6-task-handoff.md` (Task Handoff tuần tự đa
+  phòng ban, TC11) cho người dùng để chuyển cho Codex.
