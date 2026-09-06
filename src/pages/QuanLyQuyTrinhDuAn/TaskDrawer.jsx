@@ -23,6 +23,7 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
       assignee_code: data.assignee_code,
       deadline: data.deadline || "",
       priority: data.priority,
+      confirm_departments: data.confirms.map((c) => c.department_code),
     });
   }, [taskId, form]);
 
@@ -99,6 +100,20 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
                   { value: "HIGH", label: "Cao" },
                   { value: "URGENT", label: "Khẩn cấp" },
                 ]}
+              />
+            </Form.Item>
+            <Form.Item
+              name="confirm_departments"
+              label="Phòng ban cần xác nhận"
+              tooltip="Phòng ban vừa được thêm vào đây sẽ nhận thông báo yêu cầu xác nhận sau khi lưu"
+            >
+              <Select
+                mode="multiple"
+                allowClear
+                showSearch
+                optionFilterProp="label"
+                placeholder="Chọn phòng ban cần xác nhận"
+                options={departments.map((d) => ({ value: d.code, label: d.name }))}
               />
             </Form.Item>
             <Button size="small" onClick={saveInfo}>

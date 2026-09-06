@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Card, Row, Col, Statistic, Table, Empty, message } from "antd";
+import React, { useCallback, useEffect, useState } from "react";
+import { Card, Row, Col, Statistic, Table, Empty, message, Button } from "antd";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { RefreshCw } from "lucide-react";
 import * as workflowApi from "../../services/workflowApi";
 
 const HISTORY_ACTION_LABELS = {
@@ -16,7 +17,7 @@ export default function Dashboard() {
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+  const load = useCallback(() => {
     setLoading(true);
     workflowApi
       .getDashboardSummary()
@@ -24,6 +25,10 @@ export default function Dashboard() {
       .catch((e) => message.error(e.message))
       .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    load();
+  }, [load]);
 
   if (!summary) return null;
 
@@ -46,6 +51,11 @@ export default function Dashboard() {
 
   return (
     <div>
+      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 12 }}>
+        <Button icon={<RefreshCw size={14} />} loading={loading} onClick={load}>
+          Làm mới
+        </Button>
+      </div>
       <Row gutter={16} style={{ marginBottom: 16 }}>
         <Col span={6}>
           <Card loading={loading}>
