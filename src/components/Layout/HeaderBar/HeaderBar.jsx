@@ -61,7 +61,7 @@ const HeaderBar = ({ isCollapsed }) => {
   const openNotification = (n) => {
     workflowApi.markNotificationRead(n.id).catch(() => {});
     if (n.project_id) {
-      navigate(`/quan-ly-quy-trinh-du-an?tab=projects&projectId=${n.project_id}`);
+      addTab(`/quan-ly-quy-trinh-du-an?tab=projects&projectId=${n.project_id}`);
     }
     loadNotifications();
   };
