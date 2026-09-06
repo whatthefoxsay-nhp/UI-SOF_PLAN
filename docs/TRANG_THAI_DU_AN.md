@@ -225,3 +225,22 @@ TEC002→NV001, ACC001→NV009, KD014→NV003, TST001→NV012 (đã bị ngườ
   `git log`.
 - Đã đưa prompt `prompts/phase-6-task-handoff.md` (Task Handoff tuần tự đa
   phòng ban, TC11) cho người dùng để chuyển cho Codex.
+
+10. **Phase 6 — Task Handoff tuần tự đa phòng ban (2026-09-06)** — thêm
+    cấu hình chuỗi handoff trên task template, snapshot `wf_task_handoff`
+    khi tạo project, quyền thao tác theo phòng ban ACTIVE, transition tuần tự
+    và UI cấu hình/stepper. Bước cuối dùng chung Completion Engine với
+    multi-confirm; task không có handoff giữ nguyên hành vi cũ. Frontend đã
+    commit `e4d8df5` (API + WorkflowManager) và `d12acec` (TaskDrawer);
+    backend sửa trực tiếp theo quy tắc codebase không có Git.
+    - **TC11 — Pass (backend/CLI):** fixture `DA2026010`, task `KD184`,
+      chain `PB002 → PB001 → PB002`; PB001 bị 403 trước lượt, lần lượt
+      `NV003 → NV001 → NV003` hoàn tất đúng ba bước, không còn ACTIVE,
+      rồi hai confirm đưa task qua Completion Engine thành `DONE`. History
+      có ba action `TASK_HANDOFF` và status/history auto-DONE đúng.
+    - **TC05 hồi quy — Pass (backend/CLI):** task không có handoff `KD185`
+      vẫn confirm song song PB002/PB001 và tự động `DONE` khi đủ xác nhận.
+    - **Browser acceptance:** chưa thể xác minh trong phiên này vì browser
+      runtime tích hợp trả `browsers: {}`; đã chạy `npm run build` thành công
+      (chỉ còn warning CSS/lint có sẵn). Không đánh dấu browser TC11 Pass khi
+      chưa có browser khả dụng.
