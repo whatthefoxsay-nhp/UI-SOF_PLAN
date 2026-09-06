@@ -80,6 +80,11 @@ cách ly nào).
    `docs/codex-supervision/PROGRESS.md`. Đã commit (4 commit):
    `9f93df7`, `070ce59`, `537b0b4`, `794dbda`.
 
+9. **Phase 5 — Completion Engine: Reject → Rework (2026-09-06)** — thêm luồng từ chối xác nhận có lý do: reset các xác nhận cùng task, đưa task về cột Kanban chưa DONE đầu tiên, ghi `TASK_REJECTED`, thông báo cho assignee, và UI modal "Từ chối" trong TaskDrawer. Spec/plan/SQL đã commit trong `c8b1f7c`; code frontend commit riêng sau khi chốt QA.
+   - **TC06 — Pass (backend/CLI):** PB001 từ chối task KD177 với lý do; task về TODO, PB002 CONFIRMED trước đó reset về PENDING, history và notification được ghi đúng.
+   - **TC05 hồi quy — Pass (backend/CLI):** task KD176 ở stage đang mở chỉ tự động DONE sau khi PB002 và PB001 cùng CONFIRMED.
+   - **Browser acceptance:** chưa xác nhận trong session này vì in-app browser runtime không có browser (`browsers.list() = []`); cần chạy lại thao tác end-to-end qua trình duyệt khi runtime khả dụng.
+
 ## 3. Đang làm dở — QA thủ công theo checklist
 
 > Cập nhật 2026-09-06: TC4.5 và TC4.8 đã được Claude tự verify lại bằng
