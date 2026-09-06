@@ -304,5 +304,6 @@ TEC002→NV001, ACC001→NV009, KD014→NV003, TST001→NV012 (đã bị ngườ
   `wf_department`/`hr_lv0020`, nên cần hỏi escalation quá hạn nên gửi thông
   báo cho ai. Đề xuất mặc định trong prompt nếu không có ý kiến khác: gửi
   cho toàn bộ user có quyền admin + vẫn nhắc người phụ trách gốc (assignee).
-  Đã hỏi người dùng trong phiên này, đang chờ trả lời — chưa giao prompt
-  Phase 8 cho tới khi có quyết định.
+  **Người dùng đã chốt trong phiên này: đồng ý phương án đề xuất** (tất cả
+  admin + assignee gốc). Đã cập nhật quyết định vào
+  `prompts/phase-8-escalation.md` và đưa cho người dùng để chuyển Codex.

@@ -1,6 +1,6 @@
 # Tiến độ roadmap — module Quản lý Quy trình Dự án
 
-Cập nhật lần cuối: 2026-09-06 (Phase 7 verify xong qua Playwright, hỏi người dùng trước khi giao Phase 8).
+Cập nhật lần cuối: 2026-09-06 (Phase 7 verify xong qua Playwright, đã chốt quyết định escalation và giao Phase 8).
 
 Nguồn kế hoạch gốc: `docs/superpowers/specs/2026-09-05-workflow-completion-roadmap-design.md`.
 
@@ -10,7 +10,7 @@ Nguồn kế hoạch gốc: `docs/superpowers/specs/2026-09-05-workflow-completi
 | 5 | Completion Engine — Reject → Rework (TC06) | **Đã verify + xong (2026-09-06)** | Codex tự implement + tự commit (3 commit) rồi báo xong. Claude verify độc lập qua Playwright — xem "Chi tiết Phase 5" bên dưới. |
 | 6 | Task Handoff tuần tự đa phòng ban | **Đã verify + xong (2026-09-06)** | Codex tự implement + tự commit (5 commit) rồi báo xong. Claude verify độc lập qua Playwright — xem "Chi tiết Phase 6" bên dưới. |
 | 7 | Timeline/Gantt + Workload-aware Assignment | **Đã verify + xong (2026-09-06)** | Codex tự implement + tự commit (4 commit) rồi báo xong. Claude verify độc lập qua Playwright — xem "Chi tiết Phase 7" bên dưới. |
-| 8 | Escalation quá hạn | Đang chờ người dùng trả lời "escalate cho ai" | Đã hỏi người dùng 2026-09-06 — xem prompt, chưa giao cho Codex tới khi có câu trả lời |
+| 8 | Escalation quá hạn | **Sẵn sàng giao cho Codex** | Người dùng đã chốt 2026-09-06: escalate cho tất cả admin + assignee gốc. Prompt đã cập nhật quyết định, đưa cho người dùng để chuyển Codex. |
 | 9 | Business Modules M10 (Contract/Profit/Development/Testing/Handover/Payment/Maintenance) | Chưa giao | Phase lớn/rủi ro nhất — bắt buộc Codex đọc toàn bộ `ChiTietDuAnWorkflow.jsx` cũ trước khi code, có thể cần hỏi công thức Profit |
 | 10 | Regression toàn diện + dọn code cũ + chốt tài liệu | Chưa giao | Cuối roadmap |
 
