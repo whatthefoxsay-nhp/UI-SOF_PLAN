@@ -1,6 +1,23 @@
 -- Phase 6: sequential task handoff.
 -- Handoff status is application-validated VARCHAR, not ENUM.
 
+-- Phase 5 compatibility: REJECTED needs no ALTER because status is VARCHAR.
+-- Keep this migration safe when Phase 5 was already applied in the database.
+SET @wf_reject_reason_sql = IF(
+    EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_schema = DATABASE()
+          AND table_name = 'wf_task_confirm'
+          AND column_name = 'reject_reason'
+    ),
+    'SELECT 1',
+    'ALTER TABLE wf_task_confirm ADD COLUMN reject_reason VARCHAR(500) DEFAULT NULL AFTER note'
+);
+PREPARE wf_reject_reason_stmt FROM @wf_reject_reason_sql;
+EXECUTE wf_reject_reason_stmt;
+DEALLOCATE PREPARE wf_reject_reason_stmt;
+
 CREATE TABLE wf_task_template_handoff (
     id INT NOT NULL AUTO_INCREMENT,
     task_template_id INT NOT NULL,
