@@ -16,7 +16,7 @@ import {
   Collapse,
   InputNumber,
 } from "antd";
-import { Plus, Copy, Trash2, GripVertical, Pencil, Save } from "lucide-react";
+import { Plus, Copy, Trash2, GripVertical, Pencil, Save, ChevronUp, ChevronDown } from "lucide-react";
 import * as workflowApi from "../../services/workflowApi";
 
 const STAGE_TYPES = [
@@ -58,6 +58,8 @@ export default function WorkflowManager() {
   const [taskForm] = Form.useForm();
   const [editingTask, setEditingTask] = useState(null);
   const [taskStageId, setTaskStageId] = useState(null);
+  const [taskHandoffDepartments, setTaskHandoffDepartments] = useState([]);
+  const [handoffDepartmentToAdd, setHandoffDepartmentToAdd] = useState(undefined);
 
   const [dragStageId, setDragStageId] = useState(null);
 
@@ -235,6 +237,8 @@ export default function WorkflowManager() {
       depends_on_task_template_ids: [],
       dependency_join_type: "ALL",
     });
+    setTaskHandoffDepartments([]);
+    setHandoffDepartmentToAdd(undefined);
     setTaskModalOpen(true);
   };
 
@@ -250,7 +254,32 @@ export default function WorkflowManager() {
       depends_on_task_template_ids: task.depends_on_task_template_ids || [],
       dependency_join_type: task.dependency_join_type || "ALL",
     });
+    setTaskHandoffDepartments(task.handoff_departments || []);
+    setHandoffDepartmentToAdd(undefined);
     setTaskModalOpen(true);
+  };
+
+  const addHandoffDepartment = () => {
+    if (!handoffDepartmentToAdd) {
+      message.warning("Chọn phòng ban trước khi thêm bước handoff");
+      return;
+    }
+    setTaskHandoffDepartments((current) => [...current, handoffDepartmentToAdd]);
+    setHandoffDepartmentToAdd(undefined);
+  };
+
+  const moveHandoffDepartment = (index, direction) => {
+    const targetIndex = index + direction;
+    if (targetIndex < 0 || targetIndex >= taskHandoffDepartments.length) return;
+    setTaskHandoffDepartments((current) => {
+      const next = [...current];
+      [next[index], next[targetIndex]] = [next[targetIndex], next[index]];
+      return next;
+    });
+  };
+
+  const removeHandoffDepartment = (index) => {
+    setTaskHandoffDepartments((current) => current.filter((_, i) => i !== index));
   };
 
   const submitTask = async () => {
@@ -259,6 +288,7 @@ export default function WorkflowManager() {
       const data = await workflowApi.saveTaskTemplate({
         id: editingTask?.id,
         stage_id: taskStageId,
+        handoff_departments: taskHandoffDepartments,
         ...values,
       });
       message.success("Đã lưu công việc mẫu");
@@ -494,6 +524,18 @@ export default function WorkflowManager() {
                           render: (arr) => arr.map((d) => <Tag key={d}>{departmentName(d)}</Tag>),
                         },
                         {
+                          title: "Handoff tuần tự",
+                          dataIndex: "handoff_departments",
+                          render: (arr = []) =>
+                            arr.length > 0
+                              ? arr.map((d, index) => (
+                                  <Tag key={`${d}-${index}`} color={index === 0 ? "blue" : undefined}>
+                                    {index + 1}. {departmentName(d)}
+                                  </Tag>
+                                ))
+                              : "—",
+                        },
+                        {
                           title: "Phụ thuộc",
                           dataIndex: "depends_on_task_template_ids",
                           width: 130,
@@ -689,6 +731,49 @@ export default function WorkflowManager() {
           </Form.Item>
           <Form.Item name="confirm_departments" label="Phòng ban cần xác nhận (để trống nếu không cần)">
             <Select mode="multiple" options={departments.map((d) => ({ value: d.code, label: d.name }))} />
+          </Form.Item>
+          <Form.Item label="Handoff tuần tự (tùy chọn)">
+            <Space direction="vertical" style={{ width: "100%" }} size={6}>
+              <Space.Compact style={{ width: "100%" }}>
+                <Select
+                  value={handoffDepartmentToAdd}
+                  onChange={setHandoffDepartmentToAdd}
+                  placeholder="Chọn phòng ban cho bước tiếp theo"
+                  options={departments.map((d) => ({ value: d.code, label: d.name }))}
+                  style={{ flex: 1 }}
+                />
+                <Button onClick={addHandoffDepartment}>Thêm</Button>
+              </Space.Compact>
+              {taskHandoffDepartments.length > 0 && (
+                <Space direction="vertical" style={{ width: "100%" }}>
+                  {taskHandoffDepartments.map((dept, index) => (
+                    <Space key={`${dept}-${index}`} style={{ width: "100%", justifyContent: "space-between" }}>
+                      <span>
+                        <Tag color={index === 0 ? "blue" : "default"}>{index + 1}</Tag>
+                        {departmentName(dept)}
+                      </span>
+                      <Space size={2}>
+                        <Button
+                          size="small"
+                          icon={<ChevronUp size={13} />}
+                          disabled={index === 0}
+                          onClick={() => moveHandoffDepartment(index, -1)}
+                        />
+                        <Button
+                          size="small"
+                          icon={<ChevronDown size={13} />}
+                          disabled={index === taskHandoffDepartments.length - 1}
+                          onClick={() => moveHandoffDepartment(index, 1)}
+                        />
+                        <Button size="small" danger onClick={() => removeHandoffDepartment(index)}>
+                          Xóa
+                        </Button>
+                      </Space>
+                    </Space>
+                  ))}
+                </Space>
+              )}
+            </Space>
           </Form.Item>
           <Form.Item name="depends_on_task_template_ids" label="Phụ thuộc vào công việc nào (trong cùng workflow, để trống nếu không phụ thuộc)">
             <Select
