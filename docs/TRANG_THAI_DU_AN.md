@@ -267,3 +267,20 @@ TEC002→NV001, ACC001→NV009, KD014→NV003, TST001→NV012 (đã bị ngườ
       runtime tích hợp trả `browsers: {}`; đã chạy `npm run build` thành công
       (chỉ còn warning CSS/lint có sẵn). Không đánh dấu browser TC11 Pass khi
       chưa có browser khả dụng.
+
+11. **Phase 7 — Timeline/Gantt + Workload-aware Assignment (2026-09-06)**
+    Thêm tab Timeline chỉ đọc trong `ProjectDetail.jsx`, hiển thị stage/task theo
+    trục thời gian và tooltip dependency từ response `project.get`; không thêm
+    thư viện Gantt và không kéo-thả đổi lịch. Thêm `wf_h_employee_workload` dùng
+    snapshot cột Kanban `is_done_status=1`, route `employee.workload`, và hậu tố
+    số việc mở trong selector người phụ trách của `TaskDrawer.jsx`. Không sửa
+    `WorkflowManager` cho assignee template vì codebase hiện tại không có
+    trường/selector `assignee_code` ở task template để persist.
+    - **CLI/API verification — Pass:** project seed `id=17` trả đầy đủ stage/task
+      cùng dependency; workload toàn bộ trả `NV002=1, NV003=2, NV009=1`, khớp
+      SQL manual theo snapshot Kanban; filter `PB001` cũng khớp `NV002=1`.
+    - **Build/lint — Pass:** `npm run build`, `php -l handlers/workflow.php`,
+      `php -l handlers/project.php`, `php -l index.php`, `git diff --check`.
+    - **Browser acceptance:** Blocked trong phiên này vì integrated Browser runtime
+      không khả dụng (`browsers: {}` / module runtime không khởi tạo được), nên
+      chưa đánh dấu TC Timeline/workload là Pass qua trình duyệt.
