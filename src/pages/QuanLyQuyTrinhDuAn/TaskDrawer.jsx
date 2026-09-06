@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Drawer, Form, Select, Input, Button, Divider, List, Tag, message, Tooltip } from "antd";
-import { Trash2, CheckCircle2, Lock } from "lucide-react";
+import { Drawer, Form, Select, Input, Button, Divider, List, Tag, message, Tooltip, Modal, Space } from "antd";
+import { Trash2, CheckCircle2, Lock, XCircle } from "lucide-react";
 import * as workflowApi from "../../services/workflowApi";
 
 export const ITEM_TYPES = [
@@ -14,6 +14,9 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
   const [task, setTask] = useState(null);
   const [form] = Form.useForm();
   const [itemForm] = Form.useForm();
+  const [rejectTarget, setRejectTarget] = useState(null);
+  const [rejectReason, setRejectReason] = useState("");
+  const [rejectLoading, setRejectLoading] = useState(false);
 
   const reload = useCallback(async () => {
     if (!taskId) return;
@@ -55,6 +58,43 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
       onChanged();
     } catch (e) {
       message.error(e.message);
+    }
+  };
+
+  const openRejectModal = (dept) => {
+    setRejectTarget(dept);
+    setRejectReason("");
+  };
+
+  const closeRejectModal = () => {
+    if (rejectLoading) return;
+    setRejectTarget(null);
+    setRejectReason("");
+  };
+
+  const doReject = async () => {
+    const reason = rejectReason.trim();
+    if (!reason) {
+      message.error("Vui lòng nhập lý do từ chối");
+      return;
+    }
+    if (reason.length > 500) {
+      message.error("Lý do từ chối không được vượt quá 500 ký tự");
+      return;
+    }
+
+    setRejectLoading(true);
+    try {
+      await workflowApi.rejectTaskConfirm(taskId, rejectTarget, reason);
+      message.success("Đã từ chối và chuyển công việc về làm lại");
+      setRejectTarget(null);
+      setRejectReason("");
+      await reload();
+      onChanged();
+    } catch (e) {
+      message.error(e.message);
+    } finally {
+      setRejectLoading(false);
     }
   };
 
@@ -139,10 +179,21 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
                         <Tag icon={<CheckCircle2 size={12} />} color="green">
                           Đã xác nhận
                         </Tag>
+                      ) : c.status === "REJECTED" ? (
+                        <Tooltip title={c.reject_reason || "Đã bị từ chối, cần cập nhật và gửi lại để xác nhận"}>
+                          <Tag icon={<XCircle size={12} />} color="red">
+                            Đã từ chối
+                          </Tag>
+                        </Tooltip>
                       ) : canActOn(c.department_code) ? (
-                        <Button size="small" onClick={() => doConfirm(c.department_code)}>
-                          Xác nhận
-                        </Button>
+                        <Space key="confirm-actions" size={4}>
+                          <Button size="small" onClick={() => doConfirm(c.department_code)}>
+                            Xác nhận
+                          </Button>
+                          <Button size="small" danger onClick={() => openRejectModal(c.department_code)}>
+                            Từ chối
+                          </Button>
+                        </Space>
                       ) : (
                         <Tooltip title={`Chỉ phòng ${departmentName(c.department_code)} mới xác nhận được`}>
                           <Tag color="default">Chờ xác nhận</Tag>
@@ -156,6 +207,27 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
               />
             </>
           )}
+
+          <Modal
+            title={`Từ chối xác nhận - ${departmentName(rejectTarget || "")}`}
+            open={!!rejectTarget}
+            onCancel={closeRejectModal}
+            onOk={doReject}
+            confirmLoading={rejectLoading}
+            okButtonProps={{ danger: true }}
+            okText="Từ chối"
+            cancelText="Hủy"
+            destroyOnClose
+          >
+            <Input.TextArea
+              value={rejectReason}
+              onChange={(e) => setRejectReason(e.target.value)}
+              placeholder="Nhập lý do từ chối (bắt buộc)"
+              autoSize={{ minRows: 4, maxRows: 8 }}
+              maxLength={500}
+              showCount
+            />
+          </Modal>
 
           <Divider>Dữ liệu phát sinh (checklist / bug / phân bổ / ticket)</Divider>
           <List

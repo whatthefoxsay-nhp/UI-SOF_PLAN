@@ -62,6 +62,8 @@ export const updateTaskStatusFromPlan = (taskId, planStatus) =>
   callWorkflowApi("task.updateStatusFromPlan", { task_id: taskId, plan_status: planStatus });
 export const confirmTask = (taskId, departmentCode, note = "") =>
   callWorkflowApi("task.confirm", { task_id: taskId, department_code: departmentCode, note });
+export const rejectTaskConfirm = (taskId, departmentCode, reason) =>
+  callWorkflowApi("task.confirmReject", { task_id: taskId, department_code: departmentCode, reason });
 export const saveTaskItem = (data) => callWorkflowApi("task.item.save", data);
 export const deleteTaskItem = (id) => callWorkflowApi("task.item.delete", { id });
 export const saveStageExtra = (id, extraData, lockNow = false) =>
