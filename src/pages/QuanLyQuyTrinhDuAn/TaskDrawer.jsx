@@ -18,6 +18,7 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
   const [rejectReason, setRejectReason] = useState("");
   const [rejectLoading, setRejectLoading] = useState(false);
   const [handoffLoading, setHandoffLoading] = useState(false);
+  const [employeeWorkload, setEmployeeWorkload] = useState({});
 
   const reload = useCallback(async () => {
     if (!taskId) return;
@@ -34,6 +35,14 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
   useEffect(() => {
     reload();
   }, [reload]);
+
+  useEffect(() => {
+    if (!taskId) {
+      setEmployeeWorkload({});
+      return;
+    }
+    workflowApi.getEmployeeWorkload().then((data) => setEmployeeWorkload(data || {})).catch(() => setEmployeeWorkload({}));
+  }, [taskId]);
 
   if (!taskId) return null;
 
@@ -148,7 +157,10 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
                 allowClear
                 showSearch
                 optionFilterProp="label"
-                options={employees.map((e) => ({ value: e.code, label: `${e.name} (${e.code})` }))}
+                options={employees.map((e) => ({
+                  value: e.code,
+                  label: `${e.name} (${e.code}) — ${employeeWorkload[e.code] || 0} việc đang làm`,
+                }))}
               />
             </Form.Item>
             <Form.Item name="deadline" label="Deadline">

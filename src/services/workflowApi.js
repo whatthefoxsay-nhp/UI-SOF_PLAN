@@ -23,6 +23,8 @@ export const listProjectTypes = () => callWorkflowApi("project_type.list");
 export const saveProjectType = (name) => callWorkflowApi("project_type.save", { name });
 export const getEmployees = () => callWorkflowApi("meta.employees");
 export const getMyProfile = () => callWorkflowApi("meta.myProfile");
+export const getEmployeeWorkload = (departmentCode = "") =>
+  callWorkflowApi("employee.workload", departmentCode ? { department_code: departmentCode } : {});
 
 // ---- Workflow template ----
 export const listWorkflows = () => callWorkflowApi("workflow.list");
