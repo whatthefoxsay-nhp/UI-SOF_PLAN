@@ -307,3 +307,25 @@ TEC002→NV001, ACC001→NV009, KD014→NV003, TST001→NV012 (đã bị ngườ
   **Người dùng đã chốt trong phiên này: đồng ý phương án đề xuất** (tất cả
   admin + assignee gốc). Đã cập nhật quyết định vào
   `prompts/phase-8-escalation.md` và đưa cho người dùng để chuyển Codex.
+
+12. **Phase 8 — Escalation quá hạn (2026-09-06)** — thêm script CLI độc lập
+    `workflow-api/scripts/check_overdue_escalation.php`, chạy với ngưỡng
+    `ESCALATION_OVERDUE_DAYS = 2`, chỉ xét task chưa ở cột Kanban done và dùng
+    cooldown 24 giờ theo task để không spam notification. Không thêm bảng DB;
+    `OVERDUE_ESCALATION` dùng schema `wf_notification` hiện có và chuông thông
+    báo hiện tại hiển thị được loại mới.
+    - **Quyết định escalation target đã chốt:** “Tất cả admin + assignee gốc”.
+      Trong deployment hiện tại không có bảng quyền user đầy đủ cho CLI; script
+      lấy các tài khoản canonical có `hr_lv0020.lv001 = 'admin'` (fallback
+      `admin`) và cộng thêm `assignee_code` của task, loại trùng.
+    - **CLI verification — Pass:** task quá hạn thật `ACC001` (id `11`, deadline
+      `2026-08-27`, project `DA2026001`) được tạo notification cho `admin` và
+      `NV009`. Lần chạy đầu quét `43` task, tạo `36` notification; chạy lần hai
+      ngay sau đó tạo `0` notification trùng (`33` task bị cooldown). API
+      `wf_h_notification_list` cũng trả các item `OVERDUE_ESCALATION` cho chuông.
+    - **Build/lint — Pass:** `php -l scripts/check_overdue_escalation.php`.
+      Đầu script có hướng dẫn cấu hình Windows Task Scheduler chạy một lần/ngày
+      bằng PHP CLI; không tự cài Task Scheduler.
+    - **Browser acceptance:** Blocked trong phiên này vì integrated Browser
+      runtime không khởi tạo được (`@openai/browser-runtime` bị thiếu), nên chưa
+      đánh dấu xác minh trực tiếp qua chuông UI là Pass.
