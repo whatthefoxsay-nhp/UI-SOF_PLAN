@@ -45,11 +45,25 @@ export const pathLabelMap = {
 
 const dynamicRoutePatterns = [
   { pattern: /^\/quan-ly-ke-hoach\/([^/]+)$/, parentPath: "/quan-ly-ke-hoach" },
-  { pattern: /^\/quan-ly-du-an\/chi-tiet\/([^/]+)$/, parentPath: "/quan-ly-du-an/danh-sach" },
+  { pattern: /^\/quan-ly-du-an\/chi-tiet\/([^/]+)$/, parentPath: "/quan-ly-quy-trinh-du-an?tab=projects" },
 ];
 
 export const getTabMetadata = (path, t = null) => {
-  const cleanPath = path.endsWith("/") && path.length > 1 ? path.slice(0, -1) : path;
+  const fullPath = path || "";
+  const pathWithoutQuery = fullPath.split("?")[0];
+  const cleanPath = pathWithoutQuery.endsWith("/") && pathWithoutQuery.length > 1 ? pathWithoutQuery.slice(0, -1) : pathWithoutQuery;
+  const tabParam = new URLSearchParams(fullPath.split("?")[1] || "").get("tab");
+
+  // Custom labels for tab query parameters
+  if (tabParam === "workflow") {
+    return { label: "Mẫu Quy Trình (Workflow)", iconName: "Workflow", isClosable: true };
+  }
+  if (tabParam === "my-tasks") {
+    return { label: "Công việc của tôi", iconName: "Workflow", isClosable: true };
+  }
+  if (tabParam === "projects") {
+    return { label: "Danh Sách Dự Án", iconName: "Workflow", isClosable: true };
+  }
 
   if (pathLabelMap[cleanPath]) {
     const base = pathLabelMap[cleanPath];
@@ -87,6 +101,28 @@ export const getTabMetadata = (path, t = null) => {
   }
 
   return { label: t ? t("Trang mới") : "Trang mới", iconName: "FileText", isClosable: true };
+};
+
+const WORKFLOW_ROUTE = "/quan-ly-quy-trinh-du-an";
+const WORKFLOW_TABS = new Set(["dashboard", "my-tasks", "projects", "workflow"]);
+
+export const getMenuSelectedKey = (pathname = "", search = "") => {
+  if (
+    pathname === WORKFLOW_ROUTE ||
+    pathname === "/quan-ly-du-an/workflow-templates" ||
+    pathname === "/quan-ly-du-an/danh-sach" ||
+    /^\/quan-ly-du-an\/chi-tiet\/[^/]+$/.test(pathname)
+  ) {
+    const requestedTab = new URLSearchParams(search).get("tab");
+    const tab = WORKFLOW_TABS.has(requestedTab)
+      ? requestedTab
+      : pathname === "/quan-ly-du-an/workflow-templates"
+        ? "workflow"
+        : "projects";
+    return `${WORKFLOW_ROUTE}?tab=${tab}`;
+  }
+
+  return `${pathname}${search}` || "/";
 };
 
 export const IconRenderer = ({ name, size = 16, className, style }) => {

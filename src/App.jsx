@@ -4,6 +4,7 @@ import {
   Route,
   Navigate,
   useLocation,
+  useNavigate,
   MemoryRouter,
   UNSAFE_NavigationContext as NavigationContext,
   UNSAFE_LocationContext as LocationContext,
@@ -68,12 +69,9 @@ const QuanLyTrucTiepDuyetDon = React.lazy(() => import("./pages/QuanLyNghiPhep/Q
 const KabanPhongBan = React.lazy(() => import("./pages/QuanLyDuAn/KabanPhongBan/KabanPhongBan"));
 const DuAnMau = React.lazy(() => import("./pages/QuanLyDuAn/DanhMucDuAn/DanhMucDuAn").then((module) => ({ default: module.DuAnMau })));
 const DanhMucGiaiDoanDuAn = React.lazy(() => import("./pages/QuanLyDuAn/DanhMucDuAn/DanhMucDuAn").then((module) => ({ default: module.DanhMucGiaiDoan })));
-const QuanLyWorkflow = React.lazy(() => import("./pages/QuanLyDuAn/QuanLyWorkflow/QuanLyWorkflow"));
-const QuanLyDuAnWorkflow = React.lazy(() => import("./pages/QuanLyDuAn/QuanLyDuAnWorkflow/QuanLyDuAnWorkflow"));
-const ChiTietDuAnWorkflow = React.lazy(() => import("./pages/QuanLyDuAn/ChiTietDuAnWorkflow/ChiTietDuAnWorkflow"));
 const UnderDevelopment = React.lazy(() => import("./pages/Common/UnderDevelopment"));
 
-function RouteListener({ tabKey }) {
+function RouteListener({ tabKey, syncOuterLocation }) {
   const location = useLocation();
   const { updateTabPath } = useTabs();
 
@@ -81,8 +79,9 @@ function RouteListener({ tabKey }) {
     const fullPath = location.pathname + location.search;
     if (fullPath !== tabKey) {
       updateTabPath(tabKey, fullPath);
+      syncOuterLocation(fullPath, { replace: true });
     }
-  }, [location, tabKey, updateTabPath]);
+  }, [location.pathname, location.search, tabKey, updateTabPath, syncOuterLocation]);
 
   return null;
 }
@@ -146,9 +145,9 @@ function PlanRoutes() {
       <Route path="/kpi-nhan-su" element={<KPINhanSu />} />
       <Route path="/kpi-quan-ly" element={<KPIQuanLy />} />
       <Route path="/kpi-bao-cao" element={<KPIBaoCao />} />
-      <Route path="/quan-ly-du-an/workflow-templates" element={<QuanLyWorkflow />} />
-      <Route path="/quan-ly-du-an/danh-sach" element={<QuanLyDuAnWorkflow />} />
-      <Route path="/quan-ly-du-an/chi-tiet/:projectId" element={<ChiTietDuAnWorkflow />} />
+      <Route path="/quan-ly-du-an/workflow-templates" element={<Navigate to="/quan-ly-quy-trinh-du-an?tab=workflow" replace />} />
+      <Route path="/quan-ly-du-an/danh-sach" element={<Navigate to="/quan-ly-quy-trinh-du-an?tab=projects" replace />} />
+      <Route path="/quan-ly-du-an/chi-tiet/:projectId" element={<QuanLyQuyTrinhDuAn />} />
       <Route path="/quan-ly-du-an/du-an-mau" element={<DuAnMau />} />
       <Route path="/quan-ly-du-an/danh-muc-giai-doan" element={<DanhMucGiaiDoanDuAn />} />
       <Route path="/kaban-phong-ban" element={<KabanPhongBan />} />
@@ -161,6 +160,7 @@ function AppContent() {
   useAutoZoom(1920);
   const { isAuthenticated } = useAuth();
   const { tabs, activeTabKey } = useTabs();
+  const syncOuterLocation = useNavigate();
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   useEffect(() => {
@@ -198,7 +198,7 @@ function AppContent() {
                         <NavigationContext.Provider value={null}>
                           <LocationContext.Provider value={null}>
                             <MemoryRouter initialEntries={[{ pathname: tabPathname, search: tabSearch, state: tab.state }]}>
-                              <RouteListener tabKey={tab.key} />
+                              <RouteListener tabKey={tab.key} syncOuterLocation={syncOuterLocation} />
                               <PlanRoutes />
                             </MemoryRouter>
                           </LocationContext.Provider>

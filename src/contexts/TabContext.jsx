@@ -29,7 +29,7 @@ export const TabProvider = ({ children }) => {
   useEffect(() => {
     setTabs((prevTabs) =>
       prevTabs.map((tab) => {
-        const meta = getTabMetadata(tab.path.split('?')[0], t);
+        const meta = getTabMetadata(tab.path, t);
         return { ...tab, label: meta.label };
       }),
     );
@@ -71,7 +71,7 @@ export const TabProvider = ({ children }) => {
 
     const existingTab = tabs.find((tab) => tab.key === path);
     if (!existingTab) {
-      const meta = getTabMetadata(location.pathname, t);
+      const meta = getTabMetadata(path, t);
       const newTab = {
         key: path,
         path,
@@ -93,7 +93,7 @@ export const TabProvider = ({ children }) => {
   };
 
   const addTab = (path, customLabel = null, state = null) => {
-    const meta = getTabMetadata(path.split('?')[0], t);
+    const meta = getTabMetadata(path, t);
     const label = customLabel || meta.label;
     const newTab = {
       key: path,
@@ -167,7 +167,7 @@ export const TabProvider = ({ children }) => {
   const restoreTabs = (paths) => {
     const tabsToRestore = [];
     paths.forEach((path) => {
-      const meta = getTabMetadata(path.split('?')[0]);
+      const meta = getTabMetadata(path);
       const historyItem = history.find((item) => item.path === path);
       tabsToRestore.push({
         key: path,
@@ -196,10 +196,13 @@ export const TabProvider = ({ children }) => {
   };
 
   const updateTabPath = (oldKey, newPath) => {
-    setTabs((prevTabs) =>
-      prevTabs.map((tab) => {
+    setTabs((prevTabs) => {
+      const targetAlreadyExists = prevTabs.some((tab) => tab.key === newPath && tab.key !== oldKey);
+      if (targetAlreadyExists) return prevTabs.filter((tab) => tab.key !== oldKey);
+
+      return prevTabs.map((tab) => {
         if (tab.key === oldKey) {
-          const meta = getTabMetadata(newPath.split('?')[0]);
+          const meta = getTabMetadata(newPath);
           return {
             ...tab,
             key: newPath,
@@ -209,8 +212,8 @@ export const TabProvider = ({ children }) => {
           };
         }
         return tab;
-      }),
-    );
+      });
+    });
     setActiveTabKey(newPath);
   };
 

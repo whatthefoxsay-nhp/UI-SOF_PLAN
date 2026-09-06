@@ -26,13 +26,11 @@ export default function QuanLyQuyTrinhDuAn() {
   const [openProjectId, setOpenProjectId] = useState(projectIdParam ? Number(projectIdParam) : null);
 
   useEffect(() => {
+    setOpenProjectId(projectIdParam ? Number(projectIdParam) : null);
     if (projectIdParam) {
-      setOpenProjectId(Number(projectIdParam));
       setActiveTab("projects");
-    } else if (tabParam) {
-      const target = resolveTab(tabParam);
-      setActiveTab(target);
-      if (target !== "projects") setOpenProjectId(null);
+    } else {
+      setActiveTab(resolveTab(tabParam));
     }
   }, [tabParam, projectIdParam]);
 

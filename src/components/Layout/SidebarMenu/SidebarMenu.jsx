@@ -10,6 +10,7 @@ import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./SidebarMenu.css";
 import { useTabs } from "../../../contexts/TabContext";
+import { getMenuSelectedKey } from "../../../utils/menuUtils";
 import authLogo from "../../../auth/logo.png";
 
 const { Option } = Select;
@@ -497,7 +498,7 @@ const SidebarMenu = ({ isCollapsed = false, onCollapseChange }) => {
       <Menu
         mode="inline"
         inlineIndent={8}
-        selectedKeys={[location.pathname + location.search, location.pathname]}
+        selectedKeys={[getMenuSelectedKey(location.pathname, location.search)]}
         openKeys={renderedOpenKeys}
         onClick={handleMenuClick}
         onOpenChange={handleOpenChange}

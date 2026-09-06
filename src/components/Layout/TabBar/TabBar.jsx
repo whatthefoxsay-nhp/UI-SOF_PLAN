@@ -63,7 +63,7 @@ const TabBar = () => {
   };
 
   const tabItems = tabs.map(tab => {
-    const meta = getTabMetadata(tab.path.split('?')[0], t);
+    const meta = getTabMetadata(tab.path, t);
     const displayLabel = meta?.label || tab.label;
 
     return {
