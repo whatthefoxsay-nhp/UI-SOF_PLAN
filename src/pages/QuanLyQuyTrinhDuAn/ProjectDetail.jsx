@@ -16,7 +16,7 @@ import {
   Tooltip,
   Progress,
 } from "antd";
-import { ArrowLeft, Lock, Unlock, Plus, History, CheckCircle2, LayoutGrid, Columns3, GripVertical, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, Lock, Unlock, Plus, History, CheckCircle2, LayoutGrid, Columns3, GripVertical, Calendar, GitBranch, ChevronLeft, ChevronRight } from "lucide-react";
 import * as workflowApi from "../../services/workflowApi";
 import TaskDrawer from "./TaskDrawer";
 import khStyles from "../QuanLyKeHoach/QuanLyKeHoach.module.css";
@@ -244,6 +244,160 @@ function StageOverviewCard({ stage, theme, onOpen }) {
         </div>
       </div>
     </div>
+  );
+}
+
+function timelineDate(value) {
+  if (!value) return null;
+  const raw = String(value);
+  const date = new Date(raw.length === 10 ? `${raw}T00:00:00` : raw.replace(" ", "T"));
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function startOfDay(date) {
+  const result = new Date(date);
+  result.setHours(0, 0, 0, 0);
+  return result;
+}
+
+function formatTimelineDate(date) {
+  return date.toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit" });
+}
+
+function DependencyIndicator({ ids, nodesById }) {
+  if (!ids?.length) return null;
+  const labels = ids.map((id) => {
+    const node = nodesById.get(String(id));
+    return node ? `${node.code} — ${node.name}` : `#${id}`;
+  });
+  return (
+    <Tooltip
+      title={
+        <div>
+          <div>Phụ thuộc vào:</div>
+          {labels.map((label) => <div key={label}>{label}</div>)}
+        </div>
+      }
+    >
+      <GitBranch size={14} color="#7c3aed" aria-label={`Phụ thuộc vào ${labels.join(", ")}`} />
+    </Tooltip>
+  );
+}
+
+function ProjectTimeline({ project, onTaskClick }) {
+  const stages = project.stages || [];
+  const doneCodes = new Set(
+    (project.columns || []).filter((column) => Number(column.is_done_status) === 1).map((column) => column.code),
+  );
+  const projectCreatedAt = timelineDate(project.created_at) || new Date();
+  const today = startOfDay(new Date());
+  const stageNodesById = new Map();
+  const taskNodesById = new Map();
+  stages.forEach((stage) => {
+    stageNodesById.set(String(stage.id), { code: stage.code, name: stage.name });
+    (stage.tasks || []).forEach((task) => taskNodesById.set(String(task.id), { code: task.code, name: task.name }));
+  });
+
+  const makeBar = (node, done) => {
+    const start = timelineDate(node.started_at) || timelineDate(node.created_at) || projectCreatedAt;
+    const end = done
+      ? timelineDate(node.completed_at) || start
+      : timelineDate(node.deadline) || today;
+    return { start, end: end < start ? start : end, done };
+  };
+
+  const rows = [];
+  stages.forEach((stage) => {
+    rows.push({
+      key: `stage-${stage.id}`,
+      type: "stage",
+      code: stage.code,
+      name: stage.name,
+      status: stage.status,
+      dependencies: stage.depends_on_stage_ids || [],
+      bar: makeBar(stage, stage.status === "DONE"),
+    });
+    (stage.tasks || []).forEach((task) => {
+      rows.push({
+        key: `task-${task.id}`,
+        type: "task",
+        code: task.code,
+        name: task.name,
+        status: task.status,
+        dependencies: task.depends_on_task_ids || [],
+        task,
+        bar: makeBar(task, doneCodes.has(task.status)),
+      });
+    });
+  });
+
+  if (rows.length === 0) return <Empty description="Chưa có stage/công việc để hiển thị Timeline" />;
+
+  const minDate = startOfDay(new Date(Math.min(...rows.map((row) => row.bar.start.getTime()))));
+  const maxDate = startOfDay(new Date(Math.max(...rows.map((row) => row.bar.end.getTime()))));
+  const axisStart = new Date(minDate);
+  axisStart.setDate(axisStart.getDate() - 1);
+  const axisEnd = new Date(maxDate);
+  axisEnd.setDate(axisEnd.getDate() + 1);
+  const totalMs = Math.max(axisEnd.getTime() - axisStart.getTime(), 24 * 60 * 60 * 1000);
+  const position = (date) => Math.max(0, Math.min(100, ((date.getTime() - axisStart.getTime()) / totalMs) * 100));
+
+  return (
+    <Card size="small" title="Timeline" style={{ borderRadius: 12 }}>
+      <Space size={8} style={{ marginBottom: 10 }}>
+        <Tag color="blue">Đang thực hiện</Tag>
+        <Tag color="green">Đã hoàn thành</Tag>
+        <span style={{ fontSize: 12, color: "#64748b" }}>Chỉ đọc · không kéo-thả đổi lịch</span>
+      </Space>
+      <div style={{ overflowX: "auto" }}>
+        <div style={{ minWidth: 760 }}>
+          <div style={{ display: "flex", borderBottom: "1px solid #e2e8f0", paddingBottom: 6, color: "#64748b", fontSize: 11 }}>
+            <div style={{ flex: "0 0 310px" }}>Stage / công việc</div>
+            <div style={{ flex: 1, display: "flex", justifyContent: "space-between" }}>
+              <span>{formatTimelineDate(axisStart)}</span>
+              <span>{formatTimelineDate(axisEnd)}</span>
+            </div>
+          </div>
+          {rows.map((row) => {
+            const left = position(row.bar.start);
+            const width = Math.max(1.5, position(row.bar.end) - left);
+            const isStage = row.type === "stage";
+            const isOverdue = !row.bar.done && row.bar.end < today;
+            const barColor = row.bar.done ? "#52c41a" : isOverdue ? "#ff7875" : "#1677ff";
+            return (
+              <div key={row.key} style={{ display: "flex", alignItems: "center", minHeight: 42, borderBottom: "1px solid #f1f5f9" }}>
+                <div style={{ flex: "0 0 310px", padding: isStage ? "8px 10px 8px 0" : "8px 10px 8px 22px", fontWeight: isStage ? 700 : 400, color: isStage ? "#1e293b" : "#475569" }}>
+                  <Space size={6}>
+                    <span className="wf-code" style={{ fontSize: 11 }}>{row.code}</span>
+                    <span>{row.name}</span>
+                    <DependencyIndicator
+                      ids={row.dependencies}
+                      nodesById={isStage ? stageNodesById : taskNodesById}
+                    />
+                  </Space>
+                </div>
+                <div style={{ flex: 1, position: "relative", height: 26, borderRadius: 6, background: "repeating-linear-gradient(90deg, #f8fafc 0, #f8fafc calc(25% - 1px), #e2e8f0 calc(25% - 1px), #e2e8f0 25%)" }}>
+                  <Tooltip title={`${row.code} · ${row.name}`}>
+                    <div
+                      style={{ position: "absolute", left: `${left}%`, width: `${width}%`, top: 6, height: 14, minWidth: 8, borderRadius: 7, background: barColor, opacity: 0.9 }}
+                      aria-label={`${row.code} ${row.name}`}
+                    />
+                  </Tooltip>
+                </div>
+                <div style={{ flex: "0 0 100px", paddingLeft: 10, fontSize: 11, color: "#64748b" }}>
+                  {isStage ? row.status : (row.task?.deadline || "Không deadline")}
+                </div>
+                {row.task && (
+                  <Button type="link" size="small" onClick={() => onTaskClick(row.task.id)} aria-label={`Mở ${row.name}`}>
+                    Mở
+                  </Button>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </Card>
   );
 }
 
@@ -501,7 +655,7 @@ export default function ProjectDetail({ projectId, onBack }) {
   const [project, setProject] = useState(null);
   const [activeStageId, setActiveStageId] = useState(null);
   const [board, setBoard] = useState(null);
-  const [viewMode, setViewMode] = useState("stage"); // "stage" | "overview"
+  const [viewMode, setViewMode] = useState("stage"); // "stage" | "overview" | "timeline"
   const [employees, setEmployees] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [activeTaskId, setActiveTaskId] = useState(null);
@@ -617,6 +771,7 @@ export default function ProjectDetail({ projectId, onBack }) {
         options={[
           { label: "Kanban theo giai đoạn", value: "stage", icon: <Columns3 size={13} /> },
           { label: "Kanban tổng thể dự án", value: "overview", icon: <LayoutGrid size={13} /> },
+          { label: "Timeline", value: "timeline", icon: <Calendar size={13} /> },
         ]}
       />
 
@@ -706,6 +861,8 @@ export default function ProjectDetail({ projectId, onBack }) {
           ))}
         </ScrollableKanbanRow>
       )}
+
+      {viewMode === "timeline" && <ProjectTimeline project={project} onTaskClick={setActiveTaskId} />}
 
       <TaskDrawer
         taskId={activeTaskId}
