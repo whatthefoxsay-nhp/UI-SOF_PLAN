@@ -801,7 +801,7 @@ export default function ChiTietDuAnWorkflow() {
               <Progress
                 percent={Math.round(
                   ((project.programmingData?.usedDays || 60) / (project.programmingData?.totalPlannedDays || 100)) *
-                    100
+                  100
                 )}
                 status="active"
               />
@@ -955,7 +955,7 @@ export default function ChiTietDuAnWorkflow() {
                         )}
                         {bug.status === 'IN_FIX' && (
                           <Button size="small" type="primary" onClick={() => handleUpdateBugStatus(bug.id, 'RETEST')}>
-                            Dev Sửa Xong -> Chờ Retest
+                            Dev Sửa Xong -&gt; Chờ Retest
                           </Button>
                         )}
                         {bug.status === 'RETEST' && (
