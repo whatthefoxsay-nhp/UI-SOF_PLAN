@@ -17,6 +17,7 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
   const [rejectTarget, setRejectTarget] = useState(null);
   const [rejectReason, setRejectReason] = useState("");
   const [rejectLoading, setRejectLoading] = useState(false);
+  const [handoffLoading, setHandoffLoading] = useState(false);
 
   const reload = useCallback(async () => {
     if (!taskId) return;
@@ -26,7 +27,7 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
       assignee_code: data.assignee_code,
       deadline: data.deadline || "",
       priority: data.priority,
-      confirm_departments: data.confirms.map((c) => c.department_code),
+      confirm_departments: (data.confirms || []).map((c) => c.department_code),
     });
   }, [taskId, form]);
 
@@ -36,7 +37,14 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
 
   if (!taskId) return null;
 
-  const canActOn = (departmentCode) => !!profile && (profile.is_admin || profile.department_code === departmentCode);
+  const activeHandoff = task?.handoff?.find((step) => step.status === "ACTIVE") || null;
+  const canActOn = (departmentCode) => {
+    if (!profile) return false;
+    if (profile.is_admin) return true;
+    if (activeHandoff) return profile.department_code === activeHandoff.department_code && departmentCode === activeHandoff.department_code;
+    return profile.department_code === departmentCode;
+  };
+  const canEditTask = !!profile && (profile.is_admin || (activeHandoff ? profile.department_code === activeHandoff.department_code : profile.department_code === task?.department_code));
 
   const saveInfo = async () => {
     const values = await form.validateFields();
@@ -98,6 +106,20 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
     }
   };
 
+  const doCompleteHandoff = async () => {
+    setHandoffLoading(true);
+    try {
+      await workflowApi.completeTaskHandoff(taskId);
+      message.success("Đã hoàn tất bước và chuyển tiếp công việc");
+      await reload();
+      onChanged();
+    } catch (e) {
+      message.error(e.message);
+    } finally {
+      setHandoffLoading(false);
+    }
+  };
+
   const addItem = async () => {
     const values = await itemForm.validateFields();
     try {
@@ -120,7 +142,7 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
     <Drawer title={task ? `${task.code} — ${task.name}` : "..."} open={!!taskId} onClose={onClose} width={480}>
       {task && (
         <>
-          <Form form={form} layout="vertical" disabled={!canActOn(task.department_code)}>
+          <Form form={form} layout="vertical" disabled={!canEditTask}>
             <Form.Item name="assignee_code" label="Người phụ trách">
               <Select
                 allowClear
@@ -156,17 +178,60 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
                 options={departments.map((d) => ({ value: d.code, label: d.name }))}
               />
             </Form.Item>
-            <Button size="small" onClick={saveInfo}>
+            <Button size="small" onClick={saveInfo} disabled={!canEditTask}>
               Lưu thông tin
             </Button>
           </Form>
-          {!canActOn(task.department_code) && (
+          {!canEditTask && (
             <div style={{ fontSize: 12, color: "#999", marginTop: 4 }}>
-              <Lock size={11} style={{ verticalAlign: -1 }} /> Bạn không thuộc phòng {departmentName(task.department_code)} nên chỉ xem được, không sửa được.
+              <Lock size={11} style={{ verticalAlign: -1 }} />
+              {activeHandoff
+                ? ` Chỉ phòng ${departmentName(activeHandoff.department_code)} đang giữ bước handoff mới được thao tác.`
+                : ` Bạn không thuộc phòng ${departmentName(task.department_code)} nên chỉ xem được, không sửa được.`}
             </div>
           )}
 
-          {task.confirms.length > 0 && (
+          {task.handoff?.length > 0 && (
+            <>
+              <Divider>Handoff tuần tự</Divider>
+              <List
+                size="small"
+                dataSource={task.handoff}
+                renderItem={(step) => (
+                  <List.Item>
+                    <Space>
+                      <Tag color={step.status === "DONE" ? "green" : step.status === "ACTIVE" ? "blue" : "default"}>
+                        Bước {step.sequence}
+                      </Tag>
+                      <span>{departmentName(step.department_code)}</span>
+                      {step.status === "DONE" ? (
+                        <Tag icon={<CheckCircle2 size={12} />} color="green">
+                          Đã hoàn tất
+                        </Tag>
+                      ) : step.status === "ACTIVE" ? (
+                        <Tag color="blue">Đang xử lý</Tag>
+                      ) : (
+                        <Tag>Chờ đến lượt</Tag>
+                      )}
+                    </Space>
+                  </List.Item>
+                )}
+              />
+              {activeHandoff && canActOn(activeHandoff.department_code) ? (
+                <Button type="primary" size="small" loading={handoffLoading} onClick={doCompleteHandoff}>
+                  Hoàn tất tại đây, chuyển tiếp
+                </Button>
+              ) : activeHandoff ? (
+                <div style={{ fontSize: 12, color: "#999", marginTop: 4 }}>
+                  Đang chờ phòng {departmentName(activeHandoff.department_code)} hoàn tất bước hiện tại.
+                </div>
+              ) : (
+                <Tag color="green">Chuỗi handoff đã hoàn tất — tiếp tục xác nhận nếu cần</Tag>
+              )}
+            </>
+          )}
+
+          {task.confirms?.length > 0 && (
             <>
               <Divider>Xác nhận phòng ban</Divider>
               <List
@@ -235,13 +300,13 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
             dataSource={task.items}
             locale={{ emptyText: "Chưa có mục nào" }}
             renderItem={(it) => (
-              <List.Item actions={[<Button size="small" danger icon={<Trash2 size={12} />} onClick={() => deleteItem(it.id)} />]}>
+              <List.Item actions={[<Button size="small" danger disabled={!canEditTask} icon={<Trash2 size={12} />} onClick={() => deleteItem(it.id)} />]}>
                 <Tag>{ITEM_TYPES.find((t) => t.value === it.item_type)?.label || it.item_type}</Tag> {it.title}
                 {it.status ? <Tag style={{ marginLeft: 6 }}>{it.status}</Tag> : null}
               </List.Item>
             )}
           />
-          <Form form={itemForm} layout="inline" style={{ marginTop: 8, rowGap: 8 }}>
+          <Form form={itemForm} layout="inline" disabled={!canEditTask} style={{ marginTop: 8, rowGap: 8 }}>
             <Form.Item name="item_type" rules={[{ required: true }]} style={{ minWidth: 140 }}>
               <Select placeholder="Loại" options={ITEM_TYPES} />
             </Form.Item>
@@ -251,7 +316,7 @@ export default function TaskDrawer({ taskId, employees, departments, profile, on
             <Form.Item name="status">
               <Input placeholder="Trạng thái" style={{ width: 110 }} />
             </Form.Item>
-            <Button size="small" type="primary" onClick={addItem}>
+            <Button size="small" type="primary" onClick={addItem} disabled={!canEditTask}>
               Thêm
             </Button>
           </Form>
