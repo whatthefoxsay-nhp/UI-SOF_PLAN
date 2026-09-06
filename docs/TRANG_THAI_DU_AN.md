@@ -284,3 +284,25 @@ TEC002→NV001, ACC001→NV009, KD014→NV003, TST001→NV012 (đã bị ngườ
     - **Browser acceptance:** Blocked trong phiên này vì integrated Browser runtime
       không khả dụng (`browsers: {}` / module runtime không khởi tạo được), nên
       chưa đánh dấu TC Timeline/workload là Pass qua trình duyệt.
+
+## 11. Bàn giao cuối phiên 2026-09-06 (verify Phase 7)
+
+- Codex báo Phase 7 xong (4 commit tự tạo). Verify độc lập qua Playwright
+  (trình duyệt thật, không chỉ tin CLI report): tab "Timeline" trong
+  `ProjectDetail.jsx` hiển thị đúng, chỉ đọc; tooltip phụ thuộc đúng dữ liệu
+  thật (vd GD05 phụ thuộc GD04); dropdown chọn người phụ trách hiện đúng hậu
+  tố "N việc đang làm" — đối chiếu bằng SQL tính tay riêng, khớp 100%
+  (`NV002=1, NV003=2, NV009=1`).
+- Review code xác nhận không thêm thư viện Gantt mới, không sửa
+  `WorkflowManager.jsx` (đúng vì task template không có `assignee_code` để
+  gắn workload), dependency indicator tái dùng dữ liệu Phase 1 có sẵn thay vì
+  gọi API mới — đúng tinh thần YAGNI trong prompt.
+- Chi tiết đầy đủ trong `docs/codex-supervision/PROGRESS.md` mục "Chi tiết
+  Phase 7".
+- **Phase 8 (Escalation quá hạn) cần quyết định của người dùng trước khi
+  giao cho Codex:** hệ thống hiện không có field "trưởng phòng ban" trong
+  `wf_department`/`hr_lv0020`, nên cần hỏi escalation quá hạn nên gửi thông
+  báo cho ai. Đề xuất mặc định trong prompt nếu không có ý kiến khác: gửi
+  cho toàn bộ user có quyền admin + vẫn nhắc người phụ trách gốc (assignee).
+  Đã hỏi người dùng trong phiên này, đang chờ trả lời — chưa giao prompt
+  Phase 8 cho tới khi có quyết định.

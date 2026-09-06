@@ -1,6 +1,6 @@
 # Tiến độ roadmap — module Quản lý Quy trình Dự án
 
-Cập nhật lần cuối: 2026-09-06 (Phase 6 verify xong qua Playwright, giao Phase 7).
+Cập nhật lần cuối: 2026-09-06 (Phase 7 verify xong qua Playwright, hỏi người dùng trước khi giao Phase 8).
 
 Nguồn kế hoạch gốc: `docs/superpowers/specs/2026-09-05-workflow-completion-roadmap-design.md`.
 
@@ -9,10 +9,48 @@ Nguồn kế hoạch gốc: `docs/superpowers/specs/2026-09-05-workflow-completi
 | 0 | Dọn tồn đọng (QA checklist, commit fix cũ, di trú route, fix bug bell-notification, verify UI dependency task-template) | **Đã commit xong (2026-09-06)** | Verify bằng Playwright (cài riêng, không dùng Electron). Xem mục "Chi tiết Phase 0" bên dưới, gồm 1 vấn đề follow-up mới phát hiện. |
 | 5 | Completion Engine — Reject → Rework (TC06) | **Đã verify + xong (2026-09-06)** | Codex tự implement + tự commit (3 commit) rồi báo xong. Claude verify độc lập qua Playwright — xem "Chi tiết Phase 5" bên dưới. |
 | 6 | Task Handoff tuần tự đa phòng ban | **Đã verify + xong (2026-09-06)** | Codex tự implement + tự commit (5 commit) rồi báo xong. Claude verify độc lập qua Playwright — xem "Chi tiết Phase 6" bên dưới. |
-| 7 | Timeline/Gantt + Workload-aware Assignment | **Sẵn sàng giao cho Codex** | Độc lập, có thể làm sau Phase 5/6 — điều kiện đã đủ |
-| 8 | Escalation quá hạn | Chưa giao | Cần hỏi người dùng "escalate cho ai" trước khi Codex code (xem prompt) |
+| 7 | Timeline/Gantt + Workload-aware Assignment | **Đã verify + xong (2026-09-06)** | Codex tự implement + tự commit (4 commit) rồi báo xong. Claude verify độc lập qua Playwright — xem "Chi tiết Phase 7" bên dưới. |
+| 8 | Escalation quá hạn | Đang chờ người dùng trả lời "escalate cho ai" | Đã hỏi người dùng 2026-09-06 — xem prompt, chưa giao cho Codex tới khi có câu trả lời |
 | 9 | Business Modules M10 (Contract/Profit/Development/Testing/Handover/Payment/Maintenance) | Chưa giao | Phase lớn/rủi ro nhất — bắt buộc Codex đọc toàn bộ `ChiTietDuAnWorkflow.jsx` cũ trước khi code, có thể cần hỏi công thức Profit |
 | 10 | Regression toàn diện + dọn code cũ + chốt tài liệu | Chưa giao | Cuối roadmap |
+
+## Chi tiết Phase 7 — ĐÃ XONG (2026-09-06)
+
+**Lệch quy trình (giống Phase 5/6):** Codex tự implement + tự commit 4 commit
+(`f0fd093` spec/plan, `7621078` workload trong TaskDrawer, `7d194f1` Timeline
+tab, `f13b5b9` doc) rồi báo xong, docs trung thực ghi "chưa xác minh qua
+trình duyệt" — cùng pattern đáng khen đã ghi nhận ở Phase 6.
+
+**Review code:**
+- Không thêm dependency npm mới (đúng yêu cầu YAGNI — không thêm thư viện
+  Gantt). Timeline dựng thuần CSS/antd (`repeating-linear-gradient` làm lưới
+  trục thời gian, `position: absolute` cho thanh ngang).
+- `wf_h_employee_workload` (workflow.php, route `employee.workload`) dùng lại
+  đúng cách xác định "done" qua snapshot `kanban_columns_json` như
+  `kanban.php` — không tự chế lại logic riêng.
+- Dependency indicator trong Timeline dùng thẳng `depends_on_stage_ids` /
+  `depends_on_task_ids` đã có sẵn trong response `project.get` từ Phase 1 —
+  không sửa backend thêm, đúng như prompt yêu cầu kiểm tra trước khi quyết
+  định có cần API mới không.
+- `WorkflowManager.jsx` KHÔNG được sửa cho phần workload — kiểm tra lại đúng:
+  task template không có field `assignee_code` (chỉ có ở task instance qua
+  `TaskDrawer.jsx`), nên yêu cầu trong prompt không áp dụng được, Codex giải
+  thích rõ lý do trong docs thay vì im lặng bỏ qua.
+
+**Đã verify độc lập qua Playwright (browser thật):**
+- Tab "Timeline" mới hiển thị đúng trong `ProjectDetail.jsx` (project 1, đủ
+  8 giai đoạn) — đúng chỉ đọc, có ghi chú "Chỉ đọc · không kéo-thả đổi lịch"
+  trên UI.
+- Icon phụ thuộc (GitBranch) hiện tooltip đúng nội dung khi hover, ví dụ giai
+  đoạn GD05 "Tester" hiện "Phụ thuộc vào: GD04 — Thực thi lập trình" — khớp
+  đúng dữ liệu dependency thật.
+- Nút "Mở" trên 1 dòng task của Timeline mở đúng TaskDrawer của task đó.
+- Dropdown chọn người phụ trách trong TaskDrawer hiện đúng hậu tố workload,
+  ví dụ "Le Van Cuong (NV003) — 2 việc đang làm" — **đối chiếu độc lập bằng
+  SQL tính tay** (đếm task có `assignee_code` với status không thuộc cột
+  `is_done_status=1` theo đúng snapshot Kanban của từng dự án): kết quả
+  khớp 100% (`NV002=1, NV003=2, NV009=1`), không chỉ tin số hiển thị trên UI
+  hay báo cáo CLI của Codex.
 
 ## Chi tiết Phase 6 — ĐÃ XONG (2026-09-06)
 
