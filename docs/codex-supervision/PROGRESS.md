@@ -1,6 +1,6 @@
 # Tiến độ roadmap — module Quản lý Quy trình Dự án
 
-Cập nhật lần cuối: 2026-09-06 (Phase 5 verify xong qua Playwright, giao Phase 6).
+Cập nhật lần cuối: 2026-09-06 (Phase 6 verify xong qua Playwright, giao Phase 7).
 
 Nguồn kế hoạch gốc: `docs/superpowers/specs/2026-09-05-workflow-completion-roadmap-design.md`.
 
@@ -8,11 +8,74 @@ Nguồn kế hoạch gốc: `docs/superpowers/specs/2026-09-05-workflow-completi
 |---|---|---|---|
 | 0 | Dọn tồn đọng (QA checklist, commit fix cũ, di trú route, fix bug bell-notification, verify UI dependency task-template) | **Đã commit xong (2026-09-06)** | Verify bằng Playwright (cài riêng, không dùng Electron). Xem mục "Chi tiết Phase 0" bên dưới, gồm 1 vấn đề follow-up mới phát hiện. |
 | 5 | Completion Engine — Reject → Rework (TC06) | **Đã verify + xong (2026-09-06)** | Codex tự implement + tự commit (3 commit) rồi báo xong. Claude verify độc lập qua Playwright — xem "Chi tiết Phase 5" bên dưới. |
-| 6 | Task Handoff tuần tự đa phòng ban | **Sẵn sàng giao cho Codex** | Phụ thuộc Phase 5 đã verify xong — điều kiện đã đủ, prompt đưa cho người dùng 2026-09-06 |
-| 7 | Timeline/Gantt + Workload-aware Assignment | Chưa giao | Độc lập, có thể làm sau Phase 5/6 |
+| 6 | Task Handoff tuần tự đa phòng ban | **Đã verify + xong (2026-09-06)** | Codex tự implement + tự commit (5 commit) rồi báo xong. Claude verify độc lập qua Playwright — xem "Chi tiết Phase 6" bên dưới. |
+| 7 | Timeline/Gantt + Workload-aware Assignment | **Sẵn sàng giao cho Codex** | Độc lập, có thể làm sau Phase 5/6 — điều kiện đã đủ |
 | 8 | Escalation quá hạn | Chưa giao | Cần hỏi người dùng "escalate cho ai" trước khi Codex code (xem prompt) |
 | 9 | Business Modules M10 (Contract/Profit/Development/Testing/Handover/Payment/Maintenance) | Chưa giao | Phase lớn/rủi ro nhất — bắt buộc Codex đọc toàn bộ `ChiTietDuAnWorkflow.jsx` cũ trước khi code, có thể cần hỏi công thức Profit |
 | 10 | Regression toàn diện + dọn code cũ + chốt tài liệu | Chưa giao | Cuối roadmap |
+
+## Chi tiết Phase 6 — ĐÃ XONG (2026-09-06)
+
+**Lệch quy trình (giống Phase 5):** Codex tự implement, tự test qua CLI, tự
+commit 5 commit (`c119821` spec/plan, `197f0cd` fix SQL cho tương thích DB đã
+có Phase 5, `e4d8df5` WorkflowManager + API, `d12acec` TaskDrawer,
+`7f095f6` doc) rồi báo xong — nhưng docs Codex viết **trung thực ghi rõ**
+"chưa thể xác minh qua trình duyệt" (không tự nhận Pass ẩu), khác hẳn với
+việc tự commit trước verify. Đáng khen phần thành thật, vẫn cần supervisor tự
+verify qua trình duyệt trước khi coi là xong thật.
+
+**Review code (đọc trực tiếp, cả backend không-git lẫn diff frontend):**
+- Migration áp dụng đúng vào DB (`wf_task_template_handoff`,
+  `wf_task_handoff` tồn tại thật, đúng cột/FK/CASCADE).
+- Backend: `wf_h_task_handoff_complete` (kanban.php) refactor đúng như yêu
+  cầu — bước cuối gọi `wf_try_auto_complete_task()` dùng CHUNG với
+  `wf_h_task_confirm` (Completion Engine Phase 5), không viết lại logic DONE
+  riêng. Quyền thao tác qua `wf_require_task_action_or_admin` /
+  `wf_require_task_confirm_department_or_admin` đúng: khi có handoff ACTIVE
+  thì chỉ phòng ban đang giữ (hoặc admin) mới thao tác được — áp dụng cho cả
+  `task.save`, `wf_apply_task_status` (kéo-thả Kanban), `task.confirm`,
+  `task.confirmReject`, và chính `task.handoffComplete`. Task không có
+  handoff giữ nguyên hành vi cũ (`activeDepartment === null` fallback đúng
+  `department_code` tĩnh).
+- `wf_h_project_create` copy đúng chuỗi handoff từ template sang instance,
+  dòng đầu `ACTIVE` + `started_at`, các dòng sau `PENDING`.
+- `wf_h_my_tasks` được mở rộng thêm (không có trong yêu cầu prompt nhưng hợp
+  lý) để phòng ban đang giữ ACTIVE handoff cũng thấy task trong "Công việc
+  của tôi".
+- Frontend: `WorkflowManager.jsx` thêm UI cấu hình chuỗi handoff bằng nút
+  lên/xuống/xóa (đúng yêu cầu tránh thêm thư viện mới); `TaskDrawer.jsx`
+  thêm stepper + nút "Hoàn tất tại đây, chuyển tiếp" chỉ hiện cho phòng ban
+  ACTIVE. Không có dependency mới trong `package.json`.
+- Đọc spec (`docs/superpowers/specs/2026-09-05-task-handoff-design.md`):
+  phân biệt rõ Handoff (tuần tự) và Multi-confirm (song song, đã có) như yêu
+  cầu, task không cấu hình handoff giữ nguyên hành vi — không có scope creep.
+
+**Đã verify độc lập qua Playwright (browser thật, E2E toàn bộ luồng, không
+chỉ đọc code hay tin CLI report của Codex):**
+- Cấu hình chuỗi handoff (2 bước: Phòng Kinh doanh → Phòng CNTT) qua UI thật
+  trong `WorkflowManager.jsx` (thêm/lưu task template) — verify bằng
+  screenshot cho thấy đúng thứ tự lưu lại sau khi mở lại modal.
+- Tạo project mới từ workflow đã cấu hình handoff qua UI thật (`ProjectList`)
+  — verify task mới sinh ra có `wf_task_handoff` snapshot đúng: bước 1
+  ACTIVE, bước 2 PENDING.
+- **TC11 (Handoff tuần tự) — PASS qua trình duyệt thật:** mở TaskDrawer, bấm
+  "Hoàn tất tại đây, chuyển tiếp" ở bước 1 → DB xác nhận bước 1 DONE, bước 2
+  chuyển ACTIVE, `wf_history` ghi `TASK_HANDOFF: PB002 -> PB001`. Bấm tiếp ở
+  bước 2 (bước cuối) → DB xác nhận bước 2 DONE, `wf_history` ghi
+  `TASK_HANDOFF: PB001 -> COMPLETION_ENGINE` rồi `STATUS_DONE` — đúng thiết
+  kế "bước cuối đi qua Completion Engine dùng chung", task tự động DONE.
+  - Lưu ý khi test: lần đầu chọn nhầm task thuộc stage đang bị Dependency
+    Engine chặn (GD03 của project mới luôn `BLOCKED` cho đến khi GD01/GD02
+    xong) nên bấm "Hoàn tất" bị lỗi 400 — đây là hành vi ĐÚNG của gate cấp
+    giai đoạn (Phase 1, không phải lỗi Phase 6). Đổi sang task ở GD01 (giai
+    đoạn đầu, luôn mở ngay) để test sạch, kết quả Pass như trên.
+- **TC05 hồi quy — Pass:** mở task KHÔNG có handoff (KD014, project 3) qua
+  trình duyệt — không hiện mục "Handoff tuần tự", nút "Lưu thông tin" vẫn
+  hoạt động bình thường cho admin, đúng hành vi cũ không đổi.
+- Đã dọn 3 task template rác tạo ra trong lúc thử nghiệm UI (`task_template.delete`
+  qua `_wf_invoke.php`) để không làm nhiễm workflow `WF-SW-001` đang được các
+  dự án thật dùng chung. 2 project test (`Handoff PW Test ...`) không có API
+  xóa project nên giữ lại trong DB dev (giống thông lệ test data trước đó).
 
 ## Chi tiết Phase 5 — ĐÃ XONG (2026-09-06)
 

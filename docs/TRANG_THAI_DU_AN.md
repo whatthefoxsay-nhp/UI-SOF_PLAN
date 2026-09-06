@@ -226,6 +226,29 @@ TEC002→NV001, ACC001→NV009, KD014→NV003, TST001→NV012 (đã bị ngườ
 - Đã đưa prompt `prompts/phase-6-task-handoff.md` (Task Handoff tuần tự đa
   phòng ban, TC11) cho người dùng để chuyển cho Codex.
 
+## 10. Bàn giao cuối phiên 2026-09-06 (verify Phase 6)
+
+- Codex báo Phase 6 xong (5 commit tự tạo). Verify độc lập: đọc toàn bộ diff
+  frontend + đọc trực tiếp backend PHP (không git) — `wf_h_task_handoff_complete`
+  đúng như spec, tái dùng chung Completion Engine (`wf_try_auto_complete_task`)
+  với Phase 5 thay vì viết lại logic DONE riêng; quyền thao tác theo phòng ban
+  ACTIVE áp dụng nhất quán ở mọi entry point (save/status/confirm/reject/handoff).
+- Test E2E thật qua Playwright: cấu hình chuỗi handoff 2 bước qua UI
+  `WorkflowManager.jsx` → tạo project mới → xác nhận task sinh ra đúng
+  snapshot handoff → hoàn tất từng bước qua `TaskDrawer.jsx` → bước cuối tự
+  động DONE qua Completion Engine chung. TC11 Pass, TC05 hồi quy (task không
+  handoff) Pass.
+- Phát hiện phụ (không phải lỗi): lần đầu chọn nhầm task ở giai đoạn đang bị
+  Dependency Engine (Phase 1) chặn nên bấm "Hoàn tất" bị 400 — đúng thiết kế
+  gate cấp giai đoạn, không phải bug Phase 6. Đổi sang task ở giai đoạn đầu
+  (luôn mở ngay) để có phép thử sạch.
+- Đã dọn 3 task template rác tạo ra trong lúc test UI khỏi workflow
+  `WF-SW-001` (workflow thật, nhiều dự án đang dùng chung) để tránh làm
+  nhiễm dữ liệu — chi tiết trong `docs/codex-supervision/PROGRESS.md` mục
+  "Chi tiết Phase 6".
+- Đã đưa prompt `prompts/phase-7-timeline-workload.md` (Timeline/Gantt +
+  Workload-aware Assignment) cho người dùng để chuyển cho Codex.
+
 10. **Phase 6 — Task Handoff tuần tự đa phòng ban (2026-09-06)** — thêm
     cấu hình chuỗi handoff trên task template, snapshot `wf_task_handoff`
     khi tạo project, quyền thao tác theo phòng ban ACTIVE, transition tuần tự
