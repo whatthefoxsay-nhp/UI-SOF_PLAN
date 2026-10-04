@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Table, Tag, Select, message, Empty, Input, Space } from "antd";
-import { Search } from "lucide-react";
+import { Search, AlertTriangle, Lock } from "lucide-react";
 import * as workflowApi from "../../services/workflowApi";
 import TaskDrawer from "./TaskDrawer";
 
@@ -93,62 +93,130 @@ export default function MyTasksTab() {
   });
 
   const columns = [
-    { title: "Mã CV", dataIndex: "code", width: 110, render: (v) => <span className="wf-code">{v}</span> },
+    {
+      title: "Mã CV",
+      dataIndex: "code",
+      width: 110,
+      render: (v) => (
+        <span
+          className="wf-code"
+          style={{
+            fontSize: 11.5,
+            fontWeight: 700,
+            color: "#2563eb",
+            background: "#eff6ff",
+            padding: "2px 7px",
+            borderRadius: 5,
+          }}
+        >
+          {v}
+        </span>
+      ),
+    },
     {
       title: "Tên công việc",
       dataIndex: "name",
       render: (v, r) => (
-        <span>
-          <b>{v}</b>
-          {r.linked_plan_task_id ? <Tag color="purple" style={{ marginLeft: 6 }}>Đã liên kết kế hoạch</Tag> : null}
-        </span>
+        <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+          <span style={{ fontWeight: 650, color: "#0f172a" }}>{v}</span>
+          {r.linked_plan_task_id && (
+            <Tag color="purple" style={{ width: "fit-content", fontSize: 10.5, borderRadius: 4, margin: 0, padding: "0 6px" }}>
+              Liên kết kế hoạch
+            </Tag>
+          )}
+        </div>
       ),
     },
-    { title: "Dự án", render: (_, r) => `${r.project_code} — ${r.project_name}` },
-    { title: "Giai đoạn", render: (_, r) => <Tag color="cyan">{r.stage_code} — {r.stage_name}</Tag> },
     {
-      title: "Deadline",
+      title: "Dự án",
+      render: (_, r) => (
+        <div>
+          <span className="wf-code" style={{ color: "#2563eb", fontWeight: 600, fontSize: 11.5 }}>
+            {r.project_code}
+          </span>
+          <span style={{ color: "#475569", marginLeft: 6, fontSize: 12.5 }}>{r.project_name}</span>
+        </div>
+      ),
+    },
+    {
+      title: "Giai đoạn",
+      render: (_, r) => (
+        <Tag color="cyan" style={{ borderRadius: 6, fontWeight: 550 }}>
+          {r.stage_code} — {r.stage_name}
+        </Tag>
+      ),
+    },
+    {
+      title: "Hạn chót",
       dataIndex: "deadline",
-      width: 110,
+      width: 125,
       render: (v, r) => {
-        if (!v) return "—";
+        if (!v) return <span style={{ color: "#94a3b8" }}>—</span>;
         const overdue = !isTaskDone(r) && startOfDay(new Date(v)) < startOfDay(new Date());
-        return <span style={overdue ? { color: "#ff4d4f", fontWeight: 600 } : undefined}>{v}</span>;
+        return (
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 4,
+              padding: overdue ? "2px 7px" : "0",
+              background: overdue ? "#fee2e2" : "transparent",
+              borderRadius: 6,
+              color: overdue ? "#dc2626" : "#64748b",
+              fontWeight: overdue ? 650 : 500,
+              fontSize: 12,
+            }}
+          >
+            {overdue && <AlertTriangle size={12} />}
+            {v}
+          </span>
+        );
       },
     },
     {
       title: "Ưu tiên",
       dataIndex: "priority",
-      width: 100,
-      render: (v) => <Tag color={PRIORITY_COLOR[v]}>{workflowApi.TASK_PRIORITY_LABELS[v] || v}</Tag>,
+      width: 110,
+      render: (v) => (
+        <Tag color={PRIORITY_COLOR[v]} style={{ borderRadius: 5, fontWeight: 600, border: "none" }}>
+          {workflowApi.TASK_PRIORITY_LABELS[v] || v}
+        </Tag>
+      ),
     },
     {
       title: "Xác nhận",
-      width: 100,
+      width: 110,
       render: (_, r) =>
         r.confirm_total > 0 ? (
-          <Tag color={r.confirm_done === r.confirm_total ? "green" : "gold"}>
+          <Tag
+            color={r.confirm_done === r.confirm_total ? "success" : "warning"}
+            style={{ borderRadius: 5, fontWeight: 600, border: "none" }}
+          >
             {r.confirm_done}/{r.confirm_total}
           </Tag>
         ) : (
-          "—"
+          <span style={{ color: "#94a3b8" }}>—</span>
         ),
     },
     {
       title: "Trạng thái",
       dataIndex: "status",
-      width: 150,
+      width: 160,
       render: (v, r) => (
-        <Space direction="vertical" size={2}>
+        <Space direction="vertical" size={4}>
           <Select
             size="small"
             value={v}
-            style={{ width: 130 }}
+            style={{ width: 140 }}
             options={(r.columns || []).map((c) => ({ value: c.code, label: c.label }))}
             onClick={(e) => e.stopPropagation()}
             onChange={(val) => changeStatus(r.id, val)}
           />
-          {r.execution_state === "BLOCKED" && <Tag color="red" style={{ margin: 0 }}>Bị chặn</Tag>}
+          {r.execution_state === "BLOCKED" && (
+            <Tag color="error" style={{ margin: 0, borderRadius: 4, fontSize: 10.5, border: "none" }}>
+              <Lock size={10} style={{ marginRight: 2, display: "inline-block", verticalAlign: "middle" }} /> Bị chặn
+            </Tag>
+          )}
         </Space>
       ),
     },
@@ -156,7 +224,7 @@ export default function MyTasksTab() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, flexWrap: "wrap", gap: 12 }}>
+      <div className="wf-project-toolbar">
         <Space wrap>
           <Input
             placeholder="Tìm theo tên công việc, mã, dự án..."
@@ -183,9 +251,9 @@ export default function MyTasksTab() {
             onChange={setBlockedFilter}
             style={{ width: 170 }}
             options={[
-              { value: "ALL", label: "Tất cả (kể cả bị block)" },
-              { value: "BLOCKED_ONLY", label: "Chỉ công việc bị block" },
-              { value: "HIDE_BLOCKED", label: "Ẩn công việc bị block" },
+              { value: "ALL", label: "Tất cả trạng thái chặn" },
+              { value: "BLOCKED_ONLY", label: "Chỉ công việc bị chặn" },
+              { value: "HIDE_BLOCKED", label: "Ẩn công việc bị chặn" },
             ]}
           />
           <Select
@@ -202,7 +270,7 @@ export default function MyTasksTab() {
               { value: "DONE", label: "Hoàn thành" },
             ]}
           />
-          <span style={{ color: "#64748b", fontSize: 13 }}>{filteredTasks.length} / {tasks.length} công việc</span>
+          <span className="wf-project-count">{filteredTasks.length} / {tasks.length} công việc</span>
         </Space>
       </div>
 

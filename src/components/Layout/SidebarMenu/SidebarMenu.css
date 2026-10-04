@@ -5,20 +5,20 @@
 ================================================================ */
 
 :root {
-  --primary-color: #197dd3;
-  --secondary-color: #77d4fb;
-  --primary-color-rgb: 25, 125, 211;
-  --color-primary-gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-  --shadow-primary: 0 4px 14px rgba(var(--primary-color-rgb), 0.25);
+  --primary-color: #2563eb;
+  --secondary-color: #60a5fa;
+  --primary-color-rgb: 37, 99, 235;
+  --color-primary-gradient: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  --shadow-primary: 0 4px 14px rgba(37, 99, 235, 0.2);
 
   /* Shared system background/border colors dynamically mixed from primary theme color */
-  --primary-bg-color: color-mix(in srgb, var(--primary-color) 7%, #ffffff);
-  --primary-border-color: color-mix(in srgb, var(--primary-color) 20%, #ffffff);
-  --primary-header-bg: color-mix(in srgb, var(--primary-color) 12%, #ffffff);
-  --primary-header-gradient: linear-gradient(140deg, #ffffff 65%, color-mix(in srgb, var(--primary-color) 15%, #ffffff) 100%);
-  --primary-table-header-bg: color-mix(in srgb, var(--primary-color) 10%, #ffffff);
-  --primary-table-row-odd: color-mix(in srgb, var(--primary-color) 3%, #ffffff);
-  --primary-table-row-hover: color-mix(in srgb, var(--primary-color) 8%, #ffffff);
+  --primary-bg-color: color-mix(in srgb, var(--primary-color) 6%, #ffffff);
+  --primary-border-color: color-mix(in srgb, var(--primary-color) 16%, #ffffff);
+  --primary-header-bg: color-mix(in srgb, var(--primary-color) 10%, #ffffff);
+  --primary-header-gradient: linear-gradient(140deg, #ffffff 65%, color-mix(in srgb, var(--primary-color) 12%, #ffffff) 100%);
+  --primary-table-header-bg: color-mix(in srgb, var(--primary-color) 8%, #ffffff);
+  --primary-table-row-odd: color-mix(in srgb, var(--primary-color) 2%, #ffffff);
+  --primary-table-row-hover: color-mix(in srgb, var(--primary-color) 6%, #ffffff);
 }
 
 .sidebar-menu {

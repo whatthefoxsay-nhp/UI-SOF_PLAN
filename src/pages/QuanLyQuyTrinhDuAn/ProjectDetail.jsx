@@ -121,51 +121,98 @@ function TaskCard({ task, onClick, showStage }) {
       draggable
       onDragStart={(e) => e.dataTransfer.setData("text/plain", String(task.id))}
       onClick={onClick}
+      style={{
+        borderRadius: 14,
+        border: "1px solid #e2e8f0",
+        background: "#ffffff",
+        boxShadow: "0 2px 8px rgba(15, 23, 42, 0.04)",
+        transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
+      }}
     >
       <div className={khStyles.kanbanCardInner} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Space size={6}>
-            <span className={`${khStyles.detailLink} wf-code`} style={{ fontSize: 12, fontWeight: 700 }}>
+            <span
+              className="wf-code"
+              style={{
+                fontSize: 11.5,
+                fontWeight: 700,
+                color: "#2563eb",
+                background: "#eff6ff",
+                padding: "1px 6px",
+                borderRadius: 5,
+              }}
+            >
               {task.code}
             </span>
             {showStage && task.stage_code && (
-              <Tag color="cyan" style={{ fontSize: 10, margin: 0, padding: "0 4px", lineHeight: "16px" }}>
+              <Tag color="cyan" style={{ fontSize: 10.5, margin: 0, padding: "0 6px", borderRadius: 4, lineHeight: "18px", border: "none" }}>
                 {task.stage_code}
               </Tag>
             )}
             {isBlocked && (
-              <Tag color="red" style={{ fontSize: 10, margin: 0, padding: "0 4px", lineHeight: "16px" }} title="Đang chờ công việc phụ thuộc hoàn thành">
-                <Lock size={10} style={{ marginRight: 2 }} /> Chờ
+              <Tag
+                color="error"
+                style={{ fontSize: 10.5, margin: 0, padding: "0 6px", borderRadius: 4, lineHeight: "18px", border: "none" }}
+                title="Đang chờ công việc phụ thuộc hoàn thành"
+              >
+                <Lock size={10} style={{ marginRight: 2, display: "inline-block", verticalAlign: "middle" }} /> Chờ
               </Tag>
             )}
           </Space>
           {task.confirm_total > 0 && (
             <Tag
-              color={task.confirm_done === task.confirm_total ? "green" : "gold"}
-              style={{ fontSize: 10, margin: 0, padding: "0 4px", lineHeight: "16px" }}
+              color={task.confirm_done === task.confirm_total ? "success" : "warning"}
+              style={{ fontSize: 10.5, margin: 0, padding: "0 6px", borderRadius: 4, lineHeight: "18px", border: "none", fontWeight: 600 }}
             >
               {task.confirm_done}/{task.confirm_total}
             </Tag>
           )}
         </div>
 
-        <Tag color={PRIORITY_COLOR[task.priority]} style={{ width: "fit-content", fontSize: 10, margin: 0 }}>
+        <Tag
+          color={PRIORITY_COLOR[task.priority]}
+          style={{ width: "fit-content", fontSize: 10.5, margin: 0, borderRadius: 4, border: "none", fontWeight: 600 }}
+        >
           {workflowApi.TASK_PRIORITY_LABELS[task.priority] || task.priority}
         </Tag>
 
-        <div style={{ fontWeight: 700, fontSize: 13.5, color: "#1e293b" }}>{task.name}</div>
+        <div style={{ fontWeight: 650, fontSize: 13.5, color: "#0f172a", lineHeight: 1.4 }}>{task.name}</div>
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 4 }}>
           {task.deadline ? (
-            <div style={{ display: "flex", alignItems: "center", gap: 4, color: overdue ? "#ff4d4f" : "#94a3b8", fontSize: 10.5 }}>
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 4,
+                padding: overdue ? "2px 7px" : "0",
+                background: overdue ? "#fee2e2" : "transparent",
+                borderRadius: 6,
+                color: overdue ? "#dc2626" : "#64748b",
+                fontSize: 11,
+                fontWeight: overdue ? 600 : 500,
+              }}
+            >
               <Calendar size={12} />
               <span>{task.deadline}</span>
-              {overdue && <span>· Quá hạn</span>}
+              {overdue && <span>(Quá hạn)</span>}
             </div>
           ) : (
             <span />
           )}
-          <div className={`${khStyles.userAvatar} ${gradientClass}`}>{initials}</div>
+          <div
+            className={`${khStyles.userAvatar} ${gradientClass}`}
+            style={{
+              width: 26,
+              height: 26,
+              fontSize: 11,
+              fontWeight: 700,
+              boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            {initials}
+          </div>
         </div>
       </div>
     </div>
@@ -747,12 +794,52 @@ export default function ProjectDetail({ projectId, onBack }) {
         )}
       </Space>
 
-      <Card size="small" style={{ marginBottom: 12 }}>
-        <b className="wf-code">{project.code}</b> — {project.name}
-        {project.customer_name && <span> · Khách hàng: {project.customer_name}</span>}
-        <span> · Workflow: {project.workflow_name}</span>
-        <Tag style={{ marginLeft: 8 }}>{project.status}</Tag>
-      </Card>
+      <div
+        className="glass-card"
+        style={{
+          padding: "16px 20px",
+          marginBottom: 16,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: 12,
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+          <span
+            className="wf-code"
+            style={{
+              fontSize: 13,
+              fontWeight: 800,
+              color: "#2563eb",
+              background: "#eff6ff",
+              padding: "4px 10px",
+              borderRadius: 6,
+              border: "1px solid #dbeafe",
+            }}
+          >
+            {project.code}
+          </span>
+          <span style={{ fontSize: 17, fontWeight: 750, color: "#0f172a" }}>{project.name}</span>
+          {project.customer_name && (
+            <Tag color="blue" style={{ borderRadius: 6, fontWeight: 600, margin: 0, padding: "2px 8px" }}>
+              Khách hàng: {project.customer_name}
+            </Tag>
+          )}
+          <Tag color="purple" style={{ borderRadius: 6, fontWeight: 600, margin: 0, padding: "2px 8px" }}>
+            Quy trình: {project.workflow_name}
+          </Tag>
+        </div>
+        <div>
+          <Tag
+            color={project.status === "DONE" ? "success" : project.status === "IN_PROGRESS" ? "processing" : "default"}
+            style={{ borderRadius: 9999, fontWeight: 700, padding: "3px 12px", fontSize: 12 }}
+          >
+            {project.status === "IN_PROGRESS" ? "Đang triển khai" : project.status === "DONE" ? "Hoàn thành" : project.status}
+          </Tag>
+        </div>
+      </div>
 
       <StagePipeline
         stages={project.stages}

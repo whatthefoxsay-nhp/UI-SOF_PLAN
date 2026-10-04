@@ -37,21 +37,50 @@ root.render(
           locale={viVN}
           theme={{
             token: {
-              colorPrimary: '#197dd3',
-              colorSuccess: '#1b8a5a',
-              colorWarning: '#b8720f',
-              colorError: '#c23b3b',
-              colorTextBase: '#10182b',
-              colorBorder: '#e2e6ee',
-              borderRadius: 8,
-              fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+              colorPrimary: '#2563eb',
+              colorSuccess: '#10b981',
+              colorWarning: '#f59e0b',
+              colorError: '#ef4444',
+              colorInfo: '#3b82f6',
+              colorTextBase: '#0f172a',
+              colorBorder: '#e2e8f0',
+              borderRadius: 10,
+              fontFamily: "'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
             },
             components: {
-              Card: { borderRadiusLG: 12 },
-              Button: { borderRadius: 8, controlHeight: 34 },
-              Table: { borderRadius: 10, headerBg: '#edf0f5' },
-              Modal: { borderRadiusLG: 12 },
-              Tag: { borderRadiusSM: 6 },
+              Card: { 
+                borderRadiusLG: 14,
+                boxShadowSecondary: '0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.02)',
+              },
+              Button: { 
+                borderRadius: 8, 
+                controlHeight: 38,
+                fontWeight: 600,
+              },
+              Table: { 
+                borderRadius: 12, 
+                headerBg: '#f8fafc',
+                headerColor: '#334155',
+              },
+              Input: {
+                borderRadius: 8,
+                controlHeight: 38,
+              },
+              Select: {
+                borderRadius: 8,
+                controlHeight: 38,
+              },
+              Tabs: {
+                titleFontSize: 13.5,
+                horizontalItemPadding: '10px 18px',
+              },
+              Modal: { 
+                borderRadiusLG: 16,
+              },
+              Tag: { 
+                borderRadiusSM: 6,
+                fontSize: 12,
+              },
             },
           }}
         >

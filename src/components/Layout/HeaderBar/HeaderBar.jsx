@@ -71,20 +71,28 @@ const HeaderBar = ({ isCollapsed }) => {
   };
 
   const notificationDropdownContent = (
-    <div style={{ width: 340, maxHeight: 420, overflowY: "auto", background: "#fff", borderRadius: 8, boxShadow: "0 4px 16px rgba(0,0,0,0.12)" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 14px", borderBottom: "1px solid #f0f0f0" }}>
-        <Text strong>Thông báo</Text>
-        <Button type="link" size="small" onClick={markAllRead}>
-          Đánh dấu đã đọc tất cả
+    <div style={{ width: 380, maxHeight: 440, overflowY: "auto", background: "#ffffff", borderRadius: 14, boxShadow: "0 16px 40px -6px rgba(15, 23, 42, 0.16)", border: "1px solid #e2e8f0" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", borderBottom: "1px solid #f1f5f9" }}>
+        <Space size={8}>
+          <Text strong style={{ fontSize: 14 }}>Thông báo</Text>
+          {unreadCount > 0 && (
+            <span style={{ fontSize: 11, background: "#dbeafe", color: "#1d4ed8", padding: "1px 8px", borderRadius: 9999, fontWeight: 700 }}>
+              {unreadCount} mới
+            </span>
+          )}
+        </Space>
+        <Button type="link" size="small" onClick={markAllRead} style={{ fontSize: 12, padding: 0 }}>
+          Đánh dấu đã đọc
         </Button>
       </div>
       {alertCount > 0 && (
-        <div style={{ padding: "8px 14px", background: "#fff2f0", color: "#cf1322", fontSize: 12.5 }}>
+        <div style={{ padding: "8px 16px", background: "#fef2f2", color: "#dc2626", fontSize: 12, fontWeight: 600, borderBottom: "1px solid #fee2e2", display: "flex", alignItems: "center", gap: 6 }}>
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#ef4444" }} />
           {alertCount} công việc quá hạn của bạn
         </div>
       )}
       {notifications.length === 0 ? (
-        <Empty description="Không có thông báo" style={{ padding: 20 }} />
+        <Empty description="Không có thông báo mới" style={{ padding: "28px 20px" }} />
       ) : (
         <List
           size="small"
@@ -92,13 +100,24 @@ const HeaderBar = ({ isCollapsed }) => {
           renderItem={(n) => (
             <List.Item
               onClick={() => openNotification(n)}
-              style={{ cursor: "pointer", padding: "8px 14px", background: n.is_read ? "#fff" : "#f0f7ff" }}
+              style={{
+                cursor: "pointer",
+                padding: "10px 16px",
+                background: n.is_read ? "#ffffff" : "#f0f7ff",
+                borderBottom: "1px solid #f8fafc",
+                transition: "background 0.2s ease",
+              }}
             >
-              <div>
-                <div style={{ fontSize: 13 }}>{n.message}</div>
-                <div style={{ fontSize: 11, color: "#94a3b8" }}>
-                  {n.project_name ? `${n.project_code} — ${n.project_name} · ` : ""}
-                  {n.created_at}
+              <div style={{ width: "100%" }}>
+                <div style={{ fontSize: 13, fontWeight: n.is_read ? 500 : 600, color: "#1e293b", lineHeight: 1.4 }}>
+                  {n.message}
+                </div>
+                <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 4, display: "flex", alignItems: "center", gap: 6 }}>
+                  {n.project_name ? (
+                    <span style={{ color: "#2563eb", fontWeight: 600 }}>{n.project_code}</span>
+                  ) : null}
+                  {n.project_name ? <span>·</span> : null}
+                  <span>{n.created_at}</span>
                 </div>
               </div>
             </List.Item>
@@ -248,6 +267,7 @@ const HeaderBar = ({ isCollapsed }) => {
       <div className="header-center">
         <Space size="middle">
           <div className="header-clock-widget">
+            <span className="header-clock-dot" />
             <span className="header-clock-time">{timeLabel}</span>
             <span className="header-clock-date">{dateLabel}</span>
           </div>

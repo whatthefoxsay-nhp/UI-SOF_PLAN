@@ -1,3 +1,6 @@
+/* Google Fonts: Plus Jakarta Sans & JetBrains Mono */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 /* Reset và base styles */
 * {
   margin: 0;
@@ -9,26 +12,25 @@
   --sidebar-width: 250px;
 
   /* ------------------------------------------------------------------
-     Design tokens. --primary-color / --color-primary-gradient are the
-     live-switchable brand color (set at runtime by SidebarMenu's theme
-     picker) — every other token below is fixed, so switching the accent
-     never touches ink/canvas/status colors.
+     Design tokens. Modernized for clean enterprise aesthetic.
      ------------------------------------------------------------------ */
-  --ink: #10182b;
-  --ink-muted: #5b6472;
-  --ink-faint: #94a0b2;
-  --canvas: #f2f4f8;
+  --ink: #0f172a;
+  --ink-muted: #64748b;
+  --ink-faint: #94a3b8;
+  --canvas: #f8fafc;
   --surface: #ffffff;
-  --line: #e2e6ee;
-  --line-soft: #edf0f5;
-  --success: #1b8a5a;
-  --success-bg: #e7f5ee;
-  --warning: #b8720f;
-  --warning-bg: #fbf1de;
-  --danger: #c23b3b;
-  --danger-bg: #fbeaea;
-  --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --line: #e2e8f0;
+  --line-soft: #f1f5f9;
+  --primary-color: #2563eb;
+  --secondary-color: #60a5fa;
+  --success: #10b981;
+  --success-bg: #ecfdf5;
+  --warning: #f59e0b;
+  --warning-bg: #fffbeb;
+  --danger: #ef4444;
+  --danger-bg: #fef2f2;
+  --font-ui: "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
 }
 
 html, body, #root {
@@ -36,6 +38,8 @@ html, body, #root {
   min-height: 100dvh;
   font-family: var(--font-ui);
   overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -573,3 +577,130 @@ body {
   opacity: 0;
   transition: opacity 300ms;
 }
+
+/* ==========================================================================
+   Modern Enterprise UI Utilities (2026 Refresh)
+   ========================================================================== */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+  border-radius: 14px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -4px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+}
+
+.modern-stat-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modern-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.08);
+  border-color: #cbd5e1;
+}
+
+.modern-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--stat-accent, #2563eb);
+  border-radius: 16px 16px 0 0;
+}
+
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+/* Custom modern scrollbars */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Refined Ant Design table visuals */
+.ant-table-wrapper .ant-table {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ant-table-wrapper .ant-table-thead > tr > th {
+  background: #f8fafc !important;
+  color: #475569 !important;
+  font-weight: 600 !important;
+  font-size: 12.5px !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  padding: 12px 14px !important;
+}
+
+.ant-table-wrapper .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #f1f5f9 !important;
+  padding: 12px 14px !important;
+  font-size: 13px !important;
+  color: #1e293b !important;
+}
+
+.ant-table-wrapper .ant-table-tbody > tr:hover > td {
+  background-color: #f8fafc !important;
+}
+
+/* Refined Tabs header bar */
+.ant-tabs-nav {
+  margin-bottom: 16px !important;
+}
+
+.ant-tabs-ink-bar {
+  border-radius: 4px !important;
+  height: 3px !important;
+  background: #2563eb !important;
+}
+
+.ant-tabs-tab {
+  font-weight: 550 !important;
+  color: #64748b !important;
+  transition: all 0.2s ease !important;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #2563eb !important;
+  font-weight: 650 !important;
+}
+
